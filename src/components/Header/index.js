@@ -1,7 +1,23 @@
-import React from 'react'
-import { Paper, Avatar, IconButton, Button, makeStyles } from '@material-ui/core'
+import React, { useState, useEffect } from 'react'
+import { Paper, Avatar, IconButton, Button, makeStyles, Input } from '@material-ui/core'
+import Modal from '@material-ui/core/Modal'
 import MenuIcon from '@material-ui/icons/Menu'
+import { auth } from '../../firebase'
 import './styles.scss'
+
+function getModalStyle() {
+  const top = 50
+  const left = 50
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+    width: '70%',
+    outline: '0',
+    border: '0',
+  };
+}
 
 const useStyles = makeStyles(theme => ({
   buttonSignUp: {
@@ -27,28 +43,168 @@ const useStyles = makeStyles(theme => ({
       padding: '5px',
     },
   },
+  modal: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 2, 3),
+  },
+  input: {
+    width: '80%',
+  },
 }))
 
 const Header = () => {
 
+  const [open, setOpen] = useState(false)
+  const [openLogin, setOpenLogin] = useState(false)
   const classes = useStyles()
+  const [modalStyle] = useState(getModalStyle)
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null)
+  const handleClose = () => {
+    setUsername('')
+    setPassword('')
+    setEmail('')
+    setOpen(false)
+    setOpenLogin(false)
+  }
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        // user has logged in...
+        console.log(authUser)
+        setUser(authUser)
+      } else {
+        // user has logged out...
+        setUser(null)
+      }
+    })
+    // anytime a new user is created or someone logs in/out it fires authUser
+
+    return () => {
+      // performs clean-up inbetween useEffect fires
+      unsubscribe()
+    }
+  }, [user, username])
+
+  const signUp = (event) => {
+    event.preventDefault()
+    if (username) {
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((authUser) => {
+          return authUser.user.updateProfile({
+            displayName: username
+          })
+        })
+        .catch((error) => alert(error.message))
+      handleClose()
+      // .catch(error handeling)
+    } else {
+      return alert('Please enter a username')
+    }
+  }
+
+  const signIn = (event) => {
+    event.preventDefault()
+    auth.signInWithEmailAndPassword(email, password)
+      .catch((error) => alert(error.message))
+    handleClose()
+  }
 
   return (
     <div className="header">
+      <Modal
+        open={openLogin}
+        onClose={handleClose}
+      >
+        <div style={modalStyle} className={classes.modal}>
+          <form>
+            <center>
+              <div>
+                LOGO
+            </div>
+              <Input
+                required
+                type='email'
+                placeholder='Email'
+                value={email}
+                className={classes.input}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Input
+                required
+                type='password'
+                placeholder='Password'
+                value={password}
+                className={classes.input}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button type='submit' onClick={signIn}>Login</Button>
+            </center>
+          </form>
+        </div>
+      </Modal>
+      <Modal
+        open={open}
+        onClose={handleClose}
+      >
+        <div style={modalStyle} className={classes.modal}>
+          <form>
+            <center>
+              <div>
+                LOGO
+            </div>
+              <Input
+                required
+                type='text'
+                placeholder='Username'
+                value={username}
+                className={classes.input}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <Input
+                required
+                type='email'
+                placeholder='Email'
+                value={email}
+                className={classes.input}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Input
+                required
+                type='password'
+                placeholder='Password'
+                value={password}
+                className={classes.input}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button type='submit' onClick={signUp}>Sign-Up</Button>
+            </center>
+          </form>
+        </div>
+      </Modal>
       <Paper className="header" variant='outlined' square>
         <h3 className='header-logo'>Logo</h3>
-        <div className='header-login'>
-          <Button color='primary' className={classes.buttonLogin}>Login</Button>
-          <Button variant='outlined' color='secondary' className={classes.buttonSignUp}>Sign-up</Button>
-        </div>
-        {/* <div className='header-icons'>
-          <IconButton size='small'>
-            <Avatar />
-          </IconButton>
-          <IconButton size='medium'>
-            <MenuIcon />
-          </IconButton>
-        </div> */}
+        {user ? (
+          <div className='header-icons'>
+            <IconButton size='small'>
+              <Avatar onClick={() => auth.signOut()} />
+            </IconButton>
+            <IconButton size='medium'>
+              <MenuIcon />
+            </IconButton>
+          </div>
+        ) : (
+            <div className='header-login'>
+              <Button color='primary' className={classes.buttonLogin} onClick={() => setOpenLogin(true)}>Login</Button>
+              <Button variant='outlined' color='secondary' className={classes.buttonSignUp} onClick={() => setOpen(true)}>Sign-up</Button>
+            </div>
+          )}
       </Paper>
     </div>
   )
