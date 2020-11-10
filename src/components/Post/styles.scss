@@ -1,9 +1,15 @@
 .post {
+  margin-bottom: 45px;
+  width: 100%;
+  &-footer {
+    padding: 10px;
+    border-bottom: 1px solid lightgrey;
+  }
   &-header {
     &-paper {
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px;
     }
     &-avatar {
       margin-right: 10px;
@@ -11,5 +17,33 @@
   }
   &-image {
     width: 100%;
+    object-fit: contain;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .post {
+    margin-bottom: 45px;
+    max-width: 425px;
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+    &-footer {
+      padding: 10px;
+      border-bottom: 1px solid lightgrey;
+    }
+    &-header {
+      &-paper {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      }
+      &-avatar {
+        margin-right: 10px;
+      }
+    }
+    &-image {
+      width: 100%;
+      object-fit: contain;
+    }
   }
 }
