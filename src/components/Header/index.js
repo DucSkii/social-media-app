@@ -94,19 +94,15 @@ const Header = () => {
 
   const signUp = (event) => {
     event.preventDefault()
-    if (username) {
-      auth.createUserWithEmailAndPassword(email, password)
-        .then((authUser) => {
-          return authUser.user.updateProfile({
-            displayName: username
-          })
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        return authUser.user.updateProfile({
+          displayName: username
         })
-        .catch((error) => alert(error.message))
-      handleClose()
-      // .catch(error handeling)
-    } else {
-      return alert('Please enter a username')
-    }
+      })
+      .catch((error) => alert(error.message))
+    handleClose()
+    // .catch(error handeling)
   }
 
   const signIn = (event) => {
@@ -123,7 +119,7 @@ const Header = () => {
         onClose={handleClose}
       >
         <div style={modalStyle} className={classes.modal}>
-          <form>
+          <form onSubmit={signIn}>
             <center>
               <div>
                 LOGO
@@ -144,7 +140,7 @@ const Header = () => {
                 className={classes.input}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Button type='submit' onClick={signIn}>Login</Button>
+              <Button type='submit'>Login</Button>
             </center>
           </form>
         </div>
@@ -154,7 +150,7 @@ const Header = () => {
         onClose={handleClose}
       >
         <div style={modalStyle} className={classes.modal}>
-          <form>
+          <form onSubmit={signUp}>
             <center>
               <div>
                 LOGO
@@ -183,7 +179,7 @@ const Header = () => {
                 className={classes.input}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Button type='submit' onClick={signUp}>Sign-Up</Button>
+              <Button type='submit'>Sign-Up</Button>
             </center>
           </form>
         </div>
