@@ -1,0 +1,15 @@
+.post {
+  &-header {
+    &-paper {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    }
+    &-avatar {
+      margin-right: 10px;
+    }
+  }
+  &-image {
+    width: 100%;
+  }
+}
