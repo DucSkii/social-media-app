@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from './components/Header'
-import HomePage from './components/Pages/HomePage'
-import ProfilePage from './components/Pages/ProfilePage'
+import Home from './pages/Home'
+import Profile from './pages/Profile'
 import Drawer from '@material-ui/core/Drawer'
 import DrawerBar from './components/Drawer'
 import { useGeneralValue } from './context/GeneralContext'
@@ -28,8 +28,8 @@ const App = () => {
           <Header />
         </header>
         <Switch>
-          <Route path='/profile' component={ProfilePage} />
-          <Route exact path='/' component={HomePage} />
+          <Route path='/profile' component={Profile} />
+          <Route exact path='/' component={Home} />
         </Switch>
       </Router>
     </div>

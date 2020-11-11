@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import Post from '../../Post'
-import { db } from '../../../firebase'
+import Post from '../../components/Post'
+import { db } from '../../firebase'
 
 
-const HomePage = () => {
+const Home = () => {
 
   const [posts, setPosts] = useState([])
 
@@ -32,4 +32,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default Home
