@@ -4,9 +4,11 @@ import HomeIcon from '@material-ui/icons/Home'
 import ChatIcon from '@material-ui/icons/Chat'
 import FavouriteIcon from '@material-ui/icons/Favorite'
 import SettingsIcon from '@material-ui/icons/Settings'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Divider from '@material-ui/core/Divider'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { makeStyles, Button, Avatar } from '@material-ui/core'
+import { auth } from '../../firebase'
 
 const useStyles = makeStyles({
   navigation: {
@@ -39,8 +41,13 @@ const Drawer = () => {
   const [{ isDrawerOpen }, dispatch] = useGeneralValue()
   const classes = useStyles()
 
+  const signOut = () => {
+    auth.signOut()
+    dispatch({ type: 'DRAWER_TOGGLE', open: false })
+  }
+
   return (
-    <div className='drawer' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div className='drawer' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
       <div className='drawer-navigation' style={{ display: 'flex', flexDirection: 'column', marginTop: '10px', alignItems: 'center' }}>
         <Button className={classes.button} onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: false })}>
           <ArrowBackIosIcon style={{ padding: '10px 10px 10px 15px', width: '20px', height: '20px' }} />
@@ -59,11 +66,15 @@ const Drawer = () => {
           <Avatar className={classes.avatar} />
         </Button>
         <Divider className={classes.divider} />
-        <div className='drawer-settings'>
-          <Button className={classes.button}>
-            <SettingsIcon className={classes.navigation} />
-          </Button>
-        </div>
+      </div>
+      <div className='drawer-settings' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Button className={classes.button}>
+          <SettingsIcon className={classes.navigation} />
+        </Button>
+        <Divider className={classes.divider} />
+        <Button className={classes.button} onClick={signOut}>
+          <ExitToAppIcon className={classes.navigation} />
+        </Button>
       </div>
     </div>
   )
