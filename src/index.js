@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { UserContextProvider } from './context/UserContext'
+import userReducer, { initialUserState } from './reducer/userReducer'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -18,9 +20,11 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <UserContextProvider reducer={userReducer} initialState={initialUserState}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )
