@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Post from './components/Post'
 import { db } from './firebase'
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
+import Drawer from './components/Drawer'
+import { useGeneralValue } from './context/GeneralContext'
 import './App.scss'
 
 const App = () => {
 
   const [posts, setPosts] = useState([])
+  const [{ isDrawerOpen }, dispatch] = useGeneralValue()
 
   useEffect(() => {
     db.collection('posts').onSnapshot(snapshot => {
@@ -23,6 +27,14 @@ const App = () => {
 
   return (
     <div className='App'>
+      <SwipeableDrawer
+        open={isDrawerOpen}
+        anchor='right'
+        onClose={() => dispatch({ type: 'DRAWER_TOGGLE', open: false })}
+        onOpen={() => dispatch({ type: 'DRAWER_TOGGLE', open: true })}
+      >
+        <Drawer />
+      </SwipeableDrawer>
       <header>
         <Header />
       </header>

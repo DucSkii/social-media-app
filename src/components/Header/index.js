@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal'
 import MenuIcon from '@material-ui/icons/Menu'
 import { auth } from '../../firebase'
 import './styles.scss'
+import { useGeneralValue } from '../../context/GeneralContext'
 
 function getModalStyle() {
   const top = 50
@@ -20,6 +21,10 @@ function getModalStyle() {
 }
 
 const useStyles = makeStyles(theme => ({
+  avatar: {
+    width: '27px',
+    height: '27px',
+  },
   buttonSignUp: {
     marginLeft: '5px',
     marginRight: '5px',
@@ -58,9 +63,10 @@ const useStyles = makeStyles(theme => ({
 
 const Header = () => {
 
+  const classes = useStyles()
+  const [{ isDrawerOpen }, dispatch] = useGeneralValue()
   const [open, setOpen] = useState(false)
   const [openLogin, setOpenLogin] = useState(false)
-  const classes = useStyles()
   const [modalStyle] = useState(getModalStyle)
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -189,10 +195,10 @@ const Header = () => {
         {user ? (
           <div className='header-icons'>
             <IconButton size='small'>
-              <Avatar onClick={() => auth.signOut()} />
+              <Avatar className={classes.avatar} />
             </IconButton>
             <IconButton size='medium'>
-              <MenuIcon />
+              <MenuIcon onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true })} />
             </IconButton>
           </div>
         ) : (

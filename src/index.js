@@ -4,7 +4,9 @@ import './index.scss';
 import App from './App';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { UserContextProvider } from './context/UserContext'
+import { GeneralContextProvider } from './context/GeneralContext'
 import userReducer, { initialUserState } from './reducer/userReducer'
+import generalReducer, { initialState } from './reducer/generalReducer'
 
 const theme = createMuiTheme({
   breakpoints: {
@@ -20,11 +22,13 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserContextProvider reducer={userReducer} initialState={initialUserState}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </UserContextProvider>
+    <GeneralContextProvider reducer={generalReducer} initialState={initialState}>
+      <UserContextProvider reducer={userReducer} initialState={initialUserState}>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </UserContextProvider>
+    </GeneralContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )
