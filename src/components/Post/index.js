@@ -30,9 +30,9 @@ const Post = (props) => {
             transitionDuration={200}
           >
             {
-              props.image.map(image => {
+              props.image.map((image, index) => {
                 return (
-                  <div>
+                  <div key={index}>
                     <img src={image} alt='' className='post-image' />
                   </div>
                 )
