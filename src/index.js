@@ -21,14 +21,12 @@ const theme = createMuiTheme({
 })
 
 ReactDOM.render(
-  <React.StrictMode>
-    <GeneralContextProvider reducer={generalReducer} initialState={initialState}>
-      <UserContextProvider reducer={userReducer} initialState={initialUserState}>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </UserContextProvider>
-    </GeneralContextProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  <GeneralContextProvider reducer={generalReducer} initialState={initialState}>
+    <UserContextProvider reducer={userReducer} initialState={initialUserState}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </UserContextProvider>
+  </GeneralContextProvider>
+  , document.getElementById('root')
 )

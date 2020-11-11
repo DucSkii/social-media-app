@@ -21,7 +21,6 @@ const App = () => {
           open={isDrawerOpen}
           anchor='right'
           onClose={() => dispatch({ type: 'DRAWER_TOGGLE', open: false })}
-          onOpen={() => dispatch({ type: 'DRAWER_TOGGLE', open: true })}
         >
           <DrawerBar />
         </Drawer>

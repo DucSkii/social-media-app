@@ -98,9 +98,9 @@ const Drawer = () => {
             <div>Are you sure you want to sign out</div>
           </div>
           <div className='modal-buttons'>
-            <Button className={classes.modalButtonLeft} onClick={() => handleClose()}>No</Button>
+            <Button variant='outlined' className={classes.modalButtonLeft} onClick={() => handleClose()}>No</Button>
             <Link to='/'>
-              <Button className={classes.modalButtonRight} onClick={() => signOut()}>Yes</Button>
+              <Button variant='outlined' className={classes.modalButtonRight} onClick={() => signOut()}>Yes</Button>
             </Link>
           </div>
         </div>

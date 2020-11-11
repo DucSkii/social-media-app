@@ -202,8 +202,8 @@ const Header = () => {
                 <Avatar className={classes.avatar} />
               </IconButton>
             </Link>
-            <IconButton size='medium'>
-              <MenuIcon onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true })} />
+            <IconButton size='medium' onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true })}>
+              <MenuIcon />
             </IconButton>
           </div>
         ) : (
