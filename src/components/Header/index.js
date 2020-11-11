@@ -5,6 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { auth } from '../../firebase'
 import './styles.scss'
 import { useGeneralValue } from '../../context/GeneralContext'
+import { Link } from 'react-router-dom'
 
 function getModalStyle() {
   const top = 50
@@ -191,12 +192,16 @@ const Header = () => {
         </div>
       </Modal>
       <Paper className="header" variant='outlined' square>
-        <h3 className='header-logo'>Logo</h3>
+        <Link to='/'>
+          <h3 className='header-logo'>Logo</h3>
+        </Link>
         {user ? (
           <div className='header-icons'>
-            <IconButton size='small'>
-              <Avatar className={classes.avatar} />
-            </IconButton>
+            <Link to='/profile'>
+              <IconButton size='small'>
+                <Avatar className={classes.avatar} />
+              </IconButton>
+            </Link>
             <IconButton size='medium'>
               <MenuIcon onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true })} />
             </IconButton>
