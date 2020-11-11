@@ -10,16 +10,19 @@
     display: flex;
     align-items: center;
     height: 15px;
-    padding: 10px 5px;
-    }
-    &-avatar {
-      margin-right: 5px;
+    padding: 12px 7px;
     }
   }
   &-image {
     width: 100%;
     object-fit: contain;
   }
+}
+
+.react-slideshow-fade-wrapper > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media screen and (min-width: 425px) {
@@ -37,10 +40,7 @@
         display: flex;
         align-items: center;
         height: 15px;
-        padding: 15px 10px;
-      }
-      &-avatar {
-        margin-right: 10px;
+        padding: 17px 12px;
       }
     }
     &-image {
