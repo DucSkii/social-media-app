@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import HomeIcon from '@material-ui/icons/Home'
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined'
@@ -11,13 +11,34 @@ import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Divider from '@material-ui/core/Divider'
 import { useGeneralValue } from '../../context/GeneralContext'
-import { makeStyles, Button, Avatar } from '@material-ui/core'
+import { makeStyles, Button, Avatar, Modal } from '@material-ui/core'
 import { auth } from '../../firebase'
 import { Link } from 'react-router-dom'
+import './styles.scss'
 
-const useStyles = makeStyles({
+function getModalStyle() {
+  const top = 50
+  const left = 50
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+    width: '250px',
+    outline: '0',
+    border: '0',
+  };
+}
+
+const useStyles = makeStyles(theme => ({
   navigation: {
     padding: '10px',
+  },
+  modalButtonLeft: {
+    marginRight: '10px',
+  },
+  modalButtonRight: {
+    marginLeft: '10px',
   },
   button: {
     padding: '0',
@@ -39,26 +60,57 @@ const useStyles = makeStyles({
     width: '24px',
     height: '24px',
   },
-})
+  modal: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 2, 3),
+  },
+}))
 
 const Drawer = () => {
 
   const [{ isDrawerOpen }, dispatch] = useGeneralValue()
+  const [modalStyle] = useState(getModalStyle)
+  const [open, setOpen] = useState(false)
   const classes = useStyles()
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   const signOut = () => {
     auth.signOut()
+    setOpen(false)
     dispatch({ type: 'DRAWER_TOGGLE', open: false })
   }
 
   return (
     <div className='drawer' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+      <Modal
+        open={open}
+        onClose={handleClose}
+      >
+        <div style={modalStyle} className={classes.modal}>
+          <div className='modal'>
+            <div>Are you sure you want to sign out</div>
+          </div>
+          <div className='modal-buttons'>
+            <Button className={classes.modalButtonLeft} onClick={() => handleClose()}>No</Button>
+            <Link to='/'>
+              <Button className={classes.modalButtonRight} onClick={() => signOut()}>Yes</Button>
+            </Link>
+          </div>
+        </div>
+      </Modal>
       <div className='drawer-navigation' style={{ display: 'flex', flexDirection: 'column', marginTop: '10px', alignItems: 'center' }}>
         <Button className={classes.button} onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: false })}>
           <ArrowBackIosIcon style={{ padding: '10px 10px 10px 15px', width: '20px', height: '20px' }} />
         </Button>
         <Divider className={classes.divider} />
-        <Link to='/'>
+        <Link to='/' className={classes.link}>
           <Button className={classes.button}>
             <HomeOutlinedIcon className={classes.navigation} />
           </Button>
@@ -81,7 +133,7 @@ const Drawer = () => {
           <SettingsOutlinedIcon className={classes.navigation} />
         </Button>
         <Divider className={classes.divider} />
-        <Button className={classes.button} onClick={signOut}>
+        <Button className={classes.button} onClick={() => setOpen(true)}>
           <ExitToAppIcon className={classes.navigation} />
         </Button>
       </div>
