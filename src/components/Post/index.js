@@ -8,11 +8,11 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     width: '23px',
     height: '23px',
-    marginRight: '5px',
+    marginRight: '8px',
     [theme.breakpoints.up('sm')]: {
       width: '26px',
       height: '26px',
-      marginRight: '7px',
+      marginRight: '10px',
     },
   },
 }))

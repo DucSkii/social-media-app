@@ -127,9 +127,9 @@ const Header = () => {
         <div style={modalStyle} className={classes.modal}>
           <form onSubmit={signIn}>
             <center>
-              <div>
+              <div style={{ marginBottom: '15px', marginTop: '15px' }}>
                 LOGO
-            </div>
+              </div>
               <Input
                 required
                 type='email'
@@ -146,7 +146,7 @@ const Header = () => {
                 className={classes.input}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Button type='submit'>Login</Button>
+              <Button type='submit' variant='outlined' style={{ marginTop: '15px' }}>Login</Button>
             </center>
           </form>
         </div>
@@ -158,9 +158,9 @@ const Header = () => {
         <div style={modalStyle} className={classes.modal}>
           <form onSubmit={signUp}>
             <center>
-              <div>
+              <div style={{ marginBottom: '15px', marginTop: '15px' }}>
                 LOGO
-            </div>
+              </div>
               <Input
                 required
                 type='text'
@@ -185,7 +185,7 @@ const Header = () => {
                 className={classes.input}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Button type='submit'>Sign-Up</Button>
+              <Button type='submit' variant='outlined' style={{ marginTop: '15px' }}>Sign-Up</Button>
             </center>
           </form>
         </div>
