@@ -88,7 +88,14 @@ const Drawer = () => {
   }
 
   return (
-    <div className='drawer' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+    <div className='drawer'
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: '100%',
+        overflowX: 'hidden'
+      }}>
       <Modal
         open={open}
         onClose={handleClose}
