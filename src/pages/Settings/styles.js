@@ -15,8 +15,12 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
   },
   colors: {
-    display: 'flex',
-    padding: '5px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(5, 50px)',
+    [theme.breakpoints.up('sm')]: {
+      display: 'flex',
+      padding: '5px',
+    },
   },
   colorBlack: {
     borderRadius: '5px',

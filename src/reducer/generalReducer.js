@@ -14,8 +14,6 @@ export const initialState = {
   }
 }
 
-console.log(ColourPalette[0])
-
 const generalReducer = (state, action) => {
   switch (action.type) {
     case 'DRAWER_TOGGLE':

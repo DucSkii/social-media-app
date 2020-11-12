@@ -15,7 +15,7 @@ import './App.scss'
 
 const App = () => {
 
-  const [{ isDrawerOpen, darkMode, colorTheme }, dispatch] = useGeneralValue()
+  const [{ isDrawerOpen, darkMode, colorTheme, pageNav }, dispatch] = useGeneralValue()
   const useStyles = makeStyles({
     paperBackground: {
       backgroundColor: darkMode ? '#666' : '#fafafa',
@@ -49,6 +49,10 @@ const App = () => {
   }, [])
 
   useEffect(() => {
+    dispatch({ type: 'CHANGE_NAV', nav: localStorage.getItem('pageNav') })
+  }, [])
+
+  useEffect(() => {
     const darkModeBool = localStorage.getItem('darkMode')
     if (darkModeBool === 'true') {
       dispatch({ type: 'DARKMODE_TOGGLE', mode: true })
@@ -56,6 +60,10 @@ const App = () => {
       dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
     }
   }, [])
+
+  useEffect(() => {
+    localStorage.setItem('pageNav', pageNav)
+  }, [pageNav])
 
   return (
     <ThemeProvider theme={theme}>
