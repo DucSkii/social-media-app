@@ -21,9 +21,9 @@ const App = () => {
       backgroundColor: darkMode ? '#666' : '#fafafa',
     },
   })
-  
+
   const classes = useStyles()
-  
+
   const theme = createMuiTheme({
     palette: {
       type: darkMode ? 'dark' : 'light',
@@ -38,7 +38,7 @@ const App = () => {
       }
     }
   })
-  
+
   useEffect(() => {
     const darkModeBool = localStorage.getItem('darkMode')
     if (darkModeBool === 'true') {
@@ -47,7 +47,7 @@ const App = () => {
       dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
     }
   }, [])
-  
+
   return (
     <ThemeProvider theme={theme}>
       <Paper className={classes.paperBackground}>

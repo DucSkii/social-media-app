@@ -160,7 +160,7 @@ const Header = () => {
         <div style={modalStyle} className={classes.modal}>
           <form onSubmit={signUp}>
             <center>
-              <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+              <div style={{ marginBottom: '15px', marginTop: '15px' }} >
                 LOGO
               </div>
               <Input
@@ -193,13 +193,13 @@ const Header = () => {
         </div>
       </Modal>
       <Paper className="header" variant='outlined' square style={{ borderTop: 'none' }}>
-        <Link to='/'>
+        <Link to='/' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: '' })} >
           <h3 className='header-logo'>Logo</h3>
         </Link>
         {user ? (
           <div className='header-icons'>
             <Link to='/profile'>
-              <IconButton size='small'>
+              <IconButton size='small' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
                 <Avatar className={classes.avatar} />
               </IconButton>
             </Link>

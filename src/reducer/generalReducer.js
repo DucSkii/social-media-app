@@ -1,6 +1,7 @@
 export const initialState = {
   isDrawerOpen: false,
   darkMode: false,
+  pageNav: '',
 }
 
 const generalReducer = (state, action) => {
@@ -15,6 +16,11 @@ const generalReducer = (state, action) => {
       return {
         ...state,
         darkMode: action.mode,
+      }
+    case 'CHANGE_NAV':
+      return {
+        ...state,
+        pageNav: action.nav
       }
     default:
       return state

@@ -4,4 +4,8 @@ export const useStyles = makeStyles(theme => ({
   profile: {
     marginTop: '50px',
   },
+  paper: {
+    height: '100vh',
+
+  }
 }))

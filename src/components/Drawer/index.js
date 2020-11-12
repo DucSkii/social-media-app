@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
 
 const Drawer = () => {
 
-  const [{ isDrawerOpen, darkMode }, dispatch] = useGeneralValue()
+  const [{ isDrawerOpen, darkMode, pageNav }, dispatch] = useGeneralValue()
   const [modalStyle] = useState(getModalStyle)
   const [open, setOpen] = useState(false)
   const classes = useStyles()
@@ -84,7 +84,40 @@ const Drawer = () => {
   const signOut = () => {
     auth.signOut()
     setOpen(false)
+    dispatch({ type: 'CHANGE_NAV', nav: '' })
     dispatch({ type: 'DRAWER_TOGGLE', open: false })
+  }
+
+  const renderHome = (pageNav) => {
+    if (pageNav === '') {
+      return <HomeIcon className={classes.navigation} />
+    } else {
+      return <HomeOutlinedIcon className={classes.navigation} />
+    }
+  }
+
+  const renderChat = (pageNav) => {
+    if (pageNav === 'chat') {
+      return <ChatIcon className={classes.navigation} />
+    } else {
+      return <ChatOutlinedIcon className={classes.navigation} />
+    }
+  }
+
+  const renderFavourite = (pageNav) => {
+    if (pageNav === 'favourite') {
+      return <FavouriteIcon className={classes.navigation} />
+    } else {
+      return <FavouriteBorderOutlinedIcon className={classes.navigation} />
+    }
+  }
+
+  const renderSettings = (pageNav) => {
+    if (pageNav === 'settings') {
+      return <SettingsIcon className={classes.navigation} />
+    } else {
+      return <SettingsOutlinedIcon className={classes.navigation} />
+    }
   }
 
   return (
@@ -118,18 +151,18 @@ const Drawer = () => {
         </Button>
         <Divider className={classes.divider} />
         <Link to='/' className={classes.link}>
-          <Button className={classes.button}>
-            <HomeOutlinedIcon className={classes.navigation} />
+          <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: '' })}>
+            {renderHome(pageNav)}
           </Button>
         </Link>
-        <Button className={classes.button}>
-          <ChatOutlinedIcon className={classes.navigation} />
+        <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'chat' })}>
+          {renderChat(pageNav)}
         </Button>
-        <Button className={classes.button}>
-          <FavouriteBorderOutlinedIcon className={classes.navigation} />
+        <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'favourite' })}>
+          {renderFavourite(pageNav)}
         </Button>
         <Link to='/profile'>
-          <Button className={classes.buttonAvatar}>
+          <Button className={classes.buttonAvatar} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
             <Avatar className={classes.avatar} />
           </Button>
         </Link>
@@ -137,8 +170,8 @@ const Drawer = () => {
       </div>
       <div className='drawer-settings' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Link to='/settings'>
-          <Button className={classes.button}>
-            <SettingsOutlinedIcon className={classes.navigation} />
+          <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'settings' })}>
+            {renderSettings(pageNav)}
           </Button>
         </Link>
         <Divider className={classes.divider} />
