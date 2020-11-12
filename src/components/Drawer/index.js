@@ -90,33 +90,33 @@ const Drawer = () => {
 
   const renderHome = (pageNav) => {
     if (pageNav === '') {
-      return <HomeIcon className={classes.navigation} />
+      return <HomeIcon color='primary' className={classes.navigation} />
     } else {
-      return <HomeOutlinedIcon className={classes.navigation} />
+      return <HomeOutlinedIcon color='primary' className={classes.navigation} />
     }
   }
 
   const renderChat = (pageNav) => {
     if (pageNav === 'chat') {
-      return <ChatIcon className={classes.navigation} />
+      return <ChatIcon color='primary' className={classes.navigation} />
     } else {
-      return <ChatOutlinedIcon className={classes.navigation} />
+      return <ChatOutlinedIcon color='primary' className={classes.navigation} />
     }
   }
 
   const renderFavourite = (pageNav) => {
     if (pageNav === 'favourite') {
-      return <FavouriteIcon className={classes.navigation} />
+      return <FavouriteIcon color='primary' className={classes.navigation} />
     } else {
-      return <FavouriteBorderOutlinedIcon className={classes.navigation} />
+      return <FavouriteBorderOutlinedIcon color='primary' className={classes.navigation} />
     }
   }
 
   const renderSettings = (pageNav) => {
     if (pageNav === 'settings') {
-      return <SettingsIcon className={classes.navigation} />
+      return <SettingsIcon color='primary' className={classes.navigation} />
     } else {
-      return <SettingsOutlinedIcon className={classes.navigation} />
+      return <SettingsOutlinedIcon color='primary'className={classes.navigation} />
     }
   }
 
@@ -147,7 +147,7 @@ const Drawer = () => {
       </Modal>
       <div className='drawer-navigation' style={{ display: 'flex', flexDirection: 'column', marginTop: '10px', alignItems: 'center' }}>
         <Button className={classes.button} onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: false, mode: darkMode })}>
-          <ArrowBackIosIcon style={{ padding: '10px 10px 10px 15px', width: '20px', height: '20px' }} />
+          <ArrowBackIosIcon color='primary' style={{ padding: '10px 10px 10px 15px', width: '20px', height: '20px' }} />
         </Button>
         <Divider className={classes.divider} />
         <Link to='/' className={classes.link}>
@@ -176,7 +176,7 @@ const Drawer = () => {
         </Link>
         <Divider className={classes.divider} />
         <Button className={classes.button} onClick={() => setOpen(true)}>
-          <ExitToAppIcon className={classes.navigation} />
+          <ExitToAppIcon color='primary' className={classes.navigation} />
         </Button>
       </div>
     </div>

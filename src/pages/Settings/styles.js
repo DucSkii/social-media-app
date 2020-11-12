@@ -9,4 +9,9 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
   },
+  colorTheme: {
+    padding: '10px',
+    display: 'flex',
+    alignItems: 'center',
+  },
 }))

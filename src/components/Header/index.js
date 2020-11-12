@@ -204,7 +204,7 @@ const Header = () => {
               </IconButton>
             </Link>
             <IconButton size='medium' onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true, mode: darkMode })}>
-              <MenuIcon />
+              <MenuIcon color='primary' />
             </IconButton>
           </div>
         ) : (

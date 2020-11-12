@@ -27,6 +27,10 @@ const Settings = () => {
             />
           </div>
         </div>
+        <div className={classes.colorTheme}>
+          <Typography variant='h5' className={classes.colorTheme}>Colour Theme</Typography>
+
+        </div>
       </div>
     </Paper>
   )
