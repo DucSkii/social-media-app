@@ -14,7 +14,7 @@ const Settings = () => {
   }
 
   return (
-    <Paper square variant='outlined'>
+    <Paper square variant='outlined' style={{height: '100vh'}}>
       <div className={classes.settings}>
         <div className={classes.darkMode}>
           <Typography variant='h5' className={classes.darkMode}>Dark Mode</Typography>

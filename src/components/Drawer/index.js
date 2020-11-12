@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
 
 const Drawer = () => {
 
-  const [{ isDrawerOpen }, dispatch] = useGeneralValue()
+  const [{ isDrawerOpen, darkMode }, dispatch] = useGeneralValue()
   const [modalStyle] = useState(getModalStyle)
   const [open, setOpen] = useState(false)
   const classes = useStyles()
@@ -113,7 +113,7 @@ const Drawer = () => {
         </div>
       </Modal>
       <div className='drawer-navigation' style={{ display: 'flex', flexDirection: 'column', marginTop: '10px', alignItems: 'center' }}>
-        <Button className={classes.button} onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: false })}>
+        <Button className={classes.button} onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: false, mode: darkMode })}>
           <ArrowBackIosIcon style={{ padding: '10px 10px 10px 15px', width: '20px', height: '20px' }} />
         </Button>
         <Divider className={classes.divider} />

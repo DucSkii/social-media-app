@@ -7,11 +7,13 @@ const generalReducer = (state, action) => {
   switch (action.type) {
     case 'DRAWER_TOGGLE':
       return {
+        ...state,
         isDrawerOpen: action.open,
         darkMode: action.mode,
       }
     case 'DARKMODE_TOGGLE':
       return {
+        ...state,
         darkMode: action.mode,
       }
     default:

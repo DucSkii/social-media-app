@@ -68,7 +68,7 @@ const Post = (props) => {
       <div>
         {renderImage()}
       </div>
-      <Paper square>
+      <Paper square >
         <footer className='post-footer'>
           {props.image ? (
             <Typography style={{ fontSize: '12px' }}>

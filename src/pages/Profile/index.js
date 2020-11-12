@@ -1,5 +1,6 @@
 import React from 'react'
 import { useStyles } from './styles'
+import { Paper } from '@material-ui/core'
 
 const Profile = () => {
 
@@ -7,7 +8,9 @@ const Profile = () => {
 
   return (
     <div className={classes.profile}>
-      <h1>PROFILE PAGE</h1>
+      <Paper square style={{ height: '100vh' }}>
+        <h1>PROFILE PAGE</h1>
+      </Paper>
     </div>
   )
 }

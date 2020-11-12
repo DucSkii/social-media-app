@@ -80,6 +80,7 @@ const Header = () => {
     setOpen(false)
     setOpenLogin(false)
   }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {

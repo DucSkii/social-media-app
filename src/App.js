@@ -8,7 +8,7 @@ import DrawerBar from './components/Drawer'
 import { useGeneralValue } from './context/GeneralContext'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ScrollToTop from './utils/ScrollToTop'
-import { Paper } from '@material-ui/core'
+import { Paper, makeStyles } from '@material-ui/core'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import './App.scss'
 
@@ -16,7 +16,14 @@ import './App.scss'
 const App = () => {
 
   const [{ isDrawerOpen, darkMode }, dispatch] = useGeneralValue()
-
+  const useStyles = makeStyles({
+    paperBackground: {
+      backgroundColor: darkMode ? '#666' : '#fafafa',
+    },
+  })
+  
+  const classes = useStyles()
+  
   const theme = createMuiTheme({
     palette: {
       type: darkMode ? 'dark' : 'light',
@@ -31,7 +38,7 @@ const App = () => {
       }
     }
   })
-
+  
   useEffect(() => {
     const darkModeBool = localStorage.getItem('darkMode')
     if (darkModeBool === 'true') {
@@ -40,11 +47,10 @@ const App = () => {
       dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
     }
   }, [])
-
-
+  
   return (
     <ThemeProvider theme={theme}>
-      <Paper>
+      <Paper className={classes.paperBackground}>
         <div className='App'>
           <Router>
             <ScrollToTop />
