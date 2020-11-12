@@ -3,8 +3,6 @@ import classNames from 'classnames'
 import Post from '../../components/Post'
 import { db } from '../../firebase'
 import { useStyles } from './styles'
-import './styles.scss'
-
 
 const Home = () => {
 
