@@ -4,7 +4,7 @@ const ColourPalette = [
     primary: {
       light: '#000000',
       main: '#000000',
-      dark: '#fff',
+      dark: '#000000',
     },
   },
   {

@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
 
 const Drawer = () => {
 
-  const [{ isDrawerOpen, darkMode, pageNav }, dispatch] = useGeneralValue()
+  const [{ darkMode, pageNav }, dispatch] = useGeneralValue()
   const [modalStyle] = useState(getModalStyle)
   const [open, setOpen] = useState(false)
   const classes = useStyles()
