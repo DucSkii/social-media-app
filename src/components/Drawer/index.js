@@ -43,8 +43,8 @@ const useStyles = makeStyles(theme => ({
   button: {
     padding: '0',
     margin: '0',
-    maxWidth: '40px',
-    minWidth: '40px',
+    maxWidth: '44px',
+    minWidth: '44px',
   },
   buttonAvatar: {
     padding: '0',

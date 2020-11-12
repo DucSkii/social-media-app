@@ -2,9 +2,17 @@ import React from 'react'
 import './styles.scss'
 import { Paper, Typography, Avatar, makeStyles } from '@material-ui/core'
 import 'react-slideshow-image/dist/styles.css'
+import classNames from 'classnames'
 import { Fade } from "react-slideshow-image";
 
 const useStyles = makeStyles(theme => ({
+  header: {
+    borderRadius: '0',
+    [theme.breakpoints.up('sm')]: {
+      borderTopLeftRadius: '20px',
+      borderTopRightRadius: '20px',
+    },
+  },
   avatar: {
     width: '23px',
     height: '23px',
@@ -20,6 +28,7 @@ const useStyles = makeStyles(theme => ({
 const Post = (props) => {
 
   const classes = useStyles()
+  const postHeader = classNames('post-header-paper', classes.header)
 
   const renderImage = () => {
     if (props.image) {
@@ -32,7 +41,7 @@ const Post = (props) => {
             {
               props.image.map((image, index) => {
                 return (
-                  <div key={index}>
+                  <div key={index} style={{ borderLeft: '1px solid lightgrey', borderRight: '1px solid lightgrey' }}>
                     <img src={image} alt='' className='post-image' />
                   </div>
                 )
@@ -49,9 +58,9 @@ const Post = (props) => {
   }
 
   return (
-    <div className='post'>
+    <div className='post' style={{ border: 'none' }}>
       <header className='post-header'>
-        <Paper variant='outlined' square className='post-header-paper' style={{ backgroundColor: 'rgba(245, 0, 87, 0.2)' }}>
+        <Paper variant='outlined' square className={postHeader}>
           <Avatar className={classes.avatar} />
           <Typography style={{ fontSize: '12px' }}><strong>{props.username}</strong></Typography>
         </Paper>
