@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from './components/Header'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
@@ -31,6 +31,16 @@ const App = () => {
       }
     }
   })
+
+  useEffect(() => {
+    const darkModeBool = localStorage.getItem('darkMode')
+    if (darkModeBool === 'true') {
+      dispatch({ type: 'DARKMODE_TOGGLE', mode: true })
+    } else {
+      dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
+    }
+  }, [])
+
 
   return (
     <ThemeProvider theme={theme}>

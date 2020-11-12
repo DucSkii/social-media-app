@@ -8,19 +8,24 @@ const Settings = () => {
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
 
-
+  const toggleDarkMode = (darkMode) => {
+    dispatch({ type: 'DARKMODE_TOGGLE', mode: !darkMode })
+    localStorage.setItem('darkMode', !darkMode)
+  }
 
   return (
     <Paper square variant='outlined'>
       <div className={classes.settings}>
         <div className={classes.darkMode}>
           <Typography variant='h5' className={classes.darkMode}>Dark Mode</Typography>
-          <Switch
-            color='primary'
-            checked={darkMode}
-            onChange={() => dispatch({ type: 'DARKMODE_TOGGLE', mode: !darkMode })}
-            name='darkMode'
-          />
+          <div>
+            <Switch
+              color='primary'
+              checked={darkMode}
+              onClick={() => toggleDarkMode(darkMode)}
+              name='darkMode'
+            />
+          </div>
         </div>
       </div>
     </Paper>
