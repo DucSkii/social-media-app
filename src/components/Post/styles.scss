@@ -3,9 +3,6 @@
   width: 100%;
   &-footer {
     padding: 10px;
-    border-bottom: 1px solid lightgrey;
-    border-right: 1px solid lightgrey;
-    border-left: 1px solid lightgrey;
   }
   &-header {
     &-paper {
@@ -32,11 +29,8 @@
     margin-top: 20px;
     margin-bottom: 40px;
     max-width: 425px;
-    border-left: 1px solid lightgrey;
-    border-right: 1px solid lightgrey;
     &-footer {
       padding: 10px;
-      border-bottom: 1px solid lightgrey;
       max-width: 425px;
     }
     &-header {

@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme => ({
 const Header = () => {
 
   const classes = useStyles()
-  const [{ isDrawerOpen }, dispatch] = useGeneralValue()
+  const [{ isDrawerOpen, darkMode }, dispatch] = useGeneralValue()
   const [open, setOpen] = useState(false)
   const [openLogin, setOpenLogin] = useState(false)
   const [modalStyle] = useState(getModalStyle)
@@ -202,7 +202,7 @@ const Header = () => {
                 <Avatar className={classes.avatar} />
               </IconButton>
             </Link>
-            <IconButton size='medium' onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true })}>
+            <IconButton size='medium' onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true, mode: darkMode })}>
               <MenuIcon />
             </IconButton>
           </div>

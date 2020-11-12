@@ -41,7 +41,7 @@ const Post = (props) => {
             {
               props.image.map((image, index) => {
                 return (
-                  <div key={index} style={{ borderLeft: '1px solid lightgrey', borderRight: '1px solid lightgrey' }}>
+                  <div key={index} style={{ width: '100%' }}>
                     <img src={image} alt='' className='post-image' />
                   </div>
                 )
@@ -68,17 +68,19 @@ const Post = (props) => {
       <div>
         {renderImage()}
       </div>
-      <footer className='post-footer'>
-        {props.image ? (
-          <Typography style={{ fontSize: '12px' }}>
-            <strong>{props.image ? props.username : ''}</strong> {props.image ? props.caption : <strong>{props.caption}</strong>}
-          </Typography>
-        ) : (
-            <Typography style={{ fontSize: '14px' }}>
+      <Paper square>
+        <footer className='post-footer'>
+          {props.image ? (
+            <Typography style={{ fontSize: '12px' }}>
               <strong>{props.image ? props.username : ''}</strong> {props.image ? props.caption : <strong>{props.caption}</strong>}
             </Typography>
-          )}
-      </footer>
+          ) : (
+              <Typography style={{ fontSize: '14px' }}>
+                <strong>{props.image ? props.username : ''}</strong> {props.image ? props.caption : <strong>{props.caption}</strong>}
+              </Typography>
+            )}
+        </footer>
+      </Paper>
     </div>
   )
 }

@@ -136,9 +136,11 @@ const Drawer = () => {
         <Divider className={classes.divider} />
       </div>
       <div className='drawer-settings' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Button className={classes.button}>
-          <SettingsOutlinedIcon className={classes.navigation} />
-        </Button>
+        <Link to='/settings'>
+          <Button className={classes.button}>
+            <SettingsOutlinedIcon className={classes.navigation} />
+          </Button>
+        </Link>
         <Divider className={classes.divider} />
         <Button className={classes.button} onClick={() => setOpen(true)}>
           <ExitToAppIcon className={classes.navigation} />
