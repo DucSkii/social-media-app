@@ -32,6 +32,8 @@ const useStyles = makeStyles(theme => ({
     height: '25px',
     fontSize: '12px',
     padding: '0',
+    color: '#f50057',
+    borderColor: '#f50057',
     [theme.breakpoints.up('sm')]: {
       marginLeft: '10px',
       marginRight: '10px',
@@ -43,6 +45,7 @@ const useStyles = makeStyles(theme => ({
   buttonLogin: {
     height: '25px',
     padding: '0',
+    color: '#3f51b5',
     [theme.breakpoints.up('sm')]: {
       height: '30px',
       fontSize: '15px',
@@ -209,8 +212,8 @@ const Header = () => {
           </div>
         ) : (
             <div className='header-login'>
-              <Button color='primary' className={classes.buttonLogin} onClick={() => setOpenLogin(true)}>Login</Button>
-              <Button variant='outlined' color='secondary' className={classes.buttonSignUp} onClick={() => setOpen(true)}>Sign-up</Button>
+              <Button className={classes.buttonLogin} onClick={() => setOpenLogin(true)}>Login</Button>
+              <Button variant='outlined' className={classes.buttonSignUp} onClick={() => setOpen(true)}>Sign-up</Button>
             </div>
           )}
       </Paper>

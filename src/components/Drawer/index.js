@@ -84,6 +84,7 @@ const Drawer = () => {
   const signOut = () => {
     auth.signOut()
     setOpen(false)
+    dispatch({ type: 'SELECT_THEME', id: 0 })
     dispatch({ type: 'CHANGE_NAV', nav: '' })
     dispatch({ type: 'DRAWER_TOGGLE', open: false })
   }
@@ -116,7 +117,7 @@ const Drawer = () => {
     if (pageNav === 'settings') {
       return <SettingsIcon color='primary' className={classes.navigation} />
     } else {
-      return <SettingsOutlinedIcon color='primary'className={classes.navigation} />
+      return <SettingsOutlinedIcon color='primary' className={classes.navigation} />
     }
   }
 

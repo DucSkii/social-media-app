@@ -15,7 +15,7 @@ import './App.scss'
 
 const App = () => {
 
-  const [{ isDrawerOpen, darkMode }, dispatch] = useGeneralValue()
+  const [{ isDrawerOpen, darkMode, colorTheme }, dispatch] = useGeneralValue()
   const useStyles = makeStyles({
     paperBackground: {
       backgroundColor: darkMode ? '#666' : '#fafafa',
@@ -27,6 +27,11 @@ const App = () => {
   const theme = createMuiTheme({
     palette: {
       type: darkMode ? 'dark' : 'light',
+      primary: {
+        light: colorTheme.primary.light.toString(),
+        main: colorTheme.primary.main.toString(),
+        dark: colorTheme.primary.dark.toString(),
+      },
     },
     breakpoints: {
       values: {
@@ -38,6 +43,10 @@ const App = () => {
       }
     }
   })
+
+  useEffect(() => {
+    dispatch({ type: 'SELECT_THEME', id: localStorage.getItem('colourId') })
+  }, [])
 
   useEffect(() => {
     const darkModeBool = localStorage.getItem('darkMode')

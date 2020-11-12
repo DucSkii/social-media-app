@@ -13,6 +13,11 @@ const Settings = () => {
     localStorage.setItem('darkMode', !darkMode)
   }
 
+  const selectColour = (e) => {
+    dispatch({ type: 'SELECT_THEME', id: e.target.id })
+    localStorage.setItem('colourId', e.target.id)
+  }
+
   return (
     <Paper square variant='outlined' style={{ height: '100vh', backgroundColor: darkMode ? '#666' : '#fafafa' }}>
       <div className={classes.settings}>
@@ -29,7 +34,17 @@ const Settings = () => {
         </div>
         <div className={classes.colorTheme}>
           <Typography variant='h5' className={classes.colorTheme}>Colour Theme</Typography>
-
+          <div className={classes.colors}>
+            <div id={0} className={classes.colorBlack} onClick={(e) => selectColour(e)} />
+            <div id={1} className={classes.colorBlue} onClick={(e) => selectColour(e)} />
+            <div id={2} className={classes.colorPink} onClick={(e) => selectColour(e)} />
+            <div id={3} className={classes.colorPurple} onClick={(e) => selectColour(e)} />
+            <div id={4} className={classes.colorLime} onClick={(e) => selectColour(e)} />
+            <div id={5} className={classes.colorOrange} onClick={(e) => selectColour(e)} />
+            <div id={6} className={classes.colorTurquoise} onClick={(e) => selectColour(e)} />
+            <div id={7} className={classes.colorRed} onClick={(e) => selectColour(e)} />
+            <div id={8} className={classes.colorCyan} onClick={(e) => selectColour(e)} />
+          </div>
         </div>
       </div>
     </Paper>
