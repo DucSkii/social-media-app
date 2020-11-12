@@ -11,7 +11,7 @@ import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Divider from '@material-ui/core/Divider'
 import { useGeneralValue } from '../../context/GeneralContext'
-import { makeStyles, Button, Avatar, Modal } from '@material-ui/core'
+import { makeStyles, Button, Avatar, Modal, Paper } from '@material-ui/core'
 import { auth } from '../../firebase'
 import { Link } from 'react-router-dom'
 import './styles.scss'
@@ -147,38 +147,50 @@ const Drawer = () => {
         </div>
       </Modal>
       <div className='drawer-navigation' style={{ display: 'flex', flexDirection: 'column', marginTop: '10px', alignItems: 'center' }}>
-        <Button className={classes.button} onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: false, mode: darkMode })}>
-          <ArrowBackIosIcon color='primary' style={{ padding: '10px 10px 10px 15px', width: '20px', height: '20px' }} />
-        </Button>
-        <Divider className={classes.divider} />
-        <Link to='/' className={classes.link}>
-          <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: '' })}>
-            {renderHome(pageNav)}
+        <Paper
+          variant='outlined'
+          square
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: 'none', backgroundColor: darkMode ? '#666' : '#fafafa' }}
+        >
+          <Button className={classes.button} onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: false, mode: darkMode })}>
+            <ArrowBackIosIcon color='primary' style={{ padding: '10px 10px 10px 15px', width: '20px', height: '20px' }} />
           </Button>
-        </Link>
-        <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'chat' })}>
-          {renderChat(pageNav)}
-        </Button>
-        <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'favourite' })}>
-          {renderFavourite(pageNav)}
-        </Button>
-        <Link to='/profile'>
-          <Button className={classes.buttonAvatar} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
-            <Avatar className={classes.avatar} />
+          <Divider className={classes.divider} />
+          <Link to='/' className={classes.link}>
+            <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: '' })}>
+              {renderHome(pageNav)}
+            </Button>
+          </Link>
+          <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'chat' })}>
+            {renderChat(pageNav)}
           </Button>
-        </Link>
-        <Divider className={classes.divider} />
+          <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'favourite' })}>
+            {renderFavourite(pageNav)}
+          </Button>
+          <Link to='/profile'>
+            <Button className={classes.buttonAvatar} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
+              <Avatar className={classes.avatar} />
+            </Button>
+          </Link>
+          <Divider className={classes.divider} />
+        </Paper>
       </div>
       <div className='drawer-settings' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Link to='/settings'>
-          <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'settings' })}>
-            {renderSettings(pageNav)}
+        <Paper
+          variant='outlined'
+          square
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: 'none', backgroundColor: darkMode ? '#666' : '#fafafa' }}
+        >
+          <Link to='/settings'>
+            <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'settings' })}>
+              {renderSettings(pageNav)}
+            </Button>
+          </Link>
+          <Divider className={classes.divider} />
+          <Button className={classes.button} onClick={() => setOpen(true)}>
+            <ExitToAppIcon color='primary' className={classes.navigation} />
           </Button>
-        </Link>
-        <Divider className={classes.divider} />
-        <Button className={classes.button} onClick={() => setOpen(true)}>
-          <ExitToAppIcon color='primary' className={classes.navigation} />
-        </Button>
+        </Paper>
       </div>
     </div>
   )
