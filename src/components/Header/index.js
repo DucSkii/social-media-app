@@ -191,7 +191,7 @@ const Header = () => {
           </form>
         </div>
       </Modal>
-      <Paper className="header" variant='outlined' square>
+      <Paper className="header" variant='outlined' square style={{ borderTop: 'none' }}>
         <Link to='/'>
           <h3 className='header-logo'>Logo</h3>
         </Link>
