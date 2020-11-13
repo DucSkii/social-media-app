@@ -9,13 +9,15 @@ const UploadPost = () => {
 
   const classes = useStyles()
   const [{ userDisplayName }, dispatch] = useUserValue()
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState([])
   const [progress, setProgress] = useState(0)
   const [caption, setCaption] = useState('')
 
   const handleChange = e => {
-    if (e.target.files) {
-      setImage(e.target.files)
+    if (image.length === 0) {
+      setImage([...e.target.files])
+    } else {
+      setImage([...image, ...e.target.files])
     }
   }
 
