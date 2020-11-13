@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Post from '../../components/Post'
+import UploadPost from '../../components/Post/UploadPost'
+import { useUserValue } from '../../context/UserContext'
 import { db } from '../../firebase'
 import { useStyles } from './styles'
 
@@ -7,6 +9,7 @@ const Home = () => {
 
   const classes = useStyles()
   const [posts, setPosts] = useState([])
+  const [{ userExists }, dispatch] = useUserValue()
 
   useEffect(() => {
     db.collection('posts').onSnapshot(snapshot => {
@@ -23,6 +26,9 @@ const Home = () => {
 
   return (
     <div className={classes.posts}>
+      {userExists &&
+        <UploadPost />
+      }
       {
         posts.map(({ id, post }) => {
           // having a unique key for each post prevents old posts from having to re-render when a new post is added

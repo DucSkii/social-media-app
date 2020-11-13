@@ -32,7 +32,7 @@ const Post = (props) => {
 
   const renderImage = () => {
     if (props.image) {
-      if (Array.isArray(props.image)) {
+      if (props.image.length !== 1) {
         return (
           <Fade
             autoplay={false}
@@ -50,7 +50,9 @@ const Post = (props) => {
           </Fade>
         )
       } else {
-        return <img src={props.image} alt='' className='post-image' />
+        return props.image.map((image, index) => {
+          return <img key={index} src={image} alt='' className='post-image' />
+        })
       }
     } else {
       return null
