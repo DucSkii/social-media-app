@@ -35,6 +35,13 @@ const App = () => {
   }, [])
 
   const theme = createMuiTheme({
+    overrides: {
+      MuiSvgIcon: {
+        root: {
+          color: darkMode ? colorTheme.primary.dark : colorTheme.primary.main,
+        },
+      },
+    },
     palette: {
       type: darkMode ? 'dark' : 'light',
       primary: {

@@ -51,7 +51,7 @@ const UploadPost = () => {
                 timestamp: firebase.firestore.FieldValue.serverTimestamp,
                 caption: caption,
                 image: url,
-                username: userDisplayName
+                username: userDisplayName,
               })
               setProgress(0)
               setCaption('')
