@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
 const Header = () => {
 
   const classes = useStyles()
-  const [{ isDrawerOpen, darkMode }, dispatch] = useGeneralValue()
+  const [{ darkMode }, dispatch] = useGeneralValue()
   const [open, setOpen] = useState(false)
   const [openLogin, setOpenLogin] = useState(false)
   const [modalStyle] = useState(getModalStyle)
