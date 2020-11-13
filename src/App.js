@@ -16,6 +16,7 @@ import './App.scss'
 const App = () => {
 
   const [{ isDrawerOpen, darkMode, colorTheme, pageNav }, dispatch] = useGeneralValue()
+
   const useStyles = makeStyles({
     paperBackground: {
       backgroundColor: darkMode ? '#666' : '#fafafa',
@@ -24,13 +25,21 @@ const App = () => {
 
   const classes = useStyles()
 
+  useEffect(() => {
+    dispatch({ type: 'CHANGE_NAV', nav: localStorage.getItem('pageNav') })
+    if (localStorage.getItem('colourId') !== '') {
+      dispatch({ type: 'SELECT_THEME', id: localStorage.getItem('colourId') })
+    } else {
+      dispatch({ type: 'SELECT_THEME', id: colorTheme.id })
+    }
+  }, [])
+
   const theme = createMuiTheme({
     palette: {
       type: darkMode ? 'dark' : 'light',
       primary: {
-        light: colorTheme.primary.light.toString(),
-        main: colorTheme.primary.main.toString(),
-        dark: colorTheme.primary.dark.toString(),
+        main: colorTheme.primary.main,
+        dark: colorTheme.primary.dark,
       },
     },
     breakpoints: {
@@ -43,14 +52,6 @@ const App = () => {
       }
     }
   })
-
-  useEffect(() => {
-    dispatch({ type: 'SELECT_THEME', id: localStorage.getItem('colourId') })
-  }, [])
-
-  useEffect(() => {
-    dispatch({ type: 'CHANGE_NAV', nav: localStorage.getItem('pageNav') })
-  }, [])
 
   useEffect(() => {
     const darkModeBool = localStorage.getItem('darkMode')

@@ -10,6 +10,7 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Divider from '@material-ui/core/Divider'
+import classNames from 'classnames'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { makeStyles, Button, Avatar, Modal, Paper } from '@material-ui/core'
 import { auth } from '../../firebase'
@@ -68,6 +69,12 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 2, 3),
   },
+  lightTheme: {
+    color: theme.palette.primary.main,
+  },
+  darkTheme: {
+    color: theme.palette.primary.dark,
+  },
 }))
 
 const Drawer = () => {
@@ -89,35 +96,37 @@ const Drawer = () => {
     dispatch({ type: 'DRAWER_TOGGLE', open: false })
   }
 
+  const colorClass = classNames(classes.navigation, darkMode ? classes.darkTheme : classes.lightTheme)
+
   const renderHome = (pageNav) => {
     if (pageNav === '') {
-      return <HomeIcon color='primary' className={classes.navigation} />
+      return <HomeIcon className={colorClass} />
     } else {
-      return <HomeOutlinedIcon color='primary' className={classes.navigation} />
+      return <HomeOutlinedIcon className={colorClass} />
     }
   }
 
   const renderChat = (pageNav) => {
     if (pageNav === 'chat') {
-      return <ChatIcon color='primary' className={classes.navigation} />
+      return <ChatIcon className={colorClass} />
     } else {
-      return <ChatOutlinedIcon color='primary' className={classes.navigation} />
+      return <ChatOutlinedIcon className={colorClass} />
     }
   }
 
   const renderFavourite = (pageNav) => {
     if (pageNav === 'favourite') {
-      return <FavouriteIcon color='primary' className={classes.navigation} />
+      return <FavouriteIcon className={colorClass} />
     } else {
-      return <FavouriteBorderOutlinedIcon color='primary' className={classes.navigation} />
+      return <FavouriteBorderOutlinedIcon className={colorClass} />
     }
   }
 
   const renderSettings = (pageNav) => {
     if (pageNav === 'settings') {
-      return <SettingsIcon color='primary' className={classes.navigation} />
+      return <SettingsIcon className={colorClass} />
     } else {
-      return <SettingsOutlinedIcon color='primary' className={classes.navigation} />
+      return <SettingsOutlinedIcon className={colorClass} />
     }
   }
 
@@ -153,7 +162,7 @@ const Drawer = () => {
           style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: 'none', backgroundColor: darkMode ? '#666' : '#fafafa' }}
         >
           <Button className={classes.button} onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: false, mode: darkMode })}>
-            <ArrowBackIosIcon color='primary' style={{ padding: '10px 10px 10px 15px', width: '20px', height: '20px' }} />
+            <ArrowBackIosIcon className={darkMode ? classes.darkTheme : classes.lightTheme} style={{ padding: '10px 10px 10px 15px', width: '20px', height: '20px' }} />
           </Button>
           <Divider className={classes.divider} />
           <Link to='/' className={classes.link}>
@@ -188,7 +197,7 @@ const Drawer = () => {
           </Link>
           <Divider className={classes.divider} />
           <Button className={classes.button} onClick={() => setOpen(true)}>
-            <ExitToAppIcon color='primary' className={classes.navigation} />
+            <ExitToAppIcon className={colorClass} />
           </Button>
         </Paper>
       </div>

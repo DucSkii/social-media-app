@@ -5,11 +5,10 @@ export const initialState = {
   darkMode: false,
   pageNav: '',
   colorTheme: {
-    id: 1,
+    id: 0,
     primary: {
-      light: '#000000',
       main: '#000000',
-      dark: '#000000',
+      dark: '#fff',
     },
   }
 }

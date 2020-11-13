@@ -64,6 +64,12 @@ const useStyles = makeStyles(theme => ({
   input: {
     width: '80%',
   },
+  lightTheme: {
+    color: theme.palette.primary.main,
+  },
+  darkTheme: {
+    color: theme.palette.primary.dark,
+  },
 }))
 
 const Header = () => {
@@ -210,7 +216,7 @@ const Header = () => {
               </IconButton>
             </Link>
             <IconButton size='medium' onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true, mode: darkMode })}>
-              <MenuIcon color='primary' />
+              <MenuIcon className={darkMode ? classes.darkTheme : classes.lightTheme} />
             </IconButton>
           </div>
         ) : (
