@@ -94,7 +94,6 @@ const Header = () => {
     setOpen(false)
     setOpenLogin(false)
   }
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -102,10 +101,12 @@ const Header = () => {
         // console.log(authUser)
         setUser(authUser)
         setUserExists({ type: 'UPDATE_USER', user: authUser })
+        setUserExists({ type: 'UPDATE_DISPLAYNAME', name: authUser.displayName })
       } else {
         // user has logged out...
         setUser(null)
         setUserExists({ type: 'UPDATE_USER', user: null })
+        setUserExists({ type: 'UPDATE_DISPLAYNAME', name: '' })
       }
     })
 
