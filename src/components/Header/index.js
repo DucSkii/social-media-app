@@ -56,6 +56,8 @@ const useStyles = makeStyles(theme => ({
   },
   modal: {
     position: 'absolute',
+    display: 'flex',
+    flexDirection: 'column',
     width: 400,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
@@ -163,7 +165,9 @@ const Header = () => {
                 className={classes.input}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Button type='submit' variant='outlined' style={{ marginTop: '15px' }}>Login</Button>
+              <div>
+                <Button type='submit' variant='outlined' style={{ marginTop: '15px' }}>Login</Button>
+              </div>
             </center>
           </form>
         </div>
@@ -202,7 +206,9 @@ const Header = () => {
                 className={classes.input}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Button type='submit' variant='outlined' style={{ marginTop: '15px' }}>Sign-Up</Button>
+              <div>
+                <Button type='submit' variant='outlined' style={{ marginTop: '15px' }}>Sign-Up</Button>
+              </div>
             </center>
           </form>
         </div>
