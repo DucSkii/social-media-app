@@ -51,6 +51,9 @@ const UploadPost = () => {
                 image: url,
                 username: userDisplayName
               })
+              setProgress(0)
+              setCaption('')
+              setImage('')
             })
         },
       )
@@ -59,17 +62,20 @@ const UploadPost = () => {
 
   return (
     <Paper variant='outlined' className={classes.paper} >
-      <div className={classes.uploadPost}>
-        <div className={classes.uploadInfo}>
-          <Input
-            placeholder='Enter caption'
-            className={classes.caption}
-            value={caption}
-            onChange={(e) => setCaption(e.target.value)}
-          />
-          <input type='file' onChange={handleChange} />
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className={classes.uploadPost}>
+          <div className={classes.uploadInfo}>
+            <Input
+              placeholder='Enter caption'
+              className={classes.caption}
+              value={caption}
+              onChange={(e) => setCaption(e.target.value)}
+            />
+            <input type='file' onChange={handleChange} />
+          </div>
+          <Button variant='outlined' className={classes.uploadButton} onClick={handleUpload}>Quack</Button>
         </div>
-        <Button variant='outlined' className={classes.uploadButton} onClick={handleUpload}>Quack</Button>
+        <progress value={progress} max='100' style={{ width: '80%' }} />
       </div>
     </Paper>
   )
