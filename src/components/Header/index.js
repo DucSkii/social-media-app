@@ -5,6 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { auth } from '../../firebase'
 import './styles.scss'
 import { useGeneralValue } from '../../context/GeneralContext'
+import { useUserValue } from '../../context/UserContext'
 import { Link } from 'react-router-dom'
 import logo from '../../images/app-logo.png'
 
@@ -76,6 +77,7 @@ const Header = () => {
 
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
+  const [{ userExists }, setUserExists] = useUserValue()
   const [open, setOpen] = useState(false)
   const [openLogin, setOpenLogin] = useState(false)
   const [modalStyle] = useState(getModalStyle)
@@ -95,13 +97,16 @@ const Header = () => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         // user has logged in...
-        console.log(authUser)
+        // console.log(authUser)
         setUser(authUser)
+        setUserExists({ type: 'UPDATE_USER', user: authUser })
       } else {
         // user has logged out...
         setUser(null)
+        setUserExists({ type: 'UPDATE_USER', user: null })
       }
     })
+
     // anytime a new user is created or someone logs in/out it fires authUser
 
     return () => {
@@ -205,7 +210,7 @@ const Header = () => {
       <Paper className="header" variant='outlined' square style={{ borderTop: 'none' }}>
         <Link to='/' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: '' })} >
           <div>
-            <img src={logo} alt='logo' style={{ height: '40px', marginLeft: '10px' }} />
+            <img src={logo} alt='logo' style={{ height: '35px', marginLeft: '10px' }} />
           </div>
         </Link>
         {user ? (

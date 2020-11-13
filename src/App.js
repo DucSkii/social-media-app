@@ -68,7 +68,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Paper className={classes.paperBackground}>
+      <Paper square className={classes.paperBackground}>
         <div className='App'>
           <Router>
             <ScrollToTop />
