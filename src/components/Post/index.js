@@ -67,18 +67,21 @@ const Post = (props) => {
           <Typography style={{ fontSize: '12px' }}><strong>{props.username}</strong></Typography>
         </Paper>
       </header>
-      <div>
-        {renderImage()}
-      </div>
+      {
+        props.image[0] !== '' &&
+        <div>
+          {renderImage()}
+        </div>
+      }
       <Paper square >
         <footer className='post-footer'>
-          {props.image ? (
+          {props.image[0] !== '' ? (
             <Typography style={{ fontSize: '12px' }}>
-              <strong>{props.image ? props.username : ''}</strong> {props.image ? props.caption : <strong>{props.caption}</strong>}
+              <strong>{props.username}</strong> {props.caption}
             </Typography>
           ) : (
               <Typography style={{ fontSize: '14px' }}>
-                <strong>{props.image ? props.username : ''}</strong> {props.image ? props.caption : <strong>{props.caption}</strong>}
+                <strong>{props.caption}</strong>
               </Typography>
             )}
         </footer>
