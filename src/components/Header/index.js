@@ -6,6 +6,7 @@ import { auth } from '../../firebase'
 import './styles.scss'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { Link } from 'react-router-dom'
+import logo from '../../images/app-logo.png'
 
 function getModalStyle() {
   const top = 50
@@ -133,7 +134,7 @@ const Header = () => {
           <form onSubmit={signIn}>
             <center>
               <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-                LOGO
+                <img src={logo} alt='logo' style={{ height: '60px' }} />
               </div>
               <Input
                 required
@@ -164,7 +165,7 @@ const Header = () => {
           <form onSubmit={signUp}>
             <center>
               <div style={{ marginBottom: '15px', marginTop: '15px' }} >
-                LOGO
+                <img src={logo} alt='logo' style={{ height: '60px' }} />
               </div>
               <Input
                 required
@@ -197,7 +198,9 @@ const Header = () => {
       </Modal>
       <Paper className="header" variant='outlined' square style={{ borderTop: 'none' }}>
         <Link to='/' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: '' })} >
-          <h3 className='header-logo'>Logo</h3>
+          <div>
+            <img src={logo} alt='logo' style={{ height: '40px', marginLeft: '10px' }} />
+          </div>
         </Link>
         {user ? (
           <div className='header-icons'>
