@@ -26,10 +26,10 @@ const App = () => {
   const classes = useStyles()
 
   useEffect(() => {
-    if (localStorage.getItem('colourId') !== '') {
+    if (localStorage.getItem('colourId')) {
       dispatch({ type: 'SELECT_THEME', id: localStorage.getItem('colourId') })
     } else {
-      dispatch({ type: 'SELECT_THEME', id: colorTheme.id })
+      dispatch({ type: 'SELECT_THEME', id: 0 })
     }
     const darkModeBool = localStorage.getItem('darkMode')
     if (darkModeBool === 'true') {
