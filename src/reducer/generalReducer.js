@@ -3,7 +3,6 @@ import ColourPalette from '../utils/ColourPalette'
 export const initialState = {
   isDrawerOpen: false,
   darkMode: false,
-  pageNav: '',
   colorTheme: {
     id: 0,
     primary: {
@@ -25,11 +24,6 @@ const generalReducer = (state, action) => {
       return {
         ...state,
         darkMode: action.mode,
-      }
-    case 'CHANGE_NAV':
-      return {
-        ...state,
-        pageNav: action.nav
       }
     case 'SELECT_THEME':
       return {

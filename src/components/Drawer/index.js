@@ -13,7 +13,7 @@ import Divider from '@material-ui/core/Divider'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { makeStyles, Button, Avatar, Modal, Paper } from '@material-ui/core'
 import { auth } from '../../firebase'
-import { Link } from 'react-router-dom'
+import { Link, matchPath, useLocation } from 'react-router-dom'
 import './styles.scss'
 
 function getModalStyle() {
@@ -72,15 +72,16 @@ const useStyles = makeStyles(theme => ({
 
 const Drawer = () => {
 
-  const [{ darkMode, pageNav }, dispatch] = useGeneralValue()
+  const [{ darkMode }, dispatch] = useGeneralValue()
   const [modalStyle] = useState(getModalStyle)
   const [open, setOpen] = useState(false)
+  const location = useLocation()
   const classes = useStyles()
 
   const handleClose = () => {
     setOpen(false)
   }
-
+  
   const signOut = () => {
     auth.signOut()
     setOpen(false)
@@ -92,36 +93,32 @@ const Drawer = () => {
     dispatch({ type: 'DRAWER_TOGGLE', open: false })
   }
 
-  const renderHome = (pageNav) => {
-    if (pageNav === '') {
+  const renderHome = () => {
+    if (matchPath(location.pathname, { path: '/', exact: true })) {
       return <HomeIcon className={classes.navigation} />
-    } else {
-      return <HomeOutlinedIcon className={classes.navigation} />
     }
+    return <HomeOutlinedIcon className={classes.navigation} />
   }
 
-  const renderChat = (pageNav) => {
-    if (pageNav === 'chat') {
+  const renderChat = () => {
+    if (matchPath(location.pathname, { path: '/chat' })) {
       return <ChatIcon className={classes.navigation} />
-    } else {
-      return <ChatOutlinedIcon className={classes.navigation} />
     }
+    return <ChatOutlinedIcon className={classes.navigation} />
   }
 
-  const renderFavourite = (pageNav) => {
-    if (pageNav === 'favourite') {
+  const renderFavourite = () => {
+    if (matchPath(location.pathname, { path: '/favourites' })) {
       return <FavouriteIcon className={classes.navigation} />
-    } else {
-      return <FavouriteBorderOutlinedIcon className={classes.navigation} />
     }
+    return <FavouriteBorderOutlinedIcon className={classes.navigation} />
   }
 
-  const renderSettings = (pageNav) => {
-    if (pageNav === 'settings') {
+  const renderSettings = () => {
+    if (matchPath(location.pathname, { path: '/settings' })) {
       return <SettingsIcon className={classes.navigation} />
-    } else {
-      return <SettingsOutlinedIcon className={classes.navigation} />
     }
+    return <SettingsOutlinedIcon className={classes.navigation} />
   }
 
   return (
@@ -160,18 +157,22 @@ const Drawer = () => {
           </Button>
           <Divider className={classes.divider} />
           <Link to='/' className={classes.link}>
-            <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: '' })}>
-              {renderHome(pageNav)}
+            <Button className={classes.button}>
+              {renderHome()}
             </Button>
           </Link>
-          <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'chat' })}>
-            {renderChat(pageNav)}
-          </Button>
-          <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'favourite' })}>
-            {renderFavourite(pageNav)}
-          </Button>
+          <Link to='/chat'>
+            <Button className={classes.button}>
+              {renderChat()}
+            </Button>
+          </Link>
+          <Link to='/favourites'>
+            <Button className={classes.button}>
+              {renderFavourite()}
+            </Button>
+          </Link>
           <Link to='/profile'>
-            <Button className={classes.buttonAvatar} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
+            <Button className={classes.buttonAvatar}>
               <Avatar className={classes.avatar} />
             </Button>
           </Link>
@@ -185,8 +186,8 @@ const Drawer = () => {
           style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: 'none', backgroundColor: darkMode ? '#666' : '#fafafa' }}
         >
           <Link to='/settings'>
-            <Button className={classes.button} onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'settings' })}>
-              {renderSettings(pageNav)}
+            <Button className={classes.button}>
+              {renderSettings()}
             </Button>
           </Link>
           <Divider className={classes.divider} />

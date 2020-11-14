@@ -110,6 +110,7 @@ const Header = () => {
       // performs clean-up inbetween useEffect fires
       unsubscribe()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, username])
 
   const signUp = (event) => {

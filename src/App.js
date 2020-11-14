@@ -15,7 +15,7 @@ import './App.scss'
 
 const App = () => {
 
-  const [{ isDrawerOpen, darkMode, colorTheme, pageNav }, dispatch] = useGeneralValue()
+  const [{ isDrawerOpen, darkMode, colorTheme }, dispatch] = useGeneralValue()
 
   const useStyles = makeStyles({
     paperBackground: {
@@ -26,12 +26,18 @@ const App = () => {
   const classes = useStyles()
 
   useEffect(() => {
-    dispatch({ type: 'CHANGE_NAV', nav: localStorage.getItem('pageNav') })
     if (localStorage.getItem('colourId') !== '') {
       dispatch({ type: 'SELECT_THEME', id: localStorage.getItem('colourId') })
     } else {
       dispatch({ type: 'SELECT_THEME', id: colorTheme.id })
     }
+    const darkModeBool = localStorage.getItem('darkMode')
+    if (darkModeBool === 'true') {
+      dispatch({ type: 'DARKMODE_TOGGLE', mode: true })
+    } else {
+      dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const theme = createMuiTheme({
@@ -60,19 +66,6 @@ const App = () => {
     }
   })
 
-  useEffect(() => {
-    const darkModeBool = localStorage.getItem('darkMode')
-    if (darkModeBool === 'true') {
-      dispatch({ type: 'DARKMODE_TOGGLE', mode: true })
-    } else {
-      dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('pageNav', pageNav)
-  }, [pageNav])
-
   return (
     <ThemeProvider theme={theme}>
       <Paper square className={classes.paperBackground}>
@@ -92,6 +85,8 @@ const App = () => {
               <Header />
             </header>
             <Switch>
+              <Route path='/chat' />
+              <Route path='/favourites' />
               <Route path='/settings' component={Settings} />
               <Route path='/profile' component={Profile} />
               <Route exact path='/' component={Home} />
