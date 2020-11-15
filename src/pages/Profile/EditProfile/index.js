@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useGeneralValue } from '../../../context/GeneralContext'
 import { useUserValue } from '../../../context/UserContext'
 import { Paper, Grid, Typography, Input, Avatar, Button } from '@material-ui/core'
+import firebase from 'firebase'
 
 import { useStyles } from './styles'
 
@@ -11,6 +12,7 @@ const EditProfile = () => {
   const [{ darkMode }, dispatch] = useGeneralValue()
   const [{ userImage }, setUserExists] = useUserValue()
   const [image, setImage] = useState(null)
+  const user = firebase.auth().currentUser
 
   const handleChange = e => {
     const selected = e.target.files[0]
@@ -27,6 +29,14 @@ const EditProfile = () => {
     }
   }
 
+  const handleImageUpload = () => {
+    user.updateProfile({
+      photoURL: image,
+    }).then(() => {
+      setImage(null)
+    })
+  }
+
   const renderAvatar = () => {
     if (image) {
       return <Avatar src={image} className={classes.avatar} />
@@ -38,7 +48,7 @@ const EditProfile = () => {
   return (
     <div className={classes.profile}>
       <Paper square className={classes.paper} style={{ backgroundColor: darkMode ? '#666' : '#fafafa' }}>
-        <Grid container style={{ paddingTop: '20px' }}>
+        <Grid container>
           <Grid container item xs={12}>
             <Grid item xs={1} />
             <Grid item xs={2}>
@@ -62,7 +72,7 @@ const EditProfile = () => {
                     </Grid>
                     <Grid item xs={2}></Grid>
                     <Grid container item xs={5} style={{ justifyContent: 'center' }}>
-                      <Button variant='outlined' className={classes.button}>Confirm</Button>
+                      <Button variant='outlined' className={classes.button} onClick={handleImageUpload}>Confirm</Button>
                     </Grid>
                   </Grid>
                 </>

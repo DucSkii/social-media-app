@@ -91,6 +91,7 @@ const Header = () => {
 
   // console.log('userExists', userExists)
   // console.log('userId', userId)
+  // console.log('user', user)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
