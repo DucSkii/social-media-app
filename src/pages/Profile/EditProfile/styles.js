@@ -2,10 +2,11 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
   profile: {
-    marginTop: '70px',
+    marginTop: '50px',
     width: '100%',
   },
   paper: {
+    paddingTop: '20px',
     height: '100vh',
     width: '100%',
   },

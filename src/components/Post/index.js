@@ -63,7 +63,7 @@ const Post = (props) => {
     <div className='post' style={{ border: 'none' }}>
       <header className='post-header'>
         <Paper variant='outlined' square className={postHeader}>
-          <Avatar className={classes.avatar} />
+          <Avatar src={props.avatar} className={classes.avatar} />
           <Typography style={{ fontSize: '12px' }}><strong>{props.username}</strong></Typography>
         </Paper>
       </header>

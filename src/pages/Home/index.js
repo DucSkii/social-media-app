@@ -32,7 +32,7 @@ const Home = () => {
       {
         posts.map(({ id, post }) => {
           // having a unique key for each post prevents old posts from having to re-render when a new post is added
-          return <Post key={id} username={post.username} caption={post.caption} image={post.image} />
+          return <Post key={id} username={post.username} caption={post.caption} image={post.image} avatar={post.avatar} />
         })
       }
     </div>
