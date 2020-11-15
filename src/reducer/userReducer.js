@@ -2,6 +2,7 @@ export const initialUserState = {
   userExists: null,
   userDisplayName: '',
   userId: '',
+  userImage: '',
 }
 
 
@@ -21,6 +22,11 @@ const userReducer = (state, action) => {
       return {
         ...state,
         userDisplayName: action.name,
+      }
+    case 'UPDATE_IMAGE':
+      return {
+        ...state,
+        userImage: action.image,
       }
     default:
       return state

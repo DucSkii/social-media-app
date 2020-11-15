@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useGeneralValue } from '../../../context/GeneralContext'
+import { useUserValue } from '../../../context/UserContext'
 import { Paper, Grid, Typography, Input, Avatar, Button } from '@material-ui/core'
 
 import { useStyles } from './styles'
@@ -8,14 +9,32 @@ const EditProfile = () => {
 
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
+  const [{ userImage }, setUserExists] = useUserValue()
   const [image, setImage] = useState(null)
 
   const handleChange = e => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0])
+    const selected = e.target.files[0]
+    const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/jpg']
+
+    if (selected && ALLOWED_TYPES.includes(selected.type)) {
+      let reader = new FileReader()
+      reader.onloadend = () => {
+        setImage(reader.result)
+      }
+      reader.readAsDataURL(selected)
+    } else {
+      alert('File type not supported')
     }
   }
-  console.log('image', image)
+
+  const renderAvatar = () => {
+    if (image) {
+      return <Avatar src={image} className={classes.avatar} />
+    } else {
+      return <Avatar src={userImage} className={classes.avatar} />
+    }
+  }
+
   return (
     <div className={classes.profile}>
       <Paper square className={classes.paper} style={{ backgroundColor: darkMode ? '#666' : '#fafafa' }}>
@@ -23,14 +42,14 @@ const EditProfile = () => {
           <Grid container item xs={12}>
             <Grid item xs={1} />
             <Grid item xs={2}>
-              <Avatar className={classes.avatar} />
+              {renderAvatar()}
             </Grid>
             <Grid item xs={1} />
             <Grid container item xs={7}>
               <Grid container item xs={12} style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Button variant='outlined' component='label' className={classes.changeButton}>
                   Change Picture
-                <input type='file' onChange={handleChange} hidden />
+                <input type='file' onChange={handleChange} onClick={(e) => e.target.value = null} hidden />
                 </Button>
               </Grid>
               {

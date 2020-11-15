@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
 const Drawer = () => {
 
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userId, userDisplayName }, setUserExists] = useUserValue()
+  const [{ userId, userDisplayName, userImage }, setUserExists] = useUserValue()
   const [modalStyle] = useState(getModalStyle)
   const [open, setOpen] = useState(false)
   const location = useLocation()
@@ -176,7 +176,7 @@ const Drawer = () => {
           </Link>
           <Link to={`/profile/${userDisplayName}/${userId}`}>
             <Button className={classes.buttonAvatar}>
-              <Avatar className={classes.avatar} />
+              <Avatar src={userImage} className={classes.avatar} />
             </Button>
           </Link>
           <Divider className={classes.divider} />

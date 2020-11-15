@@ -73,7 +73,7 @@ const Header = () => {
 
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userId, userDisplayName }, setUserExists] = useUserValue()
+  const [{ userId, userDisplayName, userImage }, setUserExists] = useUserValue()
   const [open, setOpen] = useState(false)
   const [openLogin, setOpenLogin] = useState(false)
   const [modalStyle] = useState(getModalStyle)
@@ -101,6 +101,7 @@ const Header = () => {
         setUserExists({ type: 'UPDATE_USER', user: authUser })
         setUserExists({ type: 'UPDATE_DISPLAYNAME', name: authUser.displayName })
         setUserExists({ type: 'GET_UID', id: authUser.uid })
+        setUserExists({ type: 'UPDATE_IMAGE', image: authUser.photoURL })
       } else {
         // user has logged out...
         setUser(null)
@@ -224,7 +225,7 @@ const Header = () => {
           <div className='header-icons'>
             <Link to={`/profile/${userDisplayName}/${userId}`}>
               <IconButton size='small' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
-                <Avatar className={classes.avatar} />
+                <Avatar src={userImage} className={classes.avatar} />
               </IconButton>
             </Link>
             <IconButton size='medium' onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true, mode: darkMode })}>
