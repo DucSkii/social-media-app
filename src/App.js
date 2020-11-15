@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ScrollToTop from './utils/ScrollToTop'
 import { Paper, makeStyles } from '@material-ui/core'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+
 import './App.scss'
 
 
@@ -85,10 +86,10 @@ const App = () => {
               <Header />
             </header>
             <Switch>
+              <Route path='/profile' component={Profile} />
               <Route path='/chat' />
               <Route path='/favourites' />
               <Route path='/settings' component={Settings} />
-              <Route path='/profile' component={Profile} />
               <Route exact path='/' component={Home} />
             </Switch>
           </Router>

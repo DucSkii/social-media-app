@@ -48,7 +48,7 @@ const UploadPost = () => {
             .then(url => {
               // post image inside db
               db.collection("posts").add({
-                timestamp: firebase.firestore.FieldValue.serverTimestamp,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 caption: caption,
                 image: url,
                 username: userDisplayName,

@@ -10,10 +10,12 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Divider from '@material-ui/core/Divider'
-import { useGeneralValue } from '../../context/GeneralContext'
 import { makeStyles, Button, Avatar, Modal, Paper } from '@material-ui/core'
 import { auth } from '../../firebase'
 import { Link, matchPath, useLocation } from 'react-router-dom'
+import { useGeneralValue } from '../../context/GeneralContext'
+import { useUserValue } from '../../context/UserContext'
+
 import './styles.scss'
 
 function getModalStyle() {
@@ -73,6 +75,7 @@ const useStyles = makeStyles(theme => ({
 const Drawer = () => {
 
   const [{ darkMode }, dispatch] = useGeneralValue()
+  const [{ userId, userDisplayName }, setUserExists] = useUserValue()
   const [modalStyle] = useState(getModalStyle)
   const [open, setOpen] = useState(false)
   const location = useLocation()
@@ -81,7 +84,7 @@ const Drawer = () => {
   const handleClose = () => {
     setOpen(false)
   }
-  
+
   const signOut = () => {
     auth.signOut()
     setOpen(false)
@@ -171,7 +174,7 @@ const Drawer = () => {
               {renderFavourite()}
             </Button>
           </Link>
-          <Link to='/profile'>
+          <Link to={`/profile/${userDisplayName}/${userId}`}>
             <Button className={classes.buttonAvatar}>
               <Avatar className={classes.avatar} />
             </Button>

@@ -73,7 +73,7 @@ const Header = () => {
 
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userExists }, setUserExists] = useUserValue()
+  const [{ userId, userDisplayName }, setUserExists] = useUserValue()
   const [open, setOpen] = useState(false)
   const [openLogin, setOpenLogin] = useState(false)
   const [modalStyle] = useState(getModalStyle)
@@ -88,6 +88,10 @@ const Header = () => {
     setOpen(false)
     setOpenLogin(false)
   }
+
+  // console.log('userExists', userExists)
+  // console.log('userId', userId)
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -96,6 +100,7 @@ const Header = () => {
         setUser(authUser)
         setUserExists({ type: 'UPDATE_USER', user: authUser })
         setUserExists({ type: 'UPDATE_DISPLAYNAME', name: authUser.displayName })
+        setUserExists({ type: 'GET_UID', id: authUser.uid })
       } else {
         // user has logged out...
         setUser(null)
@@ -217,7 +222,7 @@ const Header = () => {
         </Link>
         {user ? (
           <div className='header-icons'>
-            <Link to='/profile'>
+            <Link to={`/profile/${userDisplayName}/${userId}`}>
               <IconButton size='small' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
                 <Avatar className={classes.avatar} />
               </IconButton>
