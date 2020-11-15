@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Header from './components/Header'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
+import EditProfile from './pages/Profile/EditProfile'
 import Settings from './pages/Settings'
 import Drawer from '@material-ui/core/Drawer'
 import DrawerBar from './components/Drawer'
@@ -86,6 +87,7 @@ const App = () => {
               <Header />
             </header>
             <Switch>
+              <Route path='/editprofile' component={EditProfile} />
               <Route path='/profile' component={Profile} />
               <Route path='/chat' />
               <Route path='/favourites' />

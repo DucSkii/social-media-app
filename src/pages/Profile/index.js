@@ -1,9 +1,9 @@
 import React from 'react'
 import { useStyles } from './styles'
-import { Paper, Avatar, Typography, Grid } from '@material-ui/core'
+import { Paper, Avatar, Typography, Grid, Button } from '@material-ui/core'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 
 const Profile = () => {
 
@@ -20,7 +20,7 @@ const Profile = () => {
             <Grid item xs={1} />
             <Grid item xs={1}>
               <Avatar className={classes.avatar} />
-              <Typography>{userDisplayName}</Typography>
+              <Typography style={{ fontSize: '16px', marginTop: '10px' }}>{userDisplayName}</Typography>
             </Grid>
             <Grid item xs={1} style={{ marginRight: '10px' }} />
             <Grid container item xs={8} className={classes.detailContainer}>
@@ -39,6 +39,15 @@ const Profile = () => {
                 <Typography className={classes.detailNumber}>0</Typography>
               </Grid>
               <Grid item xs={1} />
+              <Grid container item xs={12}>
+                <Grid item xs={3} />
+                <Grid item xs={4} style={{ display: 'flex', justifyContent: 'center' }}>
+                  <Link to='/editprofile' style={{ textDecoration: 'none', padding: '0', margin: '0', width: '120px' }}>
+                    <Button variant='outlined' style={{ fontSize: '12px', padding: '0px 5px', minWidth: '120px' }}>Edit Profile</Button>
+                  </Link>
+                </Grid>
+                <Grid item xs={5} />
+              </Grid>
             </Grid>
           </Grid>
         </div>
