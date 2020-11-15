@@ -8,7 +8,7 @@ import { useLocation, Link } from 'react-router-dom'
 const Profile = () => {
 
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userId, userDisplayName }, setUserExists] = useUserValue()
+  const [{ userId, userDisplayName, userImage }, setUserExists] = useUserValue()
   const location = useLocation()
   const classes = useStyles()
 
@@ -19,7 +19,7 @@ const Profile = () => {
           <Grid container className={classes.container}>
             <Grid item xs={1} />
             <Grid item xs={1}>
-              <Avatar className={classes.avatar} />
+              <Avatar src={userImage} className={classes.avatar} />
               <Typography style={{ fontSize: '16px', marginTop: '10px' }}>{userDisplayName}</Typography>
             </Grid>
             <Grid item xs={1} style={{ marginRight: '10px' }} />
