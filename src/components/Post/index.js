@@ -31,31 +31,25 @@ const Post = (props) => {
   const postHeader = classNames('post-header-paper', classes.header)
 
   const renderImage = () => {
-    if (props.image) {
-      if (props.image.length !== 1) {
-        return (
-          <Fade
-            autoplay={false}
-            transitionDuration={200}
-          >
-            {
-              props.image.map((image, index) => {
-                return (
-                  <div key={index} style={{ width: '100%' }}>
-                    <img src={image} alt='' className='post-image' />
-                  </div>
-                )
-              })
-            }
-          </Fade>
-        )
-      } else {
-        return props.image.map((image, index) => {
-          return <img key={index} src={image} alt='' className='post-image' />
-        })
-      }
+    if (Array.isArray(props.image)) {
+      return (
+        <Fade
+          autoplay={false}
+          transitionDuration={200}
+        >
+          {
+            props.image.map((image, index) => {
+              return (
+                <div key={index} style={{ width: '100%' }}>
+                  <img src={image} alt='' className='post-image' />
+                </div>
+              )
+            })
+          }
+        </Fade>
+      )
     } else {
-      return null
+      return <img src={props.image} alt='' className='post-image' />
     }
   }
 
@@ -68,10 +62,10 @@ const Post = (props) => {
         </Paper>
       </header>
       {
-        props.image[0] !== '' &&
-        <div>
+        props.image !== '' &&
+        <>
           {renderImage()}
-        </div>
+        </>
       }
       <Paper square >
         <footer className='post-footer'>
