@@ -79,7 +79,7 @@ const Post = (props) => {
   }
 
   const renderImage = () => {
-    if (Array.isArray(props.image)) {
+    if (props.image.length > 1) {
       return (
         <Fade
           autoplay={false}
@@ -115,14 +115,14 @@ const Post = (props) => {
         </Paper>
       </header>
       {
-        props.image !== '' &&
+        props.image.length &&
         <>
           {renderImage()}
         </>
       }
       <Paper square >
         <footer className='post-footer'>
-          {props.image !== '' ? (
+          {props.image.length ? (
             <Typography style={{ fontSize: '13px' }}>
               <strong>{props.username}</strong> {props.caption}
             </Typography>

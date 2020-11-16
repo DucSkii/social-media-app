@@ -31,22 +31,22 @@ const Profile = () => {
     }
   }, [isDrawerOpen])
   // console.log('posts', posts)
-  const renderProfilePost = () => {
-    return posts.map(({ post }, index) => {
-      // console.log('post', post.post.uid)
-      if (location.pathname.includes(post.uid)) {
-        // console.log('post', post)
-        userPosts.push(post)
-        return (
-          <Grid item xs={4} key={index}>
-            <img src={post.image} alt='' />
-          </Grid>
-        )
-      } else {
-        return null
-      }
-    })
-  }
+  // const renderProfilePost = () => {
+  //   return posts.map(({ post }, index) => {
+  //     // console.log('post', post.post.uid)
+  //     if (location.pathname.includes(post.uid)) {
+  //       // console.log('post', post)
+  //       userPosts.push(post)
+  //       return (
+  //         <Grid item xs={4} key={index}>
+  //           <img src={post.image} alt='' />
+  //         </Grid>
+  //       )
+  //     } else {
+  //       return null
+  //     }
+  //   })
+  // }
 
   const renderProfile = () => {
     if (location.pathname.includes(userId)) {
