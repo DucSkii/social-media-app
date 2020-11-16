@@ -139,7 +139,9 @@ const Drawer = () => {
       >
         <div style={modalStyle} className={classes.modal}>
           <div className='modal'>
-            <div>Are you sure you want to sign out</div>
+            <div style={{ color: darkMode ? '#fff' : '#000000' }}>
+              Are you sure you want to sign out
+              </div>
           </div>
           <div className='modal-buttons'>
             <Button variant='outlined' className={classes.modalButtonLeft} onClick={() => handleClose()}>No</Button>
