@@ -1,9 +1,12 @@
 import React from 'react'
-import './styles.scss'
 import { Paper, Typography, Avatar, makeStyles } from '@material-ui/core'
 import 'react-slideshow-image/dist/styles.css'
 import classNames from 'classnames'
-import { Fade } from "react-slideshow-image";
+import { Fade } from "react-slideshow-image"
+import { Link } from 'react-router-dom'
+import { useGeneralValue } from '../../context/GeneralContext'
+
+import './styles.scss'
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -23,11 +26,17 @@ const useStyles = makeStyles(theme => ({
       marginRight: '10px',
     },
   },
+  link: {
+    textDecoration: 'none',
+    display: 'flex',
+    alignItems: 'center',
+  },
 }))
 
 const Post = (props) => {
 
   const classes = useStyles()
+  const [{ darkMode }, dispatch] = useGeneralValue()
   const postHeader = classNames('post-header-paper', classes.header)
 
   const renderImage = () => {
@@ -57,8 +66,13 @@ const Post = (props) => {
     <div className='post' style={{ border: 'none' }}>
       <header className='post-header'>
         <Paper variant='outlined' square className={postHeader}>
-          <Avatar src={props.avatar} className={classes.avatar} />
-          <Typography style={{ fontSize: '12px' }}><strong>{props.username}</strong></Typography>
+          <Link to={`/profile/${props.username}/${props.uid}`}
+            className={classes.link}
+            style={{ color: darkMode ? '#fff' : '#000000' }}
+          >
+            <Avatar src={props.avatar} className={classes.avatar} />
+            <Typography style={{ fontSize: '12px' }}><strong>{props.username}</strong></Typography>
+          </Link>
         </Paper>
       </header>
       {
@@ -69,7 +83,7 @@ const Post = (props) => {
       }
       <Paper square >
         <footer className='post-footer'>
-          {props.image[0] !== '' ? (
+          {props.image !== '' ? (
             <Typography style={{ fontSize: '12px' }}>
               <strong>{props.username}</strong> {props.caption}
             </Typography>

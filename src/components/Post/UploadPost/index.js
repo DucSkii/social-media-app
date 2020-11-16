@@ -8,7 +8,7 @@ import firebase from 'firebase'
 const UploadPost = () => {
 
   const classes = useStyles()
-  const [{ userDisplayName, userImage }, dispatch] = useUserValue()
+  const [{ userDisplayName, userImage, userId }, dispatch] = useUserValue()
   const [image, setImage] = useState([])
   const [progress, setProgress] = useState(0)
   const [caption, setCaption] = useState('')
@@ -53,6 +53,7 @@ const UploadPost = () => {
                 image: url,
                 username: userDisplayName,
                 avatar: userImage,
+                uid: userId,
               })
               setProgress(0)
               setCaption('')
