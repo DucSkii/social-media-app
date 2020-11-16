@@ -115,7 +115,7 @@ const Post = (props) => {
         </Paper>
       </header>
       {
-        props.image.length &&
+        Array.isArray(props.image) &&
         <>
           {renderImage()}
         </>

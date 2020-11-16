@@ -27,7 +27,7 @@ const UploadPost = () => {
 
   const handleUpload = () => {
     console.log('HandlingUpload', images)
-    if (caption !== '') {
+    if (caption === '') {
       return alert('Enter a caption')
     }
     const promises = []
@@ -192,7 +192,7 @@ const UploadPost = () => {
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
             />
-            <input type='file' multiple onChange={handleChange} onClick={e => e.target.files = null} />
+            <input type='file' multiple onChange={handleChange} onClick={e => e.target.value = null} />
           </div>
           <Button variant='outlined' className={classes.uploadButton} onClick={handleUpload}>Quack</Button>
         </div>
