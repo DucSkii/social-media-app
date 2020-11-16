@@ -1,52 +1,101 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useStyles } from './styles'
 import { Paper, Avatar, Typography, Grid, Button } from '@material-ui/core'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
 import { useLocation, Link } from 'react-router-dom'
+import { db } from '../../firebase'
 
 const Profile = () => {
 
-  const [{ darkMode }, dispatch] = useGeneralValue()
+  const [{ darkMode, isDrawerOpen }, dispatch] = useGeneralValue()
   const [{ userId, userDisplayName, userImage }, setUserExists] = useUserValue()
+  const [posts, setPosts] = useState([])
+  const [userPosts, setUserPosts] = useState([])
   const location = useLocation()
   const classes = useStyles()
+
+
+  useEffect(() => {
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+      setPosts(snapshot.docs.map(doc => (
+        {
+          post: doc.data(),
+        })
+      ))
+    })
+
+    return () => {
+      setUserPosts([])
+      setPosts([])
+    }
+  }, [isDrawerOpen])
+  // console.log('posts', posts)
+  const renderProfilePost = () => {
+    return posts.map(({ post }, index) => {
+      // console.log('post', post.post.uid)
+      if (location.pathname.includes(post.uid)) {
+        // console.log('post', post)
+        userPosts.push(post)
+        return (
+          <Grid item xs={4} key={index}>
+            <img src={post.image} alt='' />
+          </Grid>
+        )
+      } else {
+        return null
+      }
+    })
+  }
 
   const renderProfile = () => {
     if (location.pathname.includes(userId)) {
       return (
         <div className={classes.body}>
           <Grid container className={classes.container}>
-            <Grid item xs={1} />
-            <Grid item xs={1}>
-              <Avatar src={userImage} className={classes.avatar} />
-              <Typography style={{ fontSize: '16px', marginTop: '10px' }}>{userDisplayName}</Typography>
+            <Grid container item xs={12}>
+              <Grid item xs={1} />
+              <Grid item xs={1}>
+                <Avatar src={userImage} className={classes.avatar} />
+                <Typography style={{ fontSize: '16px', marginTop: '10px' }}>{userDisplayName}</Typography>
+              </Grid>
+              <Grid item xs={1} style={{ marginRight: '10px' }} />
+              <Grid container item xs={8} className={classes.detailContainer}>
+                <Grid item xs={2}>
+                  <Typography className={classes.detailTitle}>Posts</Typography>
+                  <Typography className={classes.detailNumber}>{userPosts.length}</Typography>
+                </Grid>
+                <Grid item xs={1} />
+                <Grid item xs={4}>
+                  <Typography className={classes.detailTitle}>Followers</Typography>
+                  <Typography className={classes.detailNumber}>0</Typography>
+                </Grid>
+                <Grid item xs={1} />
+                <Grid item xs={4}>
+                  <Typography className={classes.detailTitle}>Following</Typography>
+                  <Typography className={classes.detailNumber}>0</Typography>
+                </Grid>
+                <Grid item xs={1} />
+                <Grid container item xs={12}>
+                  <Grid item xs={3} />
+                  <Grid item xs={4} style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Link to='/editprofile' style={{ textDecoration: 'none', padding: '0', margin: '0', width: '120px' }}>
+                      <Button variant='outlined' style={{ fontSize: '12px', padding: '0px 5px', minWidth: '120px' }}>Edit Profile</Button>
+                    </Link>
+                  </Grid>
+                  <Grid item xs={5} />
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={1} style={{ marginRight: '10px' }} />
-            <Grid container item xs={8} className={classes.detailContainer}>
-              <Grid item xs={2}>
-                <Typography className={classes.detailTitle}>Posts</Typography>
-                <Typography className={classes.detailNumber}>0</Typography>
-              </Grid>
+            <Grid item xs={12} style={{ height: '50px' }} />
+            <Grid container item xs={12}>
               <Grid item xs={1} />
-              <Grid item xs={4}>
-                <Typography className={classes.detailTitle}>Followers</Typography>
-                <Typography className={classes.detailNumber}>0</Typography>
-              </Grid>
-              <Grid item xs={1} />
-              <Grid item xs={4}>
-                <Typography className={classes.detailTitle}>Following</Typography>
-                <Typography className={classes.detailNumber}>0</Typography>
+              <Grid item xs={10}>
+                <Typography style={{ textAlign: 'center' }}>Images</Typography>
               </Grid>
               <Grid item xs={1} />
               <Grid container item xs={12}>
-                <Grid item xs={3} />
-                <Grid item xs={4} style={{ display: 'flex', justifyContent: 'center' }}>
-                  <Link to='/editprofile' style={{ textDecoration: 'none', padding: '0', margin: '0', width: '120px' }}>
-                    <Button variant='outlined' style={{ fontSize: '12px', padding: '0px 5px', minWidth: '120px' }}>Edit Profile</Button>
-                  </Link>
-                </Grid>
-                <Grid item xs={5} />
+                {/* {renderProfilePost()} */}
               </Grid>
             </Grid>
           </Grid>

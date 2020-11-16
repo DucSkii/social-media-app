@@ -88,7 +88,7 @@ const App = () => {
             </header>
             <Switch>
               <Route path='/editprofile' component={EditProfile} />
-              <Route path='/profile' component={Profile} />
+              <Route path='/profile' render={(props) => <Profile key={props.location.key} />} />
               <Route path='/chat' />
               <Route path='/favourites' />
               <Route path='/settings' component={Settings} />

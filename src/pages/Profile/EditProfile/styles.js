@@ -6,7 +6,6 @@ export const useStyles = makeStyles(theme => ({
     width: '100%',
   },
   paper: {
-    paddingTop: '20px',
     height: '100vh',
     width: '100%',
   },

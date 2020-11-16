@@ -6,6 +6,8 @@ import { storage } from '../../../firebase'
 import CreateIcon from '@material-ui/icons/Create'
 import CancelIcon from '@material-ui/icons/Cancel'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 
 import { useStyles } from './styles'
@@ -14,7 +16,7 @@ const EditProfile = () => {
 
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userImage, userDisplayName }, setUserExists] = useUserValue()
+  const [{ userImage, userDisplayName, userId }, setUserExists] = useUserValue()
   const [imagePreview, setImagePreview] = useState(null)
   const [image, setImage] = useState(null)
   const [edit, setEdit] = useState(false)
@@ -123,6 +125,13 @@ const EditProfile = () => {
     <div className={classes.profile}>
       <Paper square className={classes.paper} style={{ backgroundColor: darkMode ? '#666' : '#fafafa' }}>
         <Grid container>
+          <Grid item xs={12}>
+            <Link to={`/profile/${userDisplayName}/${userId}`}>
+              <IconButton>
+                <ArrowBackIosIcon />
+              </IconButton>
+            </Link>
+          </Grid>
           <Grid container item xs={12}>
             <Grid item xs={1} />
             <Grid item xs={2}>

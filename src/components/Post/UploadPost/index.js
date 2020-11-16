@@ -18,7 +18,7 @@ const UploadPost = () => {
       setImage(e.target.files[0])
     }
   }
-
+  
   const handleUpload = () => {
     if (caption === '') {
       return alert('Please enter a caption')
