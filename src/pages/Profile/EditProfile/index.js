@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { useGeneralValue } from '../../../context/GeneralContext'
 import { useUserValue } from '../../../context/UserContext'
-import { Paper, Grid, Typography, Input, Avatar, Button } from '@material-ui/core'
+import { Paper, Grid, Input, Avatar, Button, IconButton } from '@material-ui/core'
 import { storage } from '../../../firebase'
+import CreateIcon from '@material-ui/icons/Create'
+import CancelIcon from '@material-ui/icons/Cancel'
+import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import firebase from 'firebase'
 
 import { useStyles } from './styles'
@@ -11,9 +14,11 @@ const EditProfile = () => {
 
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userImage }, setUserExists] = useUserValue()
+  const [{ userImage, userDisplayName }, setUserExists] = useUserValue()
   const [imagePreview, setImagePreview] = useState(null)
   const [image, setImage] = useState(null)
+  const [edit, setEdit] = useState(false)
+  const [newUsername, setNewUsername] = useState('')
   const user = firebase.auth().currentUser
 
   const handleChange = e => {
@@ -67,6 +72,53 @@ const EditProfile = () => {
     }
   }
 
+  const renderChangeName = () => {
+    if (edit === false) {
+      return (
+        <>
+          <Input variant='contained' value={userDisplayName} disabled />
+          <IconButton onClick={() => setEdit(true)} className={classes.button}>
+            <CreateIcon />
+          </IconButton>
+        </>
+      )
+
+    } else {
+      return (
+        <>
+          <Input variant='contained' placeholder='Enter new username'
+            value={newUsername}
+            onChange={e => setNewUsername(e.target.value)}
+          />
+          <IconButton onClick={handleCancel} className={classes.button}>
+            <CancelIcon />
+          </IconButton>
+          <IconButton onClick={handleChangeUsername} className={classes.button}>
+            <CheckCircleIcon />
+          </IconButton>
+        </>
+      )
+    }
+  }
+
+  const handleCancel = () => {
+    setEdit(false)
+    setNewUsername('')
+  }
+
+  const handleChangeUsername = () => {
+    if (newUsername === '' || newUsername === userDisplayName) {
+      alert('Please enter a new username')
+    } else {
+      user.updateProfile({
+        displayName: newUsername,
+      })
+      setEdit(false)
+      setNewUsername('')
+      window.location.reload()
+    }
+  }
+
   return (
     <div className={classes.profile}>
       <Paper square className={classes.paper} style={{ backgroundColor: darkMode ? '#666' : '#fafafa' }}>
@@ -99,6 +151,14 @@ const EditProfile = () => {
                   </Grid>
                 </>
               }
+            </Grid>
+            <Grid item xs={1} />
+          </Grid>
+          <Grid item xs={12} style={{ height: '40px' }} />
+          <Grid container item xs={12}>
+            <Grid item xs={1} />
+            <Grid container item xs={10} style={{ alignItems: 'center' }}>
+              {renderChangeName()}
             </Grid>
             <Grid item xs={1} />
           </Grid>

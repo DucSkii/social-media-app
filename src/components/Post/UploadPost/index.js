@@ -9,22 +9,20 @@ const UploadPost = () => {
 
   const classes = useStyles()
   const [{ userDisplayName, userImage, userId }, dispatch] = useUserValue()
-  const [image, setImage] = useState([])
+  const [image, setImage] = useState(null)
   const [progress, setProgress] = useState(0)
   const [caption, setCaption] = useState('')
 
   const handleChange = e => {
-    if (image.length === 0) {
-      setImage([...e.target.files])
-    } else {
-      setImage([...image, ...e.target.files])
+    if (e.target.files[0]) {
+      setImage(e.target.files[0])
     }
   }
 
   const handleUpload = () => {
     if (caption === '') {
       return alert('Please enter a caption')
-    } else {
+    } else if (image) {
       const uploadTask = storage.ref(`images/${image.name}`).put(image)
 
       uploadTask.on(
@@ -57,10 +55,22 @@ const UploadPost = () => {
               })
               setProgress(0)
               setCaption('')
-              setImage('')
+              setImage(null)
             })
         },
       )
+    } else {
+      db.collection("posts").add({
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        caption: caption,
+        image: '',
+        username: userDisplayName,
+        avatar: userImage,
+        uid: userId,
+      })
+      setProgress(0)
+      setCaption('')
+      setImage(null)
     }
   }
 
@@ -75,7 +85,7 @@ const UploadPost = () => {
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
             />
-            <input type='file' onChange={handleChange} />
+            <input type='file' onChange={handleChange} onClick={e => e.target.files = null} />
           </div>
           <Button variant='outlined' className={classes.uploadButton} onClick={handleUpload}>Quack</Button>
         </div>
