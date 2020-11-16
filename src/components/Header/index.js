@@ -106,6 +106,7 @@ const Header = () => {
       } else {
         // user has logged out...
         setUser(null)
+        dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
         setUserExists({ type: 'UPDATE_USER', user: null })
         setUserExists({ type: 'UPDATE_DISPLAYNAME', name: '' })
       }

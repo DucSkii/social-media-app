@@ -136,9 +136,9 @@ const Post = (props) => {
       <Paper square variant='outlined' style={{ border: 'none' }}>
         <div>
           {
-            comments.map((comment) => {
+            comments.map((comment, index) => {
               return (
-                <div style={{ display: 'flex', alignItems: 'center', padding: '0px 10px', paddingBottom: '5px' }}>
+                <div key={index} style={{ display: 'flex', alignItems: 'center', padding: '0px 10px', paddingBottom: '5px' }}>
                   <Link
                     to={`/profile/${comment.username}/${comment.uid}`}
                     style={{

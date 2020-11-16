@@ -8,7 +8,7 @@ const Settings = () => {
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
 
-  const toggleDarkMode = (darkMode) => {
+  const toggleDarkMode = () => {
     dispatch({ type: 'DARKMODE_TOGGLE', mode: !darkMode })
     localStorage.setItem('darkMode', !darkMode)
   }
@@ -27,7 +27,7 @@ const Settings = () => {
             <Switch
               color='primary'
               checked={darkMode}
-              onClick={() => toggleDarkMode(darkMode)}
+              onClick={toggleDarkMode}
               name='darkMode'
             />
           </div>

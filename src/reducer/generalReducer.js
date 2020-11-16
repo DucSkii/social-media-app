@@ -11,7 +11,6 @@ export const initialState = {
     },
   }
 }
-
 const generalReducer = (state, action) => {
   switch (action.type) {
     case 'DRAWER_TOGGLE':
