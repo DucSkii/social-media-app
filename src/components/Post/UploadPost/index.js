@@ -85,6 +85,7 @@ const UploadPost = () => {
             setImages([])
             setProgress(0)
             setCaption('')
+            setImagePreview(null)
           }).catch(err => console.log(err))
         })
         .catch(err => console.log(err))
@@ -116,11 +117,7 @@ const UploadPost = () => {
                 <Button
                   variant='outlined'
                   component='label'
-                  style={{
-                    width: '100%',
-                    height: '25px',
-                    fontSize: '13px'
-                  }}
+                  className={classes.uploadImage}
                 > Change Image
               <input type='file' multiple onChange={handleChange} onClick={e => e.target.value = null} hidden />
                 </Button>
@@ -130,37 +127,32 @@ const UploadPost = () => {
                   <Button
                     variant='outlined'
                     component='label'
-                    style={{
-                      width: '100%',
-                      height: '25px',
-                      fontSize: '13px'
-                    }}
+                    className={classes.uploadImage}
                   > Select Image
               <input type='file' multiple onChange={handleChange} onClick={e => e.target.value = null} hidden />
                   </Button>
                 </>
               )}
           </div>
-          {
-            imagePreview &&
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '10px' }}>
-              <img style={{ width: '40px', maxHeight: '30px' }} src={imagePreview} alt='' />
-              <span style={{ fontSize: '12px' }}>{images.length}</span>
-              <Button
-                variant='outlined'
-                style={{
-                  padding: '0',
-                  margin: '0',
-                  marginTop: '5px',
-                  fontSize: '10px',
-                }}
-                onClick={clearImages}
-              >
-                Remove
+          <div className={classes.imagePreviewContainer}>
+            {
+              imagePreview &&
+              <div className={classes.imagePreview}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img className={classes.image} src={imagePreview} alt='' />
+                  <span className={classes.imageCount}>{images.length}</span>
+                </div>
+                <Button
+                  variant='outlined'
+                  className={classes.removeImage}
+                  onClick={clearImages}
+                >
+                  Remove
               </Button>
-            </div>
-          }
-          <Button variant='outlined' className={classes.uploadButton} onClick={handleUpload}>Quack</Button>
+              </div>
+            }
+            <Button variant='outlined' className={classes.uploadButton} onClick={handleUpload}>Quack</Button>
+          </div>
         </div>
         <progress value={progress} max='100' style={{ width: '80%' }} />
       </div >
