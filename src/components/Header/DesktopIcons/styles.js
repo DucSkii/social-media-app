@@ -14,4 +14,7 @@ export const useStyles = makeStyles(theme => ({
     width: '50px',
     height: '50px',
   },
+  link: {
+    textDecoration: 'none',
+  },
 }))

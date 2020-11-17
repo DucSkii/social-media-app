@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
@@ -18,6 +18,7 @@ import './App.scss'
 const App = () => {
 
   const [{ isDrawerOpen, darkMode, colorTheme }, dispatch] = useGeneralValue()
+  const [logoutModal, setLogoutModal] = useState(false)
 
   const useStyles = makeStyles({
     paperBackground: {
@@ -45,6 +46,11 @@ const App = () => {
   const theme = createMuiTheme({
     overrides: {
       MuiSvgIcon: {
+        root: {
+          color: darkMode ? colorTheme.primary.dark : colorTheme.primary.main,
+        },
+      },
+      MuiButtonBase: {
         root: {
           color: darkMode ? colorTheme.primary.dark : colorTheme.primary.main,
         },
