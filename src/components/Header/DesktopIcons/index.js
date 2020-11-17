@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconButton, Avatar, Button } from '@material-ui/core'
+import { IconButton, Avatar, Button, Paper, MenuList, MenuItem } from '@material-ui/core'
 import { useUserValue } from '../../../context/UserContext'
 import { Link, matchPath, useLocation } from 'react-router-dom'
 import HomeIcon from '@material-ui/icons/Home'
@@ -50,6 +50,13 @@ const DesktopIcons = () => {
 
   return (
     <div className={classes.container}>
+      <Paper className={classes.paper}>
+        <MenuList>
+          <MenuItem>Profile</MenuItem>
+          <MenuItem>My account</MenuItem>
+          <MenuItem>Logout</MenuItem>
+        </MenuList>
+      </Paper>
       <Link to='/'>
         <Button className={classes.button}>
           {renderHome()}

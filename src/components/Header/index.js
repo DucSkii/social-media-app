@@ -173,8 +173,18 @@ const Header = () => {
           </form>
         </div>
       </Modal>
-      <Paper className={classes.header} variant='outlined' square style={{ borderTop: 'none' }}>
-        <div className={classes.headerContainer}>
+      <Paper
+        className={classes.header}
+        variant='outlined'
+        square
+        style={{ borderTop: 'none' }}
+      >
+        <div
+          className={classes.headerContainer}
+          style={{
+            backgroundColor: darkMode ? '#424242' : '#fff'
+          }}
+        >
           <Link to='/' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: '' })} >
             <div>
               <img src={logo} alt='logo' style={{ height: '35px', marginLeft: '10px' }} />
