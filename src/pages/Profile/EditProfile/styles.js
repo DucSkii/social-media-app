@@ -22,4 +22,16 @@ export const useStyles = makeStyles(theme => ({
     minWidth: '170px',
     height: '30px',
   },
+  changePicture: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.up('sm')]: {
+      justifyContent: 'flex-start',
+    }
+  },
+  gridBreakpoint: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'none'
+    },
+  },
 }))

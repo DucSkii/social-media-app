@@ -137,9 +137,9 @@ const EditProfile = () => {
             <Grid item xs={2}>
               {renderAvatar()}
             </Grid>
-            <Grid item xs={1} />
+            <Grid item xs={1} className={classes.gridBreakpoint}/>
             <Grid container item xs={7}>
-              <Grid container item xs={12} style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <Grid container item xs={12} className={classes.changePicture}>
                 <Button variant='outlined' component='label' className={classes.changeButton}>
                   Change Picture
                 <input type='file' onChange={handleChange} onClick={(e) => e.target.value = null} hidden />
