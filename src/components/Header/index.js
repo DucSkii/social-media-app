@@ -184,7 +184,7 @@ const Header = () => {
             <>
               <div className={classes.headerIcons}>
                 <Link to={`/profile/${userDisplayName}/${userId}`}>
-                  <IconButton size='small' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
+                  <IconButton size='small'>
                     <Avatar src={userImage} className={classes.avatar} />
                   </IconButton>
                 </Link>
