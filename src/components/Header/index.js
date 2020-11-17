@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Paper, Avatar, IconButton, Button, makeStyles, Input } from '@material-ui/core'
+import { Paper, Avatar, IconButton, Button, Input } from '@material-ui/core'
 import Modal from '@material-ui/core/Modal'
 import MenuIcon from '@material-ui/icons/Menu'
 import { auth } from '../../firebase'
-import './styles.scss'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
 import { Link } from 'react-router-dom'
 import logo from '../../images/app-logo.png'
+
+import { useStyles } from './styles'
 
 function getModalStyle() {
   const top = 50
@@ -22,52 +23,6 @@ function getModalStyle() {
     border: '0',
   };
 }
-
-const useStyles = makeStyles(theme => ({
-  avatar: {
-    width: '27px',
-    height: '27px',
-  },
-  buttonSignUp: {
-    marginLeft: '5px',
-    marginRight: '5px',
-    height: '25px',
-    fontSize: '12px',
-    padding: '0',
-    color: '#f50057',
-    borderColor: '#f50057',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: '10px',
-      marginRight: '10px',
-      height: '30px',
-      fontSize: '15px',
-      padding: '5px',
-    },
-  },
-  buttonLogin: {
-    height: '25px',
-    padding: '0',
-    color: '#3f51b5',
-    [theme.breakpoints.up('sm')]: {
-      height: '30px',
-      fontSize: '15px',
-      padding: '5px',
-    },
-  },
-  modal: {
-    position: 'absolute',
-    display: 'flex',
-    flexDirection: 'column',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 2, 3),
-  },
-  input: {
-    width: '80%',
-  },
-}))
 
 const Header = () => {
 
@@ -142,7 +97,7 @@ const Header = () => {
   }
 
   return (
-    <div className="header">
+    <div className={classes.header}>
       <Modal
         open={openLogin}
         onClose={handleClose}
@@ -217,14 +172,14 @@ const Header = () => {
           </form>
         </div>
       </Modal>
-      <Paper className="header" variant='outlined' square style={{ borderTop: 'none' }}>
+      <Paper className={classes.header} variant='outlined' square style={{ borderTop: 'none' }}>
         <Link to='/' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: '' })} >
           <div>
             <img src={logo} alt='logo' style={{ height: '35px', marginLeft: '10px' }} />
           </div>
         </Link>
         {user ? (
-          <div className='header-icons'>
+          <div className={classes.headerIcons}>
             <Link to={`/profile/${userDisplayName}/${userId}`}>
               <IconButton size='small' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
                 <Avatar src={userImage} className={classes.avatar} />
@@ -235,7 +190,7 @@ const Header = () => {
             </IconButton>
           </div>
         ) : (
-            <div className='header-login'>
+            <div>
               <Button className={classes.buttonLogin} onClick={() => setOpenLogin(true)}>Login</Button>
               <Button variant='outlined' className={classes.buttonSignUp} onClick={() => setOpen(true)}>Sign-up</Button>
             </div>
