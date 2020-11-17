@@ -91,7 +91,7 @@ const Post = (props) => {
         </IconButton>
       </div>,
     nextArrow:
-      <div style={{ width: "30px", marginLeft: "-45px" }}>
+      <div style={{ width: "30px", marginLeft: "-48px" }}>
         <IconButton>
           <KeyboardArrowRightIcon style={{ backgroundColor: 'RGBA(255,255,255,0.5)', borderRadius: '20px', }} />
         </IconButton>
