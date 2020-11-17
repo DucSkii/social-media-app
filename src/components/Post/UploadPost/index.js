@@ -12,8 +12,11 @@ const UploadPost = () => {
   const [progress, setProgress] = useState(0)
   const [caption, setCaption] = useState('')
   const [images, setImages] = useState([])
+  const [imagePreview, setImagePreview] = useState(null)
 
   const handleChange = e => {
+    handleImagePreview(e)
+    setImages([])
     if (!e.target.files.length) {
       return null
     }
@@ -21,6 +24,20 @@ const UploadPost = () => {
       const newFile = e.target.files[i]
       setImages(prevState => [...prevState, newFile])
     }
+  }
+
+  const handleImagePreview = e => {
+    const selected = e.target.files[0]
+    let reader = new FileReader()
+    reader.onloadend = () => {
+      setImagePreview(reader.result)
+    }
+    reader.readAsDataURL(selected)
+  }
+
+  const clearImages = () => {
+    setImagePreview(null)
+    setImages([])
   }
 
   const handleUpload = () => {
@@ -94,13 +111,60 @@ const UploadPost = () => {
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
             />
-            <input type='file' multiple onChange={handleChange} onClick={e => e.target.value = null} />
+            {images.length ? (
+              <>
+                <Button
+                  variant='outlined'
+                  component='label'
+                  style={{
+                    width: '100%',
+                    height: '25px',
+                    fontSize: '13px'
+                  }}
+                > Change Image
+              <input type='file' multiple onChange={handleChange} onClick={e => e.target.value = null} hidden />
+                </Button>
+              </>
+            ) : (
+                <>
+                  <Button
+                    variant='outlined'
+                    component='label'
+                    style={{
+                      width: '100%',
+                      height: '25px',
+                      fontSize: '13px'
+                    }}
+                  > Select Image
+              <input type='file' multiple onChange={handleChange} onClick={e => e.target.value = null} hidden />
+                  </Button>
+                </>
+              )}
           </div>
+          {
+            imagePreview &&
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '10px' }}>
+              <img style={{ width: '40px', maxHeight: '30px' }} src={imagePreview} alt='' />
+              <span style={{ fontSize: '12px' }}>{images.length}</span>
+              <Button
+                variant='outlined'
+                style={{
+                  padding: '0',
+                  margin: '0',
+                  marginTop: '5px',
+                  fontSize: '10px',
+                }}
+                onClick={clearImages}
+              >
+                Remove
+              </Button>
+            </div>
+          }
           <Button variant='outlined' className={classes.uploadButton} onClick={handleUpload}>Quack</Button>
         </div>
         <progress value={progress} max='100' style={{ width: '80%' }} />
-      </div>
-    </Paper>
+      </div >
+    </Paper >
   )
 }
 
