@@ -8,8 +8,8 @@ import { useGeneralValue } from '../../context/GeneralContext'
 import SendIcon from '@material-ui/icons/Send'
 import { db } from '../../firebase'
 import firebase from 'firebase'
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 
 import './styles.scss'
 import { useUserValue } from '../../context/UserContext'
@@ -87,13 +87,13 @@ const Post = (props) => {
     prevArrow:
       <div style={{ width: "30px", marginRight: "-30px" }}>
         <IconButton>
-          <ArrowBackIosIcon />
+          <KeyboardArrowLeftIcon style={{ backgroundColor: 'RGBA(255,255,255,00.5)', borderRadius: '20px' }} />
         </IconButton>
       </div>,
     nextArrow:
-      <div style={{ width: "30px", marginLeft: "-40px" }}>
+      <div style={{ width: "30px", marginLeft: "-45px" }}>
         <IconButton>
-          <ArrowForwardIosIcon />
+          <KeyboardArrowRightIcon style={{ backgroundColor: 'RGBA(255,255,255,0.5)', borderRadius: '20px', }} />
         </IconButton>
       </div>,
   }
