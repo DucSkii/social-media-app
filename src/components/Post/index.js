@@ -8,6 +8,8 @@ import { useGeneralValue } from '../../context/GeneralContext'
 import SendIcon from '@material-ui/icons/Send'
 import { db } from '../../firebase'
 import firebase from 'firebase'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 import './styles.scss'
 import { useUserValue } from '../../context/UserContext'
@@ -78,13 +80,28 @@ const Post = (props) => {
     setComment('')
   }
 
+  const properties = {
+    autoplay: false,
+    transitionDuration: 200,
+    indicators: true,
+    prevArrow:
+      <div style={{ width: "30px", marginRight: "-30px" }}>
+        <IconButton>
+          <ArrowBackIosIcon />
+        </IconButton>
+      </div>,
+    nextArrow:
+      <div style={{ width: "30px", marginLeft: "-40px" }}>
+        <IconButton>
+          <ArrowForwardIosIcon />
+        </IconButton>
+      </div>,
+  }
+
   const renderImage = () => {
     if (props.image.length > 1) {
       return (
-        <Fade
-          autoplay={false}
-          transitionDuration={200}
-        >
+        <Fade {...properties}>
           {
             props.image.map((image, index) => {
               return (

@@ -17,16 +17,13 @@ const UploadPost = () => {
     if (!e.target.files.length) {
       return null
     }
-    console.log('e.target.files', e.target.files)
     for (let i = 0; i < e.target.files.length; i++) {
       const newFile = e.target.files[i]
       setImages(prevState => [...prevState, newFile])
     }
-    console.log('setImages')
   }
 
   const handleUpload = () => {
-    console.log('HandlingUpload', images)
     if (caption === '') {
       return alert('Enter a caption')
     }
@@ -48,23 +45,18 @@ const UploadPost = () => {
             // error func
             console.log(error)
           },
-          () => {
-            console.log('completed')
-          }
+          () => { }
         )
       })
 
       Promise.all(promises)
         .then(() => {
-          console.log('All uploaded')
           const imageUrlPromises = []
           images.forEach(image => {
             const imageRef = storage.ref(`images/${image.name}`).getDownloadURL()
             imageUrlPromises.push(imageRef)
           })
           Promise.all(imageUrlPromises).then((images) => {
-            console.log('callback hell success')
-
             db.collection("posts").add({
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               caption: caption,
@@ -79,8 +71,6 @@ const UploadPost = () => {
           }).catch(err => console.log(err))
         })
         .catch(err => console.log(err))
-
-      console.log('After Promise')
     } else {
       db.collection("posts").add({
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -91,94 +81,6 @@ const UploadPost = () => {
         uid: userId,
       })
     }
-
-
-    console.log('promises', promises)
-    // const uploadTask = storage.ref(`images/${image.name}`).put(image)
-    // uploadTask.on(
-    //   "state_changed",
-    //   (snapshot) => {
-    //     const progress = Math.round(
-    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-    //     )
-    //     setProgress(progress)
-    //   },
-    //   (error) => {
-    //     // error func
-    //     console.log(error)
-    //   },
-    //   //complete func
-    //   () => {
-    //     storage
-    //       .ref('images')
-    //       .child(image.name)
-    //       .getDownloadURL()
-    //       .then(url => {
-    //         // post image inside db
-    //         db.collection("posts").add({
-    //           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    //           caption: caption,
-    //           image: url,
-    //           username: userDisplayName,
-    //           avatar: userImage,
-    //           uid: userId,
-    //         })
-    //       })
-    //   },
-    // )
-
-    // if (caption === '') {
-    //   return alert('Please enter a caption')
-    // } else if (image) {
-    //   const uploadTask = storage.ref(`images/${image.name}`).put(image)
-
-    //   uploadTask.on(
-    //     "state_changed",
-    //     (snapshot) => {
-    //       const progress = Math.round(
-    //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-    //       )
-    //       setProgress(progress)
-    //     },
-    //     (error) => {
-    //       // error func
-    //       console.log(error)
-    //     },
-    //     //complete func
-    //     () => {
-    //       storage
-    //         .ref('images')
-    //         .child(image.name)
-    //         .getDownloadURL()
-    //         .then(url => {
-    //           // post image inside db
-    //           db.collection("posts").add({
-    //             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    //             caption: caption,
-    //             image: url,
-    //             username: userDisplayName,
-    //             avatar: userImage,
-    //             uid: userId,
-    //           })
-    //           setProgress(0)
-    //           setCaption('')
-    //           setImage(null)
-    //         })
-    //     },
-    //   )
-    // } else {
-    //   db.collection("posts").add({
-    //     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    //     caption: caption,
-    //     image: '',
-    //     username: userDisplayName,
-    //     avatar: userImage,
-    //     uid: userId,
-    //   })
-    //   setProgress(0)
-    //   setCaption('')
-    //   setImage(null)
-    // }
   }
 
   return (
