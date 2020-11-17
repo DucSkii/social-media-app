@@ -8,6 +8,7 @@ import CancelIcon from '@material-ui/icons/Cancel'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import { Link } from 'react-router-dom'
+import { db } from '../../../firebase'
 import firebase from 'firebase'
 
 import { useStyles } from './styles'
@@ -112,6 +113,7 @@ const EditProfile = () => {
     if (newUsername === '' || newUsername === userDisplayName) {
       alert('Please enter a new username')
     } else {
+      updateDb()
       user.updateProfile({
         displayName: newUsername,
       })
@@ -120,6 +122,17 @@ const EditProfile = () => {
       window.location.reload()
     }
   }
+  console.log('newUsername', newUsername)
+  const updateDb = () => {
+    db.collection("users").doc(userId).update({
+      username: newUsername,
+    })
+  }
+  // const updateName = () => {
+  //   db.collection("users").doc(userId).update({
+  //     username: 'randomname',
+  //   })
+  // }
 
   return (
     <div className={classes.profile}>
@@ -137,7 +150,7 @@ const EditProfile = () => {
             <Grid item xs={2}>
               {renderAvatar()}
             </Grid>
-            <Grid item xs={1} className={classes.gridBreakpoint}/>
+            <Grid item xs={1} className={classes.gridBreakpoint} />
             <Grid container item xs={7}>
               <Grid container item xs={12} className={classes.changePicture}>
                 <Button variant='outlined' component='label' className={classes.changeButton}>

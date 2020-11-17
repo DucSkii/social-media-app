@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Paper, Avatar, IconButton, Button, Input } from '@material-ui/core'
 import Modal from '@material-ui/core/Modal'
 import MenuIcon from '@material-ui/icons/Menu'
-import { auth } from '../../firebase'
+import { auth, db } from '../../firebase'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
 import { Link } from 'react-router-dom'
@@ -75,12 +75,22 @@ const Header = () => {
       unsubscribe()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, username])
+  }, [])
 
   const signUp = (event) => {
     event.preventDefault()
     auth.createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
+        db.collection("users").doc(authUser.user.uid).set({
+          uid: authUser.user.uid,
+          username: username,
+          avatar: '',
+          colourTheme: 0,
+          postBannerColour: 'white',
+          following: 0,
+          followers: 0,
+          posts: 0,
+        })
         return authUser.user.updateProfile({
           displayName: username
         })
