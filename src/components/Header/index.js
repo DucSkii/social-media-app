@@ -7,6 +7,7 @@ import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
 import { Link } from 'react-router-dom'
 import logo from '../../images/app-logo.png'
+import DesktopIcons from './DesktopIcons'
 
 import { useStyles } from './styles'
 
@@ -180,16 +181,19 @@ const Header = () => {
             </div>
           </Link>
           {user ? (
-            <div className={classes.headerIcons}>
-              <Link to={`/profile/${userDisplayName}/${userId}`}>
-                <IconButton size='small' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
-                  <Avatar src={userImage} className={classes.avatar} />
+            <>
+              <div className={classes.headerIcons}>
+                <Link to={`/profile/${userDisplayName}/${userId}`}>
+                  <IconButton size='small' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
+                    <Avatar src={userImage} className={classes.avatar} />
+                  </IconButton>
+                </Link>
+                <IconButton size='medium' onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true, mode: darkMode })}>
+                  <MenuIcon />
                 </IconButton>
-              </Link>
-              <IconButton size='medium' onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true, mode: darkMode })}>
-                <MenuIcon />
-              </IconButton>
-            </div>
+              </div>
+              <DesktopIcons />
+            </>
           ) : (
               <div>
                 <Button className={classes.buttonLogin} onClick={() => setOpenLogin(true)}>Login</Button>

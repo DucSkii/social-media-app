@@ -49,6 +49,9 @@ export const useStyles = makeStyles(theme => ({
   headerIcons: {
     display: 'flex',
     alignItems: 'center',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
   },
   header: {
     display: 'flex',
