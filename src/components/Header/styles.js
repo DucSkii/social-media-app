@@ -40,9 +40,11 @@ export const useStyles = makeStyles(theme => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 2, 3),
+    maxWidth: '500px',
   },
   input: {
     width: '80%',
+    maxWidth: '400px',
   },
   headerIcons: {
     display: 'flex',
@@ -57,6 +59,20 @@ export const useStyles = makeStyles(theme => ({
     width: '100%',
     backgroundColor: 'white',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerContainer: {
+    display: 'flex',
+    position: 'fixed',
+    top: '0',
+    zIndex: '1000',
+    height: '50px',
+    width: '100%',
+    backgroundColor: 'white',
+    alignItems: 'center',
     justifyContent: 'space-between',
-  }
+    [theme.breakpoints.up('md')]: {
+      width: '960px',
+    },
+  },
 }))

@@ -173,28 +173,30 @@ const Header = () => {
         </div>
       </Modal>
       <Paper className={classes.header} variant='outlined' square style={{ borderTop: 'none' }}>
-        <Link to='/' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: '' })} >
-          <div>
-            <img src={logo} alt='logo' style={{ height: '35px', marginLeft: '10px' }} />
-          </div>
-        </Link>
-        {user ? (
-          <div className={classes.headerIcons}>
-            <Link to={`/profile/${userDisplayName}/${userId}`}>
-              <IconButton size='small' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
-                <Avatar src={userImage} className={classes.avatar} />
-              </IconButton>
-            </Link>
-            <IconButton size='medium' onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true, mode: darkMode })}>
-              <MenuIcon />
-            </IconButton>
-          </div>
-        ) : (
+        <div className={classes.headerContainer}>
+          <Link to='/' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: '' })} >
             <div>
-              <Button className={classes.buttonLogin} onClick={() => setOpenLogin(true)}>Login</Button>
-              <Button variant='outlined' className={classes.buttonSignUp} onClick={() => setOpen(true)}>Sign-up</Button>
+              <img src={logo} alt='logo' style={{ height: '35px', marginLeft: '10px' }} />
             </div>
-          )}
+          </Link>
+          {user ? (
+            <div className={classes.headerIcons}>
+              <Link to={`/profile/${userDisplayName}/${userId}`}>
+                <IconButton size='small' onClick={() => dispatch({ type: 'CHANGE_NAV', nav: 'profile' })}>
+                  <Avatar src={userImage} className={classes.avatar} />
+                </IconButton>
+              </Link>
+              <IconButton size='medium' onClick={() => dispatch({ type: 'DRAWER_TOGGLE', open: true, mode: darkMode })}>
+                <MenuIcon />
+              </IconButton>
+            </div>
+          ) : (
+              <div>
+                <Button className={classes.buttonLogin} onClick={() => setOpenLogin(true)}>Login</Button>
+                <Button variant='outlined' className={classes.buttonSignUp} onClick={() => setOpen(true)}>Sign-up</Button>
+              </div>
+            )}
+        </div>
       </Paper>
     </div>
   )
