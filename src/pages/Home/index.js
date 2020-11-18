@@ -9,9 +9,11 @@ const Home = () => {
 
   const classes = useStyles()
   const [posts, setPosts] = useState([])
+  // const [postOwner, setPostOwner] = useState({})
   const [{ user }, userDispatch] = useUserValue()
 
   useEffect(() => {
+
     db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc => (
         {
@@ -21,8 +23,8 @@ const Home = () => {
       ))
       // from the snapshot look through docs and map
     })
-    // onSnapshot is a powerful listener, if posts gets changed or updated the function will update
-  }, [])
+  })
+
 
   return (
     <div className={classes.posts}>

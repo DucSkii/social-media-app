@@ -46,7 +46,7 @@ const Post = (props) => {
   const [comment, setComment] = useState('')
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ user, userDisplayName, userId, userImage }, userDispatch] = useUserValue()
+  const [{ user, userId }, userDispatch] = useUserValue()
   const postHeader = classNames('post-header-paper', classes.header)
 
   useEffect(() => {

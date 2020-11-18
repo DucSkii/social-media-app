@@ -28,7 +28,7 @@ function getModalStyle() {
 const Header = () => {
 
   const classes = useStyles()
-  const [{ darkMode, dbTheme }, dispatch] = useGeneralValue()
+  const [{ darkMode }, dispatch] = useGeneralValue()
   const [{ user, userId, userDisplayName, userImage }, userDispatch] = useUserValue()
   const [openSignup, setOpenSignup] = useState(false)
   const [openLogin, setOpenLogin] = useState(false)

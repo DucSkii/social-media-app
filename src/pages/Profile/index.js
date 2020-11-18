@@ -10,26 +10,8 @@ const Profile = () => {
 
   const [{ darkMode, isDrawerOpen }, dispatch] = useGeneralValue()
   const [{ userId, userDisplayName, userImage }, userDispatch] = useUserValue()
-  const [posts, setPosts] = useState([])
-  const [userPosts, setUserPosts] = useState([])
   const location = useLocation()
   const classes = useStyles()
-
-
-  useEffect(() => {
-    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-      setPosts(snapshot.docs.map(doc => (
-        {
-          post: doc.data(),
-        })
-      ))
-    })
-
-    return () => {
-      setUserPosts([])
-      setPosts([])
-    }
-  }, [isDrawerOpen])
 
   const renderProfile = () => {
     if (location.pathname.includes(userId)) {
@@ -46,7 +28,7 @@ const Profile = () => {
               <Grid container item xs={8} className={classes.detailContainer}>
                 <Grid item xs={2}>
                   <Typography className={classes.detailTitle}>Posts</Typography>
-                  <Typography className={classes.detailNumber}>{userPosts.length}</Typography>
+                  <Typography className={classes.detailNumber}>0</Typography>
                 </Grid>
                 <Grid item xs={1} />
                 <Grid item xs={4}>
@@ -78,7 +60,6 @@ const Profile = () => {
               </Grid>
               <Grid item xs={1} />
               <Grid container item xs={12}>
-                {/* {renderProfilePost()} */}
               </Grid>
             </Grid>
           </Grid>
