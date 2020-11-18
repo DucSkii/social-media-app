@@ -82,20 +82,23 @@ const Post = (props) => {
   const postComment = (event) => {
     event.preventDefault()
 
-    db.collection("comments").add({
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      text: comment,
-      uid: userId,
-      postId: props.postId,
-    })
-    setComments(prevState => [{
+    let commentObj = {
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       text: comment,
       uid: userId,
       postId: props.postId,
       username: userDisplayName,
       avatar: userImage,
-    }, ...prevState])
+    }
+
+    db.collection("comments").add({
+      timestamp: commentObj.timestamp,
+      text: commentObj.text,
+      uid: commentObj.uid,
+      postId: commentObj.postId,
+    }).then(() => {
+      setComments(prevState => [commentObj, ...prevState])
+    }).catch(error => console.log(error))
 
     setComment('')
   }
