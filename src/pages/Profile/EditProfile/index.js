@@ -17,7 +17,7 @@ const EditProfile = () => {
 
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userImage, userDisplayName, userId }, setUserExists] = useUserValue()
+  const [{ userImage, userDisplayName, userId }, userDispatch] = useUserValue()
   const [imagePreview, setImagePreview] = useState(null)
   const [image, setImage] = useState(null)
   const [edit, setEdit] = useState(false)
@@ -113,26 +113,18 @@ const EditProfile = () => {
     if (newUsername === '' || newUsername === userDisplayName) {
       alert('Please enter a new username')
     } else {
-      updateDb()
       user.updateProfile({
         displayName: newUsername,
       })
-      setEdit(false)
-      setNewUsername('')
-      window.location.reload()
+      db.collection("users").doc(userId).update({
+        username: newUsername,
+      }).then(() => {
+        setEdit(false)
+        setNewUsername('')
+        window.location.reload()
+      }).catch((error) => console.log(error))
     }
   }
-  console.log('newUsername', newUsername)
-  const updateDb = () => {
-    db.collection("users").doc(userId).update({
-      username: newUsername,
-    })
-  }
-  // const updateName = () => {
-  //   db.collection("users").doc(userId).update({
-  //     username: 'randomname',
-  //   })
-  // }
 
   return (
     <div className={classes.profile}>

@@ -1,5 +1,5 @@
 export const initialUserState = {
-  userExists: null,
+  user: null,
   userDisplayName: '',
   userId: '',
   userImage: '',
@@ -8,22 +8,20 @@ export const initialUserState = {
 
 const userReducer = (state, action) => {
   switch (action.type) {
-    case 'GET_UID':
+    case 'SET_USER':
       return {
         ...state,
-        userId: action.id,
+        user: action.payload.user,
+        userDisplayName: action.payload.displayName,
+        userId: action.payload.uid,
+        userImage: action.payload.image,
       }
-    case 'UPDATE_USER':
-      return {
-        ...state,
-        userExists: action.user,
-      }
-    case 'UPDATE_DISPLAYNAME':
+    case 'SET_DISPLAYNAME':
       return {
         ...state,
         userDisplayName: action.name,
       }
-    case 'UPDATE_IMAGE':
+    case 'SET_IMAGE':
       return {
         ...state,
         userImage: action.image,

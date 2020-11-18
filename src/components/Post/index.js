@@ -46,7 +46,7 @@ const Post = (props) => {
   const [comment, setComment] = useState('')
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userExists, userDisplayName, userId, userImage }, setUserExists] = useUserValue()
+  const [{ user, userDisplayName, userId, userImage }, userDispatch] = useUserValue()
   const postHeader = classNames('post-header-paper', classes.header)
 
   useEffect(() => {
@@ -179,7 +179,7 @@ const Post = (props) => {
           }
         </div>
       </Paper>
-      {userExists &&
+      {user &&
         <>
           <Divider style={{ backgroundColor: darkMode ? '#666' : 'lightgrey' }} />
           <Paper

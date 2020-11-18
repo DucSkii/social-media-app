@@ -9,7 +9,7 @@ const Home = () => {
 
   const classes = useStyles()
   const [posts, setPosts] = useState([])
-  const [{ userExists }, dispatch] = useUserValue()
+  const [{ user }, userDispatch] = useUserValue()
 
   useEffect(() => {
     db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
@@ -26,7 +26,7 @@ const Home = () => {
 
   return (
     <div className={classes.posts}>
-      {userExists &&
+      {user &&
         <UploadPost />
       }
       {

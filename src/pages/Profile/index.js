@@ -9,7 +9,7 @@ import { db } from '../../firebase'
 const Profile = () => {
 
   const [{ darkMode, isDrawerOpen }, dispatch] = useGeneralValue()
-  const [{ userId, userDisplayName, userImage }, setUserExists] = useUserValue()
+  const [{ userId, userDisplayName, userImage }, userDispatch] = useUserValue()
   const [posts, setPosts] = useState([])
   const [userPosts, setUserPosts] = useState([])
   const location = useLocation()
@@ -30,23 +30,6 @@ const Profile = () => {
       setPosts([])
     }
   }, [isDrawerOpen])
-  // console.log('posts', posts)
-  // const renderProfilePost = () => {
-  //   return posts.map(({ post }, index) => {
-  //     // console.log('post', post.post.uid)
-  //     if (location.pathname.includes(post.uid)) {
-  //       // console.log('post', post)
-  //       userPosts.push(post)
-  //       return (
-  //         <Grid item xs={4} key={index}>
-  //           <img src={post.image} alt='' />
-  //         </Grid>
-  //       )
-  //     } else {
-  //       return null
-  //     }
-  //   })
-  // }
 
   const renderProfile = () => {
     if (location.pathname.includes(userId)) {

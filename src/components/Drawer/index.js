@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 const Drawer = () => {
 
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userId, userDisplayName, userImage }, setUserExists] = useUserValue()
+  const [{ userId, userDisplayName, userImage }, userDispatch] = useUserValue()
   const [open, setOpen] = useState(false)
   const location = useLocation()
   const classes = useStyles()

@@ -5,6 +5,7 @@ import { auth } from '../../firebase'
 import { useGeneralValue } from '../../context/GeneralContext'
 
 import './styles.scss'
+import { useUserValue } from '../../context/UserContext'
 
 function getModalStyle() {
   const top = 50
@@ -42,9 +43,9 @@ const LogoutModal = (props) => {
   const classes = useStyles()
   const [modalStyle] = useState(getModalStyle)
   const [{ darkMode }, dispatch] = useGeneralValue()
+  const [{ user }, userDispatch] = useUserValue()
 
   const signOut = () => {
-    auth.signOut()
     props.setOpen(false)
     localStorage.setItem('darkMode', false)
     localStorage.setItem('colourId', 0)
@@ -52,6 +53,15 @@ const LogoutModal = (props) => {
     dispatch({ type: 'SELECT_THEME', id: 0 })
     dispatch({ type: 'CHANGE_NAV', nav: '' })
     dispatch({ type: 'DRAWER_TOGGLE', open: false })
+
+    const payload = {
+      user: null,
+      displayName: null,
+      id: null,
+      image: null, //add a default image
+    }
+    userDispatch({ type: 'SET_USER', payload })
+    auth.signOut()
   }
 
   const handleClose = () => {

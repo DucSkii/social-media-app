@@ -25,7 +25,7 @@ import { useStyles } from './styles'
 const DesktopIcons = () => {
 
   const classes = useStyles()
-  const [{ userImage, userDisplayName, userId }, setUserExists] = useUserValue()
+  const [{ userImage, userDisplayName, userId }, userDispatch] = useUserValue()
   const [open, setOpen] = useState(false)
   const [logoutModal, setLogoutModal] = useState(false)
   const anchorRef = useRef(null)

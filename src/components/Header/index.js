@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Paper, Avatar, IconButton, Button, Input } from '@material-ui/core'
 import Modal from '@material-ui/core/Modal'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -29,53 +29,20 @@ const Header = () => {
 
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userId, userDisplayName, userImage }, setUserExists] = useUserValue()
-  const [open, setOpen] = useState(false)
+  const [{ user, userId, userDisplayName, userImage }, userDispatch] = useUserValue()
+  const [openSignup, setOpenSignup] = useState(false)
   const [openLogin, setOpenLogin] = useState(false)
   const [modalStyle] = useState(getModalStyle)
-  const [username, setUsername] = useState('')
+  const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
   const handleClose = () => {
-    setUsername('')
+    setDisplayName('')
     setPassword('')
     setEmail('')
-    setOpen(false)
+    setOpenSignup(false)
     setOpenLogin(false)
   }
-
-  // console.log('userExists', userExists)
-  // console.log('userId', userId)
-  // console.log('user', user)
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        // user has logged in...
-        // console.log(authUser)
-        setUser(authUser)
-        setUserExists({ type: 'UPDATE_USER', user: authUser })
-        setUserExists({ type: 'UPDATE_DISPLAYNAME', name: authUser.displayName })
-        setUserExists({ type: 'GET_UID', id: authUser.uid })
-        setUserExists({ type: 'UPDATE_IMAGE', image: authUser.photoURL })
-      } else {
-        // user has logged out...
-        setUser(null)
-        dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
-        setUserExists({ type: 'UPDATE_USER', user: null })
-        setUserExists({ type: 'UPDATE_DISPLAYNAME', name: '' })
-      }
-    })
-
-    // anytime a new user is created or someone logs in/out it fires authUser
-
-    return () => {
-      // performs clean-up inbetween useEffect fires
-      unsubscribe()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const signUp = (event) => {
     event.preventDefault()
@@ -83,7 +50,7 @@ const Header = () => {
       .then((authUser) => {
         db.collection("users").doc(authUser.user.uid).set({
           uid: authUser.user.uid,
-          username: username,
+          username: displayName,
           avatar: '',
           colourTheme: 0,
           postBannerColour: 'white',
@@ -91,8 +58,17 @@ const Header = () => {
           followers: 0,
           posts: 0,
         })
+
+        const payload = {
+          user: authUser.user,
+          displayName: displayName,
+          uid: authUser.user.uid,
+          image: authUser.user.photoURL, //add a default image
+        }
+
+        userDispatch({ type: 'SET_USER', payload })
         return authUser.user.updateProfile({
-          displayName: username
+          displayName: displayName
         })
       })
       .catch((error) => alert(error.message))
@@ -102,7 +78,22 @@ const Header = () => {
 
   const signIn = (event) => {
     event.preventDefault()
-    auth.signInWithEmailAndPassword(email, password)
+    auth.signInWithEmailAndPassword(email, password).then((authUser) => {
+
+      //TODO: do a query on firebase and set image etcetc globally for the user
+      //db query
+      db.collection("users").doc(authUser.user.uid).get().then(doc => {
+        const payload = {
+          user: authUser.user,
+          displayName: doc.data().username,
+          uid: doc.data().uid,
+          image: doc.data().avatar,
+        }
+        userDispatch({ type: 'SET_USER', payload })
+      })
+
+
+    })
       .catch((error) => alert(error.message))
     handleClose()
   }
@@ -143,7 +134,7 @@ const Header = () => {
         </div>
       </Modal>
       <Modal
-        open={open}
+        open={openSignup}
         onClose={handleClose}
       >
         <div style={modalStyle} className={classes.modal}>
@@ -156,9 +147,9 @@ const Header = () => {
                 required
                 type='text'
                 placeholder='Username'
-                value={username}
+                value={displayName}
                 className={classes.input}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => setDisplayName(e.target.value)}
               />
               <Input
                 required
@@ -217,7 +208,7 @@ const Header = () => {
           ) : (
               <div>
                 <Button className={classes.buttonLogin} onClick={() => setOpenLogin(true)}>Login</Button>
-                <Button variant='outlined' className={classes.buttonSignUp} onClick={() => setOpen(true)}>Sign-up</Button>
+                <Button variant='outlined' className={classes.buttonSignUp} onClick={() => setOpenSignup(true)}>Sign-up</Button>
               </div>
             )}
         </div>
