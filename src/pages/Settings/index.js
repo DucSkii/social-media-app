@@ -3,7 +3,7 @@ import { useStyles } from './styles'
 import { Paper, Typography, Switch, Button } from '@material-ui/core'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
-import { db, auth } from '../../firebase'
+import { db } from '../../firebase'
 
 const Settings = () => {
 

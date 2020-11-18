@@ -78,9 +78,8 @@ const UploadPost = () => {
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               caption: caption,
               image: images,
-              username: userDisplayName,
-              avatar: userImage,
               uid: userId,
+              likes: 0,
             })
             setImages([])
             setProgress(0)
