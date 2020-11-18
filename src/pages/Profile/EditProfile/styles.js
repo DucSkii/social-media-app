@@ -14,7 +14,7 @@ export const useStyles = makeStyles(theme => ({
     width: '70px',
   },
   button: {
-    padding: '0px 5px',
+    padding: '0px 7px',
     margin: '0',
   },
   changeButton: {
@@ -32,6 +32,23 @@ export const useStyles = makeStyles(theme => ({
   gridBreakpoint: {
     [theme.breakpoints.up('sm')]: {
       display: 'none'
+    },
+  },
+  gridButtonContainer: {
+    justifyContent: 'space-around',
+    [theme.breakpoints.up('sm')]: {
+      justifyContent: 'flex-start',
+    },
+  },
+  gridButton: {
+    justifyContent: 'center',
+    [theme.breakpoints.up('sm')]: {
+      justifyContent: 'flex-start'
+    },
+  },
+  smHidden: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
     },
   },
 }))

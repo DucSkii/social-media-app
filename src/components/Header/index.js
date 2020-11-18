@@ -60,7 +60,7 @@ const Header = () => {
         const payload = {
           user: null,
           displayName: null,
-          id: null,
+          uid: null,
           image: null,
         }
         userDispatch({ type: 'SET_USER', payload })
@@ -70,8 +70,9 @@ const Header = () => {
     return () => {
       unsubscribe()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  
+
   const signUp = (event) => {
     event.preventDefault()
     auth.createUserWithEmailAndPassword(email, password)

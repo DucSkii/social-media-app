@@ -127,7 +127,7 @@ const EditProfile = () => {
       setNewUsername('')
     }
   }
-  
+
   return (
     <div className={classes.profile}>
       <Paper square className={classes.paper} style={{ backgroundColor: darkMode ? '#666' : '#fafafa' }}>
@@ -156,12 +156,12 @@ const EditProfile = () => {
                 imagePreview &&
                 <>
                   <Grid item xs={12} style={{ height: '15px' }} />
-                  <Grid container item xs={12} style={{ justifyContent: 'space-around' }}>
-                    <Grid container item xs={5} style={{ justifyContent: 'center' }}>
+                  <Grid container item xs={12} className={classes.gridButtonContainer}>
+                    <Grid container item xs={5} sm={3} className={classes.gridButton}>
                       <Button variant='outlined' className={classes.button} onClick={() => setImagePreview(null)}>Cancel</Button>
                     </Grid>
-                    <Grid item xs={2}></Grid>
-                    <Grid container item xs={5} style={{ justifyContent: 'center' }}>
+                    <Grid item xs={2} className={classes.smHidden}></Grid>
+                    <Grid container item xs={5} sm={3} className={classes.gridButton}>
                       <Button variant='outlined' className={classes.button} onClick={handleImageUpload}>Confirm</Button>
                     </Grid>
                   </Grid>

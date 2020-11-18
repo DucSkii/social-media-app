@@ -57,7 +57,7 @@ const LogoutModal = (props) => {
     const payload = {
       user: null,
       displayName: null,
-      id: null,
+      uid: null,
       image: null, //add a default image
     }
     userDispatch({ type: 'SET_USER', payload })
