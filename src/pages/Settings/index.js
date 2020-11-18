@@ -10,12 +10,10 @@ const Settings = () => {
 
   const toggleDarkMode = () => {
     dispatch({ type: 'DARKMODE_TOGGLE', mode: !darkMode })
-    localStorage.setItem('darkMode', !darkMode)
   }
 
   const selectColour = e => {
     dispatch({ type: 'SELECT_THEME', id: e.target.id })
-    localStorage.setItem('colourId', e.target.id)
   }
 
   return (

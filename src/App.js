@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Header from './components/Header'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
@@ -26,21 +26,6 @@ const App = () => {
   })
 
   const classes = useStyles()
-
-  useEffect(() => {
-    if (localStorage.getItem('colourId')) {
-      dispatch({ type: 'SELECT_THEME', id: localStorage.getItem('colourId') })
-    } else {
-      dispatch({ type: 'SELECT_THEME', id: 0 })
-    }
-    const darkModeBool = localStorage.getItem('darkMode')
-    if (darkModeBool === 'true') {
-      dispatch({ type: 'DARKMODE_TOGGLE', mode: true })
-    } else {
-      dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const theme = createMuiTheme({
     overrides: {

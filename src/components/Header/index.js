@@ -43,7 +43,7 @@ const Header = () => {
     setOpenSignup(false)
     setOpenLogin(false)
   }
-
+  // console.log('userId', userId)
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -54,6 +54,8 @@ const Header = () => {
             uid: doc.data().uid,
             image: doc.data().avatar,
           }
+          dispatch({ type: 'DARKMODE_TOGGLE', mode: doc.data().darkMode })
+          dispatch({ type: 'SELECT_THEME', id: doc.data().colourTheme })
           userDispatch({ type: 'SET_USER', payload })
         })
       } else {
@@ -82,6 +84,7 @@ const Header = () => {
           username: displayName,
           avatar: '',
           colourTheme: 0,
+          darkMode: false,
           postBannerColour: 'white',
           following: 0,
           followers: 0,
@@ -94,7 +97,8 @@ const Header = () => {
           uid: authUser.user.uid,
           image: authUser.user.photoURL, //add a default image
         }
-
+        dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
+        dispatch({ type: 'SELECT_THEME', id: 0 })
         userDispatch({ type: 'SET_USER', payload })
         return authUser.user.updateProfile({
           displayName: displayName
@@ -116,10 +120,10 @@ const Header = () => {
           uid: doc.data().uid,
           image: doc.data().avatar,
         }
+        dispatch({ type: 'DARKMODE_TOGGLE', mode: doc.data().darkMode })
+        dispatch({ type: 'SELECT_THEME', id: doc.data().colourTheme })
         userDispatch({ type: 'SET_USER', payload })
       })
-
-
     })
       .catch((error) => alert(error.message))
     handleClose()
