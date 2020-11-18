@@ -48,7 +48,7 @@ const Post = (props) => {
   const [{ darkMode }, dispatch] = useGeneralValue()
   const [{ user, userId }, userDispatch] = useUserValue()
   const postHeader = classNames('post-header-paper', classes.header)
-
+  console.log('comments', comments)
   useEffect(() => {
 
     if (props.postId) {
@@ -56,42 +56,26 @@ const Post = (props) => {
       const promise = []
 
       db.collection("comments")
-        .where("postId", "==", props.postId).get()
+        .where("postId", "==", props.postId).get() // grabbing post linked to comment
         .then(querySnapshot => {
           querySnapshot.forEach(comment => {
-            promise.push(comment.data())
+            promise.push(comment.data()) // pushes comments into array
           })
         }).then(() => {
-          promise.forEach(comment => {
-            const commentData = { ...comment }
-            db.collection("users").where("uid", "==", comment.uid).get()
+          promise.forEach(comment => { // after comments are pushed into promise array loop through
+            const commentData = { ...comment } // create a new object for each object
+            db.collection("users").where("uid", "==", comment.uid).get() // match user id to uid of comment
               .then(querySnapshot => {
                 querySnapshot.forEach(comment => {
-                  const userData = {
+                  const userData = { // new object for username and avatar
                     username: comment.data().username,
                     avatar: comment.data().avatar,
                   }
-                  console.log('userData', userData)
-                  console.log('commentData', commentData)
                   setComments(prevState => [...prevState, { ...commentData, ...userData }])
                 })
               })
           })
         })
-      // .doc('0fXkV9Dm0IftMQOFPKTg').get().then((e) => {
-      //   e.data().postId.get().then((p) =>{
-      //     console.log('Post', p.data())
-      //   })
-      //   console.log(e.data().uid)
-      // })
-
-      // // .orderBy('timestamp', 'desc')
-      // .onSnapshot(
-      //   (snapshot) => {setComments(snapshot.docs.map((doc) => doc.data()),
-      //   (error) =>{ console.log(error)},
-      //   (complete) =>{console.log('complete')}
-      // )
-      // })
     }
   }, [])
 
@@ -144,7 +128,7 @@ const Post = (props) => {
       return <img src={props.image} alt='' className='post-image' />
     }
   }
-  console.log('comments', comments)
+
   return (
     <div className='post' style={{ border: 'none' }}>
       <header className='post-header'>
