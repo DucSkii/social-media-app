@@ -50,13 +50,13 @@ const Post = (props) => {
   const postHeader = classNames('post-header-paper', classes.header)
   console.log('comments', comments)
   useEffect(() => {
-
+    setComments([])
     if (props.postId) {
-
       const promise = []
-
       db.collection("comments")
-        .where("postId", "==", props.postId).get() // grabbing post linked to comment
+        .where("postId", "==", props.postId)
+        .orderBy('timestamp', 'desc')
+        .get() // grabbing post linked to comment
         .then(querySnapshot => {
           querySnapshot.forEach(comment => {
             promise.push(comment.data()) // pushes comments into array
@@ -88,6 +88,7 @@ const Post = (props) => {
       uid: userId,
       postId: props.postId,
     })
+
     setComment('')
   }
 
