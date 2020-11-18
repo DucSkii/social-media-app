@@ -41,35 +41,29 @@ const useStyles = makeStyles(theme => ({
 
 const Post = (props) => {
 
-
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
   const [{ user, userId, userDisplayName, userImage }, userDispatch] = useUserValue()
   const postHeader = classNames('post-header-paper', classes.header)
-  console.log('comments', comments)
+
   useEffect(() => {
     setComments([])
     if (props.postId) {
-      const promise = []
       db.collection("comments")
         .where("postId", "==", props.postId)
-        .orderBy('timestamp', 'desc')
-        .get() // grabbing post linked to comment
-        .then(querySnapshot => {
-          querySnapshot.forEach(comment => {
-            promise.push(comment.data()) // pushes comments into array
-          })
-        }).then(() => {
-          promise.forEach(comment => { // after comments are pushed into promise array loop through
-            const commentData = { ...comment } // create a new object for each object
-            db.collection("users").where("uid", "==", comment.uid).get() // match user id to uid of comment
-              .then(querySnapshot => {
-                querySnapshot.forEach(comment => {
+        .orderBy('timestamp', 'desc').get() // grabbing comment linked to post
+        .then(queryCommentSnapshot => {
+          queryCommentSnapshot.forEach(comment => {
+            const commentData = comment.data()
+
+            db.collection("users").where("uid", "==", commentData.uid).get() // grabbing user linked to comment uid
+              .then(queryUserSnapshot => {
+                queryUserSnapshot.forEach(user => {
                   const userData = { // new object for username and avatar
-                    username: comment.data().username,
-                    avatar: comment.data().avatar,
+                    username: user.data().username,
+                    avatar: user.data().avatar,
                   }
                   setComments(prevState => [...prevState, { ...commentData, ...userData }])
                 })
