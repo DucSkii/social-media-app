@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Paper, Avatar, IconButton, Button, Input } from '@material-ui/core'
 import Modal from '@material-ui/core/Modal'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -44,6 +44,34 @@ const Header = () => {
     setOpenLogin(false)
   }
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        db.collection("users").doc(authUser.uid).get().then(doc => {
+          const payload = {
+            user: authUser,
+            displayName: doc.data().username,
+            uid: doc.data().uid,
+            image: doc.data().avatar,
+          }
+          userDispatch({ type: 'SET_USER', payload })
+        })
+      } else {
+        const payload = {
+          user: null,
+          displayName: null,
+          id: null,
+          image: null,
+        }
+        userDispatch({ type: 'SET_USER', payload })
+      }
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [])
+  
   const signUp = (event) => {
     event.preventDefault()
     auth.createUserWithEmailAndPassword(email, password)
@@ -72,16 +100,14 @@ const Header = () => {
         })
       })
       .catch((error) => alert(error.message))
-    handleClose()
     // .catch(error handeling)
+    handleClose()
   }
 
   const signIn = (event) => {
     event.preventDefault()
     auth.signInWithEmailAndPassword(email, password).then((authUser) => {
 
-      //TODO: do a query on firebase and set image etcetc globally for the user
-      //db query
       db.collection("users").doc(authUser.user.uid).get().then(doc => {
         const payload = {
           user: authUser.user,

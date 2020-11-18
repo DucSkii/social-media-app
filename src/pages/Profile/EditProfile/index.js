@@ -59,9 +59,12 @@ const EditProfile = () => {
             user.updateProfile({
               photoURL: url,
             })
+            db.collection("users").doc(userId).update({
+              avatar: url,
+            })
+            userDispatch({ type: 'SET_IMAGE', image: url })
             setImage(null)
             setImagePreview(null)
-            window.location.reload()
           })
       },
     )
@@ -118,14 +121,13 @@ const EditProfile = () => {
       })
       db.collection("users").doc(userId).update({
         username: newUsername,
-      }).then(() => {
-        setEdit(false)
-        setNewUsername('')
-        window.location.reload()
-      }).catch((error) => console.log(error))
+      })
+      userDispatch({ type: 'SET_DISPLAYNAME', name: newUsername })
+      setEdit(false)
+      setNewUsername('')
     }
   }
-
+  
   return (
     <div className={classes.profile}>
       <Paper square className={classes.paper} style={{ backgroundColor: darkMode ? '#666' : '#fafafa' }}>
