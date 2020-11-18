@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useStyles } from './styles'
-import { Paper, Typography, Switch } from '@material-ui/core'
+import { Paper, Typography, Switch, Button } from '@material-ui/core'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
-import { db } from '../../firebase'
+import { db, auth } from '../../firebase'
 
 const Settings = () => {
 
   const classes = useStyles()
   const [{ darkMode, colorTheme, dbTheme }, dispatch] = useGeneralValue()
   const [{ userId }, userDispatch] = useUserValue()
+  const [saved, setSaved] = useState(false)
 
   const toggleDarkMode = () => {
     dispatch({ type: 'DARKMODE_TOGGLE', mode: !darkMode })
@@ -18,19 +19,36 @@ const Settings = () => {
   const selectColour = e => {
     dispatch({ type: 'SELECT_THEME', id: e.target.id })
   }
-console.log('colorTheme.id', colorTheme.id)
-console.log('dbTheme.dbColourTheme', dbTheme.dbColourTheme)
+
+  useEffect(() => {
+    setSaved(false)
+  }, [colorTheme.id, darkMode])
+
   const setTheme = () => {
-    if (dbTheme.dbDarkMode !== darkMode) {
-      return (
-        <div>
-          SAVE CHANGES
-        </div>
-      )
+    if (dbTheme.dbDarkMode !== darkMode || dbTheme.dbColourTheme !== colorTheme.id) {
+      if (saved) {
+        return (
+          <Button style={{ margin: '20px' }}>SAVED</Button>
+        )
+      } if (!saved) {
+        return (
+          <Button style={{ margin: '20px' }} onClick={saveChanges}>SAVE CHANGES</Button>
+        )
+      }
+
     } else {
       return null
     }
   }
+
+  const saveChanges = () => {
+    setSaved(true)
+    db.collection("users").doc(userId).update({
+      colourTheme: colorTheme.id,
+      darkMode: darkMode,
+    })
+  }
+
   return (
     <Paper square variant='outlined' style={{ height: '100vh', backgroundColor: darkMode ? '#666' : '#fafafa' }}>
       <div className={classes.settings}>
