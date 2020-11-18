@@ -70,10 +70,11 @@ const Post = (props) => {
   const postComment = (event) => {
     event.preventDefault()
 
-    db.collection("comments").doc(props.postId).set({
+    db.collection("comments").add({
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       text: comment,
       uid: userId,
+      postId: props.postId,
     })
     setComment('')
   }

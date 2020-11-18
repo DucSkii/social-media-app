@@ -19,29 +19,25 @@ const Settings = () => {
     dispatch({ type: 'SELECT_THEME', id: e.target.id })
   }
 
-  console.log('colorTheme.id', colorTheme.id)
-  console.log('dbTheme.dbColourTheme', dbTheme.dbColourTheme)
+
   const setTheme = () => {
     if (dbTheme.dbDarkMode !== darkMode || dbTheme.dbColourTheme !== colorTheme.id) {
       return (
         <Button style={{ margin: '20px' }} onClick={saveChanges}>SAVE CHANGES</Button>
       )
-    } else {
-      return null
-    }
+    } 
+    return null
   }
 
   const saveChanges = () => {
-    db.collection("users").doc(userId).update({
-      colourTheme: colorTheme.id,
+    const themePayload = {
       darkMode: darkMode,
-    }).then(() => {
-      const themePayload = {
-        darkMode: darkMode,
-        colourTheme: colorTheme.id,
-      }
-      dispatch({ type: 'SET_THEME', themePayload })
-    })
+      colourTheme: colorTheme.id,
+    }
+    db.collection("users").doc(userId).update(themePayload)
+      .then(() => {
+        dispatch({ type: 'SET_THEME', themePayload })
+      })
   }
 
   return (
