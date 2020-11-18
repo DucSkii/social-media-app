@@ -46,7 +46,7 @@ const Post = (props) => {
   const [comment, setComment] = useState('')
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ user, userId }, userDispatch] = useUserValue()
+  const [{ user, userId, userDisplayName, userImage }, userDispatch] = useUserValue()
   const postHeader = classNames('post-header-paper', classes.header)
   console.log('comments', comments)
   useEffect(() => {
@@ -88,6 +88,14 @@ const Post = (props) => {
       uid: userId,
       postId: props.postId,
     })
+    setComments(prevState => [{
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      text: comment,
+      uid: userId,
+      postId: props.postId,
+      username: userDisplayName,
+      avatar: userImage,
+    }, ...prevState])
 
     setComment('')
   }
