@@ -47,8 +47,6 @@ const LogoutModal = (props) => {
 
   const signOut = () => {
     props.setOpen(false)
-    localStorage.setItem('darkMode', false)
-    localStorage.setItem('colourId', 0)
     dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
     dispatch({ type: 'SELECT_THEME', id: 0 })
     dispatch({ type: 'CHANGE_NAV', nav: '' })
