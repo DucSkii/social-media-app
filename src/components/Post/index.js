@@ -139,12 +139,12 @@ const Post = (props) => {
     <div className='post' style={{ border: 'none' }}>
       <header className='post-header'>
         <Paper variant='outlined' square className={postHeader}>
-          <Link to={`/profile/${props.username}/${props.uid}`}
+          <Link to={`/profile/${props.uid}`}
             className={classes.link}
             style={{ color: darkMode ? '#fff' : '#000000' }}
           >
             <Avatar src={props.avatar} className={classes.avatar} />
-            <Typography style={{ fontSize: '12px' }}><strong>{props.username}</strong></Typography>
+            <Typography style={{ fontSize: '12px' }}><strong></strong></Typography>
           </Link>
         </Paper>
       </header>
@@ -158,7 +158,7 @@ const Post = (props) => {
         <footer className='post-footer'>
           {props.image.length ? (
             <Typography style={{ fontSize: '13px' }}>
-              <strong>{props.username}</strong> {props.caption}
+              <strong></strong> {props.caption}
             </Typography>
           ) : (
               <Typography style={{ fontSize: '14px' }}>
