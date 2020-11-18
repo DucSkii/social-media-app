@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useStyles } from './styles'
 import { Paper, Typography, Switch } from '@material-ui/core'
 import { useGeneralValue } from '../../context/GeneralContext'
+import { useUserValue } from '../../context/UserContext'
+import { db } from '../../firebase'
 
 const Settings = () => {
 
   const classes = useStyles()
-  const [{ darkMode }, dispatch] = useGeneralValue()
+  const [{ darkMode, colorTheme, dbTheme }, dispatch] = useGeneralValue()
+  const [{ userId }, userDispatch] = useUserValue()
 
   const toggleDarkMode = () => {
     dispatch({ type: 'DARKMODE_TOGGLE', mode: !darkMode })
@@ -15,7 +18,19 @@ const Settings = () => {
   const selectColour = e => {
     dispatch({ type: 'SELECT_THEME', id: e.target.id })
   }
-
+console.log('colorTheme.id', colorTheme.id)
+console.log('dbTheme.dbColourTheme', dbTheme.dbColourTheme)
+  const setTheme = () => {
+    if (dbTheme.dbDarkMode !== darkMode) {
+      return (
+        <div>
+          SAVE CHANGES
+        </div>
+      )
+    } else {
+      return null
+    }
+  }
   return (
     <Paper square variant='outlined' style={{ height: '100vh', backgroundColor: darkMode ? '#666' : '#fafafa' }}>
       <div className={classes.settings}>
@@ -44,8 +59,9 @@ const Settings = () => {
             <div id={8} className={classes.colorCyan} onClick={(e) => selectColour(e)} />
           </div>
         </div>
+        {setTheme()}
       </div>
-    </Paper>
+    </Paper >
   )
 }
 

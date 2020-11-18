@@ -28,7 +28,7 @@ function getModalStyle() {
 const Header = () => {
 
   const classes = useStyles()
-  const [{ darkMode }, dispatch] = useGeneralValue()
+  const [{ darkMode, dbTheme }, dispatch] = useGeneralValue()
   const [{ user, userId, userDisplayName, userImage }, userDispatch] = useUserValue()
   const [openSignup, setOpenSignup] = useState(false)
   const [openLogin, setOpenLogin] = useState(false)
@@ -43,7 +43,7 @@ const Header = () => {
     setOpenSignup(false)
     setOpenLogin(false)
   }
-  // console.log('userId', userId)
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -54,8 +54,13 @@ const Header = () => {
             uid: doc.data().uid,
             image: doc.data().avatar,
           }
+          const themePayload = {
+            darkMode: doc.data().darkMode,
+            colourTheme: doc.data().colourTheme,
+          }
           dispatch({ type: 'DARKMODE_TOGGLE', mode: doc.data().darkMode })
           dispatch({ type: 'SELECT_THEME', id: doc.data().colourTheme })
+          dispatch({ type: 'SET_THEME', themePayload })
           userDispatch({ type: 'SET_USER', payload })
         })
       } else {
@@ -120,8 +125,13 @@ const Header = () => {
           uid: doc.data().uid,
           image: doc.data().avatar,
         }
+        const themePayload = {
+          darkMode: doc.data().darkMode,
+          colourTheme: doc.data().colourTheme,
+        }
         dispatch({ type: 'DARKMODE_TOGGLE', mode: doc.data().darkMode })
         dispatch({ type: 'SELECT_THEME', id: doc.data().colourTheme })
+        dispatch({ type: 'SET_THEME', themePayload })
         userDispatch({ type: 'SET_USER', payload })
       })
     })

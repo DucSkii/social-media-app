@@ -9,7 +9,11 @@ export const initialState = {
       main: '#000000',
       dark: '#fff',
     },
-  }
+  },
+  dbTheme: {
+    dbDarkMode: null,
+    dbColourTheme: null,
+  },
 }
 const generalReducer = (state, action) => {
   switch (action.type) {
@@ -28,6 +32,14 @@ const generalReducer = (state, action) => {
       return {
         ...state,
         colorTheme: ColourPalette[action.id],
+      }
+    case 'SET_THEME':
+      return {
+        ...state,
+        dbTheme: {
+          dbDarkMode: action.themePayload.darkMode,
+          dbColourTheme: action.themePayload.colourTheme,
+        }
       }
     default:
       return state
