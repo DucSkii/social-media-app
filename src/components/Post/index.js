@@ -50,22 +50,50 @@ const Post = (props) => {
   const postHeader = classNames('post-header-paper', classes.header)
 
   useEffect(() => {
-    let unsubscribe
-    if (props.postId) {
-      unsubscribe = db
-        .collection("posts")
-        .doc(props.postId)
-        .collection("comments")
-        .orderBy('timestamp', 'desc')
-        .onSnapshot((snapshot) => {
-          setComments(snapshot.docs.map((doc) => doc.data()))
-        })
-    }
 
-    return () => {
-      unsubscribe()
+    if (props.postId) {
+
+      const promise = []
+
+      db.collection("comments")
+        .where("postId", "==", props.postId).get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(comment => {
+            promise.push(comment.data())
+          })
+        }).then(() => {
+          promise.forEach(comment => {
+            const commentData = { ...comment }
+            db.collection("users").where("uid", "==", comment.uid).get()
+              .then(querySnapshot => {
+                querySnapshot.forEach(comment => {
+                  const userData = {
+                    username: comment.data().username,
+                    avatar: comment.data().avatar,
+                  }
+                  console.log('userData', userData)
+                  console.log('commentData', commentData)
+                  setComments(prevState => [...prevState, { ...commentData, ...userData }])
+                })
+              })
+          })
+        })
+      // .doc('0fXkV9Dm0IftMQOFPKTg').get().then((e) => {
+      //   e.data().postId.get().then((p) =>{
+      //     console.log('Post', p.data())
+      //   })
+      //   console.log(e.data().uid)
+      // })
+
+      // // .orderBy('timestamp', 'desc')
+      // .onSnapshot(
+      //   (snapshot) => {setComments(snapshot.docs.map((doc) => doc.data()),
+      //   (error) =>{ console.log(error)},
+      //   (complete) =>{console.log('complete')}
+      // )
+      // })
     }
-  }, [props.postId])
+  }, [])
 
   const postComment = (event) => {
     event.preventDefault()
@@ -86,7 +114,7 @@ const Post = (props) => {
     prevArrow:
       <div style={{ width: "30px", marginRight: "-30px" }}>
         <IconButton>
-          <KeyboardArrowLeftIcon style={{ backgroundColor: 'RGBA(255,255,255,00.5)', borderRadius: '20px' }} />
+          <KeyboardArrowLeftIcon style={{ backgroundColor: 'RGBA(255,255,255,0.5)', borderRadius: '20px' }} />
         </IconButton>
       </div>,
     nextArrow:
@@ -116,7 +144,7 @@ const Post = (props) => {
       return <img src={props.image} alt='' className='post-image' />
     }
   }
-
+  console.log('comments', comments)
   return (
     <div className='post' style={{ border: 'none' }}>
       <header className='post-header'>
