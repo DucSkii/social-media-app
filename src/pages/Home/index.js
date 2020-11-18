@@ -9,7 +9,6 @@ const Home = () => {
 
   const classes = useStyles()
   const [posts, setPosts] = useState([])
-  // const [postOwner, setPostOwner] = useState({})
   const [{ user }, userDispatch] = useUserValue()
 
   useEffect(() => {
@@ -23,8 +22,7 @@ const Home = () => {
       ))
       // from the snapshot look through docs and map
     })
-  })
-
+  }, [])
 
   return (
     <div className={classes.posts}>
