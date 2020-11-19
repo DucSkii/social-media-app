@@ -3,6 +3,7 @@ export const initialUserState = {
   userDisplayName: '',
   userId: '',
   userImage: '',
+  userBanner: '',
 }
 
 
@@ -25,6 +26,11 @@ const userReducer = (state, action) => {
       return {
         ...state,
         userImage: action.image,
+      }
+    case 'SET_BANNER':
+      return {
+        ...state,
+        userBanner: action.banner,
       }
     default:
       return state

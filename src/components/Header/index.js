@@ -61,6 +61,7 @@ const Header = () => {
           dispatch({ type: 'DARKMODE_TOGGLE', mode: doc.data().darkMode })
           dispatch({ type: 'SELECT_THEME', id: doc.data().colourTheme })
           dispatch({ type: 'SET_THEME', themePayload })
+          userDispatch({ type: 'SET_BANNER', banner: doc.data().postBannerColour })
           userDispatch({ type: 'SET_USER', payload })
         })
       } else {
@@ -70,6 +71,7 @@ const Header = () => {
           uid: null,
           image: null,
         }
+        userDispatch({ type: 'SET_BANNER', banner: null })
         userDispatch({ type: 'SET_USER', payload })
       }
     })
@@ -90,7 +92,7 @@ const Header = () => {
           avatar: '',
           colourTheme: 0,
           darkMode: false,
-          postBannerColour: 'white',
+          postBannerColour: null,
           following: 0,
           followers: 0,
           posts: 0,
@@ -104,6 +106,7 @@ const Header = () => {
         }
         dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
         dispatch({ type: 'SELECT_THEME', id: 0 })
+        userDispatch({ type: 'SET_BANNER', banner: null })
         userDispatch({ type: 'SET_USER', payload })
         return authUser.user.updateProfile({
           displayName: displayName
@@ -132,6 +135,7 @@ const Header = () => {
         dispatch({ type: 'DARKMODE_TOGGLE', mode: doc.data().darkMode })
         dispatch({ type: 'SELECT_THEME', id: doc.data().colourTheme })
         dispatch({ type: 'SET_THEME', themePayload })
+        userDispatch({ type: 'SET_BANNER', banner: doc.data().postBannerColour })
         userDispatch({ type: 'SET_USER', payload })
       })
     })

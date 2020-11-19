@@ -138,7 +138,7 @@ const Post = (props) => {
   return (
     <div className='post' style={{ border: 'none' }}>
       <header className='post-header'>
-        <Paper variant='outlined' square className={postHeader}>
+        <Paper variant='outlined' square className={postHeader} style={{ backgroundColor: props.postBannerColour }}>
           <Link to={`/profile/${props.username}/${props.uid}`}
             className={classes.link}
             style={{ color: darkMode ? '#fff' : '#000000' }}
