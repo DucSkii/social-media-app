@@ -42,6 +42,12 @@ const useStyles = makeStyles(theme => ({
       marginLeft: '8px'
     },
   },
+  captionTextNoImage: {
+    padding: '10px 5px',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: '8px'
+    },
+  },
   moreComments: {
     fontSize: '13px',
     padding: '15px',
@@ -231,7 +237,7 @@ const Post = (props) => {
               <strong>{props.username}</strong> {props.caption}
             </Typography>
           ) : (
-              <Typography style={{ fontSize: '14px' }} className={classes.captionText}>
+              <Typography style={{ fontSize: '14px' }} className={classes.captionTextNoImage}>
                 <strong>{props.caption}</strong>
               </Typography>
             )}
