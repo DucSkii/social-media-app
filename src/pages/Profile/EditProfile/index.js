@@ -196,7 +196,7 @@ const EditProfile = () => {
               </Grid>
               <Grid item xs={12} style={{ height: '15px' }} />
               <Grid container item xs={12}>
-                <Grid item xs={1}>
+                <Grid item xs={2} sm={1}>
                   <Paper
                     id={null}
                     className={classes.postBannerColour}
@@ -204,7 +204,7 @@ const EditProfile = () => {
                     onClick={e => userDispatch({ type: 'SELECT_BANNER', banner: null })}
                   />
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2} sm={1}>
                   <div
                     id='#79E9C6'
                     className={classes.postBannerColour}
@@ -212,7 +212,7 @@ const EditProfile = () => {
                     onClick={e => userDispatch({ type: 'SELECT_BANNER', banner: e.target.id })}
                   />
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2} sm={1}>
                   <div
                     id='#8A6FE7'
                     className={classes.postBannerColour}
@@ -220,7 +220,7 @@ const EditProfile = () => {
                     onClick={e => userDispatch({ type: 'SELECT_BANNER', banner: e.target.id })}
                   />
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2} sm={1}>
                   <div
                     id='#E76F78'
                     className={classes.postBannerColour}
@@ -228,7 +228,7 @@ const EditProfile = () => {
                     onClick={e => userDispatch({ type: 'SELECT_BANNER', banner: e.target.id })}
                   />
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2} sm={1}>
                   <div
                     id='#6FE076'
                     className={classes.postBannerColour}
