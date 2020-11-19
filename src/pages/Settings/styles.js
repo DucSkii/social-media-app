@@ -26,7 +26,6 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: '5px',
     width: '30px',
     height: '30px',
-    backgroundColor: '#000000',
     margin: '10px',
   },
   colorBlue: {
@@ -84,5 +83,10 @@ export const useStyles = makeStyles(theme => ({
     height: '30px',
     backgroundColor: '#2DE8E5',
     margin: '10px',
+  },
+  currentTheme: {
+    display: 'flex',
+    padding: '15px',
+    alignItems: 'center'
   },
 }))
