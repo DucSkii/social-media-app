@@ -9,7 +9,7 @@ import { db } from '../../firebase'
 const Profile = () => {
 
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userId, userDisplayName, userImage }, userDispatch] = useUserValue()
+  const [{ userId }, userDispatch] = useUserValue()
   const [userProfile, setUserProfile] = useState([])
   const location = useLocation()
   const classes = useStyles()

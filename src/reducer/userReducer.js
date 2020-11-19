@@ -7,7 +7,6 @@ export const initialUserState = {
   selectBanner: '',
 }
 
-
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'SET_USER':

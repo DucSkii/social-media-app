@@ -14,7 +14,6 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
 import './App.scss'
 
-
 const App = () => {
 
   const [{ isDrawerOpen, darkMode, colorTheme }, dispatch] = useGeneralValue()

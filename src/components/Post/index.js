@@ -40,8 +40,14 @@ const useStyles = makeStyles(theme => ({
   captionText: {
     [theme.breakpoints.up('sm')]: {
       marginLeft: '8px'
-    }
-  }
+    },
+  },
+  moreComments: {
+    fontSize: '13px',
+    padding: '15px',
+    textAlign: 'center',
+    cursor: 'pointer',
+  },
 }))
 
 const Post = (props) => {
@@ -101,7 +107,7 @@ const Post = (props) => {
 
     setComment('')
   }
-
+  console.log('comments', comments)
   const properties = {
     autoplay: false,
     transitionDuration: 200,
@@ -140,6 +146,65 @@ const Post = (props) => {
     }
   }
 
+  const renderComments = () => {
+    if (comments.length > 3) {
+      return (
+        <>
+          {comments.slice(0, 3).map((comment, index) => {
+            return (
+              <div key={index} style={{ display: 'flex', alignItems: 'center', padding: '0px 10px', paddingBottom: '5px' }}>
+                <Link
+                  to={`/profile/${comment.username}/${comment.uid}`}
+                  style={{
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: darkMode ? '#fff' : '#000000'
+                  }}
+                >
+                  <Avatar src={comment.avatar} className={classes.avatar} />
+                  <Typography style={{ fontSize: '12px' }}>
+                    <strong>{comment.username}</strong>
+                  </Typography>
+                </Link>
+                <Typography style={{ fontSize: '11px', marginLeft: '5px' }}>
+                  {comment.text}
+                </Typography>
+              </div>
+            )
+          })}
+          <Typography variant='h4' className={classes.moreComments}>Show more comments</Typography>
+        </>
+      )
+    } else {
+      return (
+        comments.map((comment, index) => {
+          return (
+            <div key={index} style={{ display: 'flex', alignItems: 'center', padding: '0px 10px', paddingBottom: '5px' }}>
+              <Link
+                to={`/profile/${comment.username}/${comment.uid}`}
+                style={{
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: darkMode ? '#fff' : '#000000'
+                }}
+              >
+                <Avatar src={comment.avatar} className={classes.avatar} />
+                <Typography style={{ fontSize: '12px' }}>
+                  <strong>{comment.username}</strong>
+                </Typography>
+              </Link>
+              <Typography style={{ fontSize: '11px', marginLeft: '5px' }}>
+                {comment.text}
+              </Typography>
+            </div>
+          )
+        })
+      )
+    }
+  }
+
   return (
     <div className='post' style={{ border: 'none' }}>
       <header className='post-header'>
@@ -174,31 +239,7 @@ const Post = (props) => {
       </Paper>
       <Paper square variant='outlined' style={{ border: 'none' }}>
         <div>
-          {
-            comments.map((comment, index) => {
-              return (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', padding: '0px 10px', paddingBottom: '5px' }}>
-                  <Link
-                    to={`/profile/${comment.username}/${comment.uid}`}
-                    style={{
-                      textDecoration: 'none',
-                      display: 'flex',
-                      alignItems: 'center',
-                      color: darkMode ? '#fff' : '#000000'
-                    }}
-                  >
-                    <Avatar src={comment.avatar} className={classes.avatar} />
-                    <Typography style={{ fontSize: '12px' }}>
-                      <strong>{comment.username}</strong>
-                    </Typography>
-                  </Link>
-                  <Typography style={{ fontSize: '11px', marginLeft: '5px' }}>
-                    {comment.text}
-                  </Typography>
-                </div>
-              )
-            })
-          }
+          {renderComments()}
         </div>
       </Paper>
       {user &&
