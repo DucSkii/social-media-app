@@ -12,28 +12,47 @@ const Home = () => {
   const [{ user }, userDispatch] = useUserValue()
 
   useEffect(() => {
+    setPosts([])
+    db.collection("posts").orderBy('timestamp', 'desc').get().then(queryPostSnapshot => {
+      queryPostSnapshot.forEach(post => {
+        const postData = {
+          post: post.data(),
+          id: post.id,
+        }
 
-    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-      setPosts(snapshot.docs.map(doc => (
-        {
-          id: doc.id,
-          post: doc.data(),
+        db.collection("users").where("uid", "==", post.data().uid).get().then(queryUserSnapshot => {
+          queryUserSnapshot.forEach(user => {
+            const userData = {
+              username: user.data().username,
+              avatar: user.data().avatar,
+              postBannerColour: user.data().postBannerColour,
+            }
+            setPosts(prevState => [...prevState, { ...postData, ...userData }])
+          })
         })
-      ))
-      // from the snapshot look through docs and map
+      })
     })
   }, [])
 
   return (
     <div className={classes.posts}>
       {user &&
-        <UploadPost />
+        <UploadPost setPosts={setPosts}/>
       }
       {
-        posts.map(({ id, post }) => {
-          // having a unique key for each post prevents old posts from having to re-render when a new post is added
-          return <Post key={id} postId={id} caption={post.caption} image={post.image} uid={post.uid} />
+        posts.map(({ id, post, username, avatar, postBannerColour }) => {
+          return <Post
+            key={id}
+            postId={id}
+            caption={post.caption}
+            image={post.image}
+            uid={post.uid}
+            username={username}
+            avatar={avatar}
+            postBannerColour={postBannerColour}
+          />
         })
+        // // having a unique key for each post prevents old posts from having to re-render when a new post is added
       }
     </div>
   )

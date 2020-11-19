@@ -5,7 +5,7 @@ import { db, storage } from '../../../firebase'
 import { useUserValue } from '../../../context/UserContext'
 import firebase from 'firebase'
 
-const UploadPost = () => {
+const UploadPost = (props) => {
 
   const classes = useStyles()
   const [{ userDisplayName, userImage, userId }, dispatch] = useUserValue()
@@ -80,11 +80,24 @@ const UploadPost = () => {
               image: images,
               uid: userId,
               likes: 0,
+            }).then(() => {
+              props.setPosts(prevState => [{
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                id: 1 + Math.random() * (1000 - 1),
+                post: {
+                  caption: caption,
+                  image: images,
+                  uid: userId,
+                  likes: 0,
+                },
+                username: userDisplayName,
+                avatar: userImage,
+              }, ...prevState])
+              setImages([])
+              setProgress(0)
+              setCaption('')
+              setImagePreview(null)
             })
-            setImages([])
-            setProgress(0)
-            setCaption('')
-            setImagePreview(null)
           }).catch(err => console.log(err))
         })
         .catch(err => console.log(err))
@@ -95,6 +108,23 @@ const UploadPost = () => {
         image: '',
         uid: userId,
         likes: 0,
+      }).then(() => {
+        props.setPosts(prevState => [{
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          id: 1 + Math.random() * (1000 - 1),
+          post: {
+            caption: caption,
+            image: '',
+            uid: userId,
+            likes: 0,
+          },
+          username: userDisplayName,
+          avatar: userImage,
+        }, ...prevState])
+        setImages([])
+        setProgress(0)
+        setCaption('')
+        setImagePreview(null)
       })
     }
   }

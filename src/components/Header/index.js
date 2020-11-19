@@ -47,7 +47,7 @@ const Header = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        db.collection("users").doc(authUser.uid).get().then(doc => {
+        db.collection("users").doc(authUser.uid).get().then((doc) => {
           const payload = {
             user: authUser,
             displayName: doc.data().username,
