@@ -51,4 +51,14 @@ export const useStyles = makeStyles(theme => ({
       display: 'none',
     },
   },
+  postBannerColour: {
+    width: '30px',
+    height: '30px',
+    borderRadius: '5px',
+  },
+  postBannerConfirm: {
+    width: '50px',
+    height: '50px',
+    borderRadius: '5px'
+  },
 }))

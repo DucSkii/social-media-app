@@ -8,7 +8,7 @@ import firebase from 'firebase'
 const UploadPost = (props) => {
 
   const classes = useStyles()
-  const [{ userDisplayName, userImage, userId, userBanner }, dispatch] = useUserValue()
+  const [{ userDisplayName, userImage, userId, userBanner }, userDispatch] = useUserValue()
   const [progress, setProgress] = useState(0)
   const [caption, setCaption] = useState('')
   const [images, setImages] = useState([])

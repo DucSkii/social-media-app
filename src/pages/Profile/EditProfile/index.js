@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useGeneralValue } from '../../../context/GeneralContext'
 import { useUserValue } from '../../../context/UserContext'
-import { Paper, Grid, Input, Avatar, Button, IconButton } from '@material-ui/core'
+import { Paper, Grid, Input, Avatar, Button, IconButton, Typography } from '@material-ui/core'
 import { storage } from '../../../firebase'
 import CreateIcon from '@material-ui/icons/Create'
 import CancelIcon from '@material-ui/icons/Cancel'
@@ -17,7 +17,7 @@ const EditProfile = () => {
 
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ userImage, userDisplayName, userId }, userDispatch] = useUserValue()
+  const [{ userImage, userDisplayName, userId, userBanner, selectBanner }, userDispatch] = useUserValue()
   const [imagePreview, setImagePreview] = useState(null)
   const [image, setImage] = useState(null)
   const [edit, setEdit] = useState(false)
@@ -128,6 +128,15 @@ const EditProfile = () => {
     }
   }
 
+  const setBannerColour = () => {
+    db.collection("users").doc(userId).update({
+      postBannerColour: selectBanner,
+    }).then(() => {
+      userDispatch({ type: 'SET_BANNER', banner: selectBanner })
+    })
+  }
+  console.log('userBanner', userBanner)
+  console.log('selectBanner', selectBanner)
   return (
     <div className={classes.profile}>
       <Paper square className={classes.paper} style={{ backgroundColor: darkMode ? '#666' : '#fafafa' }}>
@@ -175,6 +184,84 @@ const EditProfile = () => {
             <Grid item xs={1} />
             <Grid container item xs={10} style={{ alignItems: 'center' }}>
               {renderChangeName()}
+            </Grid>
+            <Grid item xs={1} />
+          </Grid>
+          <Grid item xs={12} style={{ height: '40px' }} />
+          <Grid container item xs={12}>
+            <Grid item xs={1} />
+            <Grid container item xs={10}>
+              <Grid item xs={12}>
+                <Typography variant='h4' style={{ fontSize: '20px' }}>Post Banner Colour</Typography>
+              </Grid>
+              <Grid item xs={12} style={{ height: '15px' }} />
+              <Grid container item xs={12}>
+                <Grid item xs={1}>
+                  <Paper
+                    id={null}
+                    className={classes.postBannerColour}
+                    style={{ backgroundColor: null }}
+                    onClick={e => userDispatch({ type: 'SELECT_BANNER', banner: null })}
+                  />
+                </Grid>
+                <Grid item xs={1}>
+                  <div
+                    id='#79E9C6'
+                    className={classes.postBannerColour}
+                    style={{ backgroundColor: '#79E9C6' }}
+                    onClick={e => userDispatch({ type: 'SELECT_BANNER', banner: e.target.id })}
+                  />
+                </Grid>
+                <Grid item xs={1}>
+                  <div
+                    id='#8A6FE7'
+                    className={classes.postBannerColour}
+                    style={{ backgroundColor: '#8A6FE7' }}
+                    onClick={e => userDispatch({ type: 'SELECT_BANNER', banner: e.target.id })}
+                  />
+                </Grid>
+                <Grid item xs={1}>
+                  <div
+                    id='#E76F78'
+                    className={classes.postBannerColour}
+                    style={{ backgroundColor: '#E76F78' }}
+                    onClick={e => userDispatch({ type: 'SELECT_BANNER', banner: e.target.id })}
+                  />
+                </Grid>
+                <Grid item xs={1}>
+                  <div
+                    id='#6FE076'
+                    className={classes.postBannerColour}
+                    style={{ backgroundColor: '#6FE076' }}
+                    onClick={e => userDispatch({ type: 'SELECT_BANNER', banner: e.target.id })}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item xs={12} style={{ height: '15px' }} />
+              <Grid container item xs={12}>
+                <Paper
+                  className={classes.postBannerConfirm}
+                  style={{
+                    backgroundColor: userBanner,
+                    marginRight: '10px',
+                  }}
+                />
+                <Button disableRipple>Current Colour</Button>
+              </Grid>
+              <Grid item xs={12} style={{ height: '15px' }} />
+              {
+                userBanner !== selectBanner &&
+                <Grid container item xs={12}>
+                  <Paper
+                    className={classes.postBannerConfirm}
+                    style={{
+                      backgroundColor: selectBanner,
+                      marginRight: '10px',
+                    }}
+                  />
+                  <Button onClick={setBannerColour}>Save Colour</Button>
+                </Grid>
+              }
             </Grid>
             <Grid item xs={1} />
           </Grid>

@@ -23,9 +23,9 @@ const Settings = () => {
   const setTheme = () => {
     if (dbTheme.dbDarkMode !== darkMode || dbTheme.dbColourTheme !== colorTheme.id) {
       return (
-        <Button style={{ margin: '20px' }} onClick={saveChanges}>SAVE CHANGES</Button>
+        <Button variant='outlined' style={{ margin: '20px' }} onClick={saveChanges}>SAVE CHANGES</Button>
       )
-    } 
+    }
     return null
   }
 
