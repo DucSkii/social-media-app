@@ -37,6 +37,11 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
   },
+  captionText: {
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: '8px'
+    }
+  }
 }))
 
 const Post = (props) => {
@@ -157,11 +162,11 @@ const Post = (props) => {
       <Paper square >
         <footer className='post-footer'>
           {props.image.length ? (
-            <Typography style={{ fontSize: '13px' }}>
+            <Typography style={{ fontSize: '13px' }} className={classes.captionText}>
               <strong>{props.username}</strong> {props.caption}
             </Typography>
           ) : (
-              <Typography style={{ fontSize: '14px' }}>
+              <Typography style={{ fontSize: '14px' }} className={classes.captionText}>
                 <strong>{props.caption}</strong>
               </Typography>
             )}
