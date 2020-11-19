@@ -206,9 +206,9 @@ const EditProfile = () => {
                 </Grid>
                 <Grid item xs={2} sm={1}>
                   <div
-                    id='#79E9C6'
+                    id='#6AE3BD'
                     className={classes.postBannerColour}
-                    style={{ backgroundColor: '#79E9C6' }}
+                    style={{ backgroundColor: '#6AE3BD' }}
                     onClick={e => userDispatch({ type: 'SELECT_BANNER', banner: e.target.id })}
                   />
                 </Grid>
@@ -230,9 +230,9 @@ const EditProfile = () => {
                 </Grid>
                 <Grid item xs={2} sm={1}>
                   <div
-                    id='#6FE076'
+                    id='#61DA68'
                     className={classes.postBannerColour}
-                    style={{ backgroundColor: '#6FE076' }}
+                    style={{ backgroundColor: '#61DA68' }}
                     onClick={e => userDispatch({ type: 'SELECT_BANNER', banner: e.target.id })}
                   />
                 </Grid>
