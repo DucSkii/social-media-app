@@ -135,8 +135,7 @@ const EditProfile = () => {
       userDispatch({ type: 'SET_BANNER', banner: selectBanner })
     })
   }
-  console.log('userBanner', userBanner)
-  console.log('selectBanner', selectBanner)
+
   return (
     <div className={classes.profile}>
       <Paper square className={classes.paper} style={{ backgroundColor: darkMode ? '#666' : '#fafafa' }}>
