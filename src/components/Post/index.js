@@ -32,6 +32,16 @@ const useStyles = makeStyles(theme => ({
       marginRight: '10px',
     },
   },
+  commentAvatar: {
+    width: '17px',
+    height: '17px',
+    marginRight: '8px',
+    [theme.breakpoints.up('sm')]: {
+      width: '20px',
+      height: '20px',
+      marginRight: '10px',
+    },
+  },
   link: {
     textDecoration: 'none',
     display: 'flex',
@@ -168,8 +178,8 @@ const Post = (props) => {
                     color: darkMode ? '#fff' : '#000000'
                   }}
                 >
-                  <Avatar src={comment.avatar} className={classes.avatar} />
-                  <Typography style={{ fontSize: '12px' }}>
+                  <Avatar src={comment.avatar} className={classes.commentAvatar} />
+                  <Typography style={{ fontSize: '11px' }}>
                     <strong>{comment.username}</strong>
                   </Typography>
                 </Link>
@@ -196,8 +206,8 @@ const Post = (props) => {
                   color: darkMode ? '#fff' : '#000000'
                 }}
               >
-                <Avatar src={comment.avatar} className={classes.avatar} />
-                <Typography style={{ fontSize: '12px' }}>
+                <Avatar src={comment.avatar} className={classes.commentAvatar} />
+                <Typography style={{ fontSize: '11px' }}>
                   <strong>{comment.username}</strong>
                 </Typography>
               </Link>
@@ -220,7 +230,7 @@ const Post = (props) => {
             style={{ color: darkMode ? '#fff' : '#000000' }}
           >
             <Avatar src={props.avatar} className={classes.avatar} />
-            <Typography style={{ fontSize: '12px' }}><strong>{props.username}</strong></Typography>
+            <Typography style={{ fontSize: '13px' }}><strong>{props.username}</strong></Typography>
           </Link>
         </Paper>
       </header>
