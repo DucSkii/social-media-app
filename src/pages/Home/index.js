@@ -19,28 +19,41 @@ const Home = () => {
           post: post.data(),
           id: post.id,
         }
-
-        db.collection("users").where("uid", "==", post.data().uid).get().then(queryUserSnapshot => {
-          queryUserSnapshot.forEach(user => {
-            const userData = {
-              username: user.data().username,
-              avatar: user.data().avatar,
-              postBannerColour: user.data().postBannerColour,
-            }
-            setPosts(prevState => [...prevState, { ...postData, ...userData }])
-          })
+        db.collection("users").doc(post.data().uid).get().then(doc => {
+          const userData = {
+            username: doc.data().username,
+            avatar: doc.data().avatar,
+            postBannerColour: doc.data().postBannerColour,
+          }
+          Object.assign(postData, userData)
+          // postData.push(userData)
         })
+        setPosts(prevState => [...prevState, postData])
+        // setPosts()
+        // .then(queryUserSnapshot => {
+        //   console.log('queryUserSnapshot', queryUserSnapshot.docs)
+        //   queryUserSnapshot.forEach(user => {
+        //     const userData = {
+        //       username: user.data().username,
+        //       avatar: user.data().avatar,
+        //       postBannerColour: user.data().postBannerColour,
+        //     }
+        //     // setPosts(prevState => [...prevState, { ...userData, ...postData }])
+        //   })
+        // })
+        // console.log('userData', userData)
       })
     })
   }, [])
-
+  console.log('posts', posts)
   return (
     <div className={classes.posts}>
+      {/* {console.log('posts', posts)} */}
       {user &&
-        <UploadPost setPosts={setPosts}/>
+        <UploadPost setPosts={setPosts} />
       }
       {
-        posts.map(({ id, post, username, avatar, postBannerColour }) => {
+        posts.map(({ id, username, avatar, postBannerColour, post }) => {
           return <Post
             key={id}
             postId={id}

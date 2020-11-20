@@ -240,6 +240,7 @@ const Header = () => {
               <img src={logo} alt='logo' style={{ height: '35px', marginLeft: '10px' }} />
             </div>
           </Link>
+          <Input placeholder='Search...' style={{ width: '40%' }} />
           {user ? (
             <>
               <div className={classes.headerIcons}>

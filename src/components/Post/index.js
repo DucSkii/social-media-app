@@ -67,7 +67,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Post = (props) => {
-
+// console.log('props', props)
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const classes = useStyles()
@@ -123,7 +123,6 @@ const Post = (props) => {
 
     setComment('')
   }
-  console.log('comments', comments)
   const properties = {
     autoplay: false,
     transitionDuration: 200,
