@@ -10,6 +10,8 @@ import { db } from '../../firebase'
 import firebase from 'firebase'
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIcon from '@material-ui/icons/Favorite'
 
 import './styles.scss'
 import { useUserValue } from '../../context/UserContext'
@@ -67,7 +69,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Post = (props) => {
-// console.log('props', props)
+  // console.log('props', props)
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const classes = useStyles()
@@ -220,6 +222,63 @@ const Post = (props) => {
     }
   }
 
+  // useEffect(() => {
+
+  //   db.collection("posts").doc(props.postId).collection("likes").get().then(doc => {
+  //     // console.log('doc', doc.docs)
+  //     if (doc.docs.length) {
+  //       doc.forEach(post => {
+  //         console.log('post', post.id)
+  //         if (post.id === userId) {
+  //           console.log('includes')
+  //           return (
+  //             <div style={{
+  //               display: 'flex',
+  //               paddingRight: '10px',
+  //               alignItems: 'center',
+  //               flexDirection: 'column',
+  //               width: '50px',
+  //             }}>
+  //               <IconButton style={{ padding: '0' }}><FavoriteIcon /></IconButton>
+  //               <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+  //             </div>
+  //           )
+  //         } else {
+  //           console.log('does not include')
+  //           return (
+  //             <div style={{
+  //               display: 'flex',
+  //               paddingRight: '10px',
+  //               alignItems: 'center',
+  //               flexDirection: 'column',
+  //               width: '50px',
+  //             }}>
+  //               <IconButton style={{ padding: '0' }}><FavoriteBorderIcon /></IconButton>
+  //               <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+  //             </div>
+  //           )
+  //         }
+  //       })
+  //     } else {
+  //       console.log('no likes')
+  //       return (
+  //         <div style={{
+  //           display: 'flex',
+  //           paddingRight: '10px',
+  //           alignItems: 'center',
+  //           flexDirection: 'column',
+  //           width: '50px',
+  //         }}>
+  //           <IconButton style={{ padding: '0' }}><FavoriteBorderIcon /></IconButton>
+  //           <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+  //         </div>
+  //       )
+  //     }
+  //   })
+  // }, [])
+
+  // renderLikes()
+
   return (
     <div className='post' style={{ border: 'none' }}>
       <header className='post-header'>
@@ -242,13 +301,19 @@ const Post = (props) => {
       <Paper square >
         <footer className='post-footer'>
           {props.image.length ? (
-            <Typography style={{ fontSize: '13px' }} className={classes.captionText}>
-              <strong>{props.username}</strong> {props.caption}
-            </Typography>
-          ) : (
-              <Typography style={{ fontSize: '14px' }} className={classes.captionTextNoImage}>
-                <strong>{props.caption}</strong>
+            <>
+              <Typography style={{ fontSize: '13px' }} className={classes.captionText}>
+                <strong>{props.username}</strong> {props.caption}
               </Typography>
+              {/* {renderLikes()} */}
+            </>
+          ) : (
+              <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Typography style={{ fontSize: '14px' }} className={classes.captionTextNoImage}>
+                  <strong>{props.caption}</strong>
+                </Typography>
+                {/* {renderLikes()} */}
+              </div>
             )}
         </footer>
       </Paper>

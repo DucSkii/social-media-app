@@ -14,25 +14,39 @@ const Home = () => {
   useEffect(() => {
     setPosts([])
     db.collection("posts").orderBy('timestamp', 'desc').get().then(queryPostSnapshot => {
+      let postsData = []
+
+      let i = 0
+
       queryPostSnapshot.forEach(post => {
-        console.log('post', post.data())
-        const postData = {
+        postsData[i] = {
           post: post.data(),
           id: post.id,
+          user: {}
         }
+
         db.collection("users").doc(post.data().uid).get().then(doc => {
-          const userData = {
-            username: doc.data().username,
-            avatar: doc.data().avatar,
-            postBannerColour: doc.data().postBannerColour,
+          for (let j in postsData) {
+            if (postsData[j].id === post.id) {
+              postsData[j].user = {
+                username: doc.data().username,
+                avatar: doc.data().avatar,
+                postBannerColour: doc.data().postBannerColour,
+              }
+              break
+            }
           }
-          Object.assign(postData, userData)
-          setPosts(prevState => [...prevState, postData])
+
         })
+
+        i++
       })
+      setPosts(postsData)
     })
   }, [])
-// console.log('posts', posts)
+
+  // console.log('posts', posts)
+
   // db.collection("posts").orderBy('timestamp', 'desc').get().then(queryPostSnapshot => {
   //   return queryPostSnapshot.docs.map(doc => {
   //     return doc.data()
@@ -87,18 +101,20 @@ const Home = () => {
         <UploadPost setPosts={setPosts} />
       }
       {
-        // posts.map(post => {
-        //   // return <Post
-        //   //   key={id}
-        //   //   postId={id}
-        //   //   caption={post.caption}
-        //   //   image={post.image}
-        //   //   uid={post.uid}
-        //   //   username={username}
-        //   //   avatar={avatar}
-        //   //   postBannerColour={postBannerColour}
-        //   // />
-        // })
+        posts.map(({ id, post, user }) => {
+          // console.log('post', post)
+          return <Post
+            key={id}
+            postId={id}
+            likes={post.likes}
+            caption={post.caption}
+            image={post.image}
+            uid={post.uid}
+            username={user.username}
+            avatar={user.avatar}
+            postBannerColour={user.postBannerColour}
+          />
+        })
         // // // having a unique key for each post prevents old posts from having to re-render when a new post is added
       }
     </div>
