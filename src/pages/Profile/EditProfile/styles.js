@@ -4,10 +4,17 @@ export const useStyles = makeStyles(theme => ({
   profile: {
     paddingTop: '50px !important',
     width: '100%',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+      justifyContent: 'center',
+    },
   },
   paper: {
     height: 'calc(100vh - 50px)',
     width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '950px',
+    },
   },
   avatar: {
     height: '70px',
