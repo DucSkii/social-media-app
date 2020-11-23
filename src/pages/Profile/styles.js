@@ -2,7 +2,10 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
   profile: {
+    overflowX: 'hidden',
     marginTop: '50px',
+    overflowY: 'auto',
+    height: 'calc(100vh - 50px)',
     width: '100%',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
@@ -33,8 +36,22 @@ export const useStyles = makeStyles(theme => ({
   },
   detailNumber: {
     textAlign: 'center',
-
-  }
+  },
+  arrowIcon: {
+    backgroundColor: 'RGBA(255,255,255,0.5)',
+    borderRadius: '20px',
+    [theme.breakpoints.down('sm')]: {
+      width: '15px',
+      height: '15px',
+    },
+  },
+  arrowRight: {
+    width: "30px",
+    marginLeft: "-48px",
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: "-38px",
+    },
+  },
   // id: {
   //   display: 'flex',
   //   marginRight: '15px',
