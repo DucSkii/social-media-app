@@ -65,7 +65,7 @@ const Profile = () => {
             <Grid item xs={1} />
             <Grid item xs={1}>
               <Avatar src={userProfile.avatar} className={classes.avatar} />
-              <Typography style={{ fontSize: '16px', marginTop: '10px' }}>{userProfile.username}</Typography>
+              <Typography style={{ fontSize: '15px', marginTop: '10px', minWidth: '80px' }}>{userProfile.username}</Typography>
             </Grid>
             <Grid item xs={1} style={{ marginRight: '10px' }} />
             <Grid container item xs={8} className={classes.detailContainer}>
