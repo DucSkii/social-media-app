@@ -1,8 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
+  container: {
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+      justifyContent: 'center',
+    },
+  },
   settings: {
     marginTop: '50px',
+    [theme.breakpoints.up('md')]: {
+      width: '950px',
+    },
   },
   darkMode: {
     padding: '10px',

@@ -9,7 +9,5 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    [theme.breakpoints.up('sm')]: {
-    },
   },
 }))
