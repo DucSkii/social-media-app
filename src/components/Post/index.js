@@ -159,7 +159,7 @@ const Post = (props) => {
         </Fade>
       )
     } else {
-      return <img src={props.image} alt='' className='post-image' />
+      return <img src={props.image} alt='' className='post-image'/>
     }
   }
 
@@ -280,7 +280,7 @@ const Post = (props) => {
   // renderLikes()
 
   return (
-    <div className='post' style={{ border: 'none' }}>
+    <div className='post'>
       <header className='post-header'>
         <Paper variant='outlined' square className={postHeader} style={{ backgroundColor: props.postBannerColour }}>
           <Link to={`/profile/${props.username}/${props.uid}`}

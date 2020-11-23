@@ -1,6 +1,7 @@
 .post {
   margin-bottom: 50px;
   width: 100%;
+  border: none;
   &-footer {
     display: flex;
     padding: 10px;
@@ -17,6 +18,7 @@
   &-image {
     width: 100%;
     object-fit: contain;
+    max-height: 400px;
   }
 }
 
@@ -31,6 +33,11 @@
     margin-top: 20px;
     margin-bottom: 40px;
     max-width: 425px;
+    border-bottom: 1px solid #424242;
+    border-left: 1px solid #424242;
+    border-right: 1px solid #424242;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     &-footer {
       padding: 10px 10px 10px 0px;
       max-width: 425px;
@@ -38,6 +45,32 @@
     }
     &-header {
       max-width: 425px;
+      &-paper {
+        display: flex;
+        align-items: center;
+        height: 15px;
+        padding: 17px 12px;
+      }
+    }
+    &-image {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .post {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    max-width: 600px;
+    &-footer {
+      padding: 10px 10px 10px 0px;
+      max-width: 600px;
+      margin-left: 8px;
+    }
+    &-header {
+      max-width: 600px;
       &-paper {
         display: flex;
         align-items: center;
