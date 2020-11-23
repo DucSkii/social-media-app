@@ -4,10 +4,17 @@ export const useStyles = makeStyles(theme => ({
   profile: {
     marginTop: '50px',
     width: '100%',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+      justifyContent: 'center',
+    },
   },
   paper: {
     height: '100vh',
     width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '950px'
+    },
   },
   container: {
     paddingTop: '20px',
