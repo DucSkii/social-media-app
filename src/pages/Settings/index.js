@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useStyles } from './styles'
 import { Paper, Typography, Switch, Button } from '@material-ui/core'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
-import { db } from '../../firebase'
+import { db, auth } from '../../firebase'
 import ColourPalette from '../../utils/ColourPalette'
 
 const Settings = () => {
@@ -44,7 +44,7 @@ const Settings = () => {
     }
     return null
   }
-
+  console.log('colorTheme.id', colorTheme.id)
   const saveChanges = () => {
     const themePayload = {
       darkMode: darkMode,
@@ -55,11 +55,10 @@ const Settings = () => {
         dispatch({ type: 'SET_THEME', themePayload })
       })
   }
-  console.log('dbTheme', dbTheme.dbColourTheme)
-  console.log('ColourPalette', ColourPalette[dbTheme.dbColourTheme].primary)
+
   return (
     <div className={classes.container} style={{ backgroundColor: darkMode ? '#424242' : '#fff' }}>
-      <Paper square variant='outlined' style={{ height: '100vh', backgroundColor: darkMode ? '#666' : '#fafafa' }}>
+      <Paper square variant='outlined' style={{ border: 'none', height: '100vh', backgroundColor: darkMode ? '#666' : '#fafafa' }}>
         <div className={classes.settings}>
           <div className={classes.darkMode}>
             <Typography variant='h5' className={classes.darkMode}>Dark Mode</Typography>
