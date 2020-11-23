@@ -58,6 +58,8 @@ const Header = () => {
             darkMode: doc.data().darkMode,
             colourTheme: doc.data().colourTheme,
           }
+          localStorage.setItem('darkMode', doc.data().darkMode)
+          localStorage.setItem('colourTheme', doc.data().colourTheme)
           dispatch({ type: 'DARKMODE_TOGGLE', mode: doc.data().darkMode })
           dispatch({ type: 'SELECT_THEME', id: doc.data().colourTheme })
           dispatch({ type: 'SET_THEME', themePayload })

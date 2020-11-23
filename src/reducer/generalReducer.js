@@ -2,17 +2,11 @@ import ColourPalette from '../utils/ColourPalette'
 
 export const initialState = {
   isDrawerOpen: false,
-  darkMode: false,
-  colorTheme: {
-    id: 0,
-    primary: {
-      main: '#000000',
-      dark: '#fff',
-    },
-  },
+  darkMode: (localStorage.getItem('darkMode') === 'true') ? true : false,
+  colorTheme: ColourPalette[Number(localStorage.getItem('colourTheme'))],
   dbTheme: {
-    dbDarkMode: null,
-    dbColourTheme: null,
+    dbDarkMode: (localStorage.getItem('darkMode') === 'true') ? true : false,
+    dbColourTheme: Number(localStorage.getItem('colourTheme')),
   },
 }
 const generalReducer = (state, action) => {

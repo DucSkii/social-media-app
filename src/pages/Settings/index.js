@@ -44,7 +44,7 @@ const Settings = () => {
     }
     return null
   }
-  console.log('colorTheme.id', colorTheme.id)
+
   const saveChanges = () => {
     const themePayload = {
       darkMode: darkMode,
@@ -99,7 +99,7 @@ const Settings = () => {
                   backgroundColor: darkMode ?
                     ColourPalette[dbTheme.dbColourTheme].primary.dark
                     :
-                    ColourPalette[dbTheme.dbColourTheme].primary.main,
+                    ColourPalette[dbTheme.dbColourTheme].primary.main
                 }}
               />
               <Typography variant='h4' style={{ fontSize: '20px' }}>Current Theme</Typography>
