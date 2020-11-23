@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
     height: 'calc(100vh - 50px)',
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '950px',
+      width: '960px',
     },
   },
   avatar: {

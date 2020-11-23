@@ -10,7 +10,7 @@ export const useStyles = makeStyles(theme => ({
   settings: {
     marginTop: '50px',
     [theme.breakpoints.up('md')]: {
-      width: '950px',
+      width: '960px',
     },
   },
   darkMode: {

@@ -58,6 +58,8 @@ const LogoutModal = (props) => {
       uid: null,
       image: null, //add a default image
     }
+    localStorage.setItem('darkMode', false)
+    localStorage.setItem('colourTheme', 0)
     userDispatch({ type: 'SELECT_BANNER', banner: null })
     userDispatch({ type: 'SET_BANNER', banner: null })
     userDispatch({ type: 'SET_USER', payload })

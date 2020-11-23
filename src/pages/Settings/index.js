@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useStyles } from './styles'
 import { Paper, Typography, Switch, Button } from '@material-ui/core'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
-import { db, auth } from '../../firebase'
+import { db } from '../../firebase'
 import ColourPalette from '../../utils/ColourPalette'
 
 const Settings = () => {
@@ -19,7 +19,6 @@ const Settings = () => {
   const selectColour = e => {
     dispatch({ type: 'SELECT_THEME', id: e.target.id })
   }
-
 
   const setTheme = () => {
     if (dbTheme.dbDarkMode !== darkMode || dbTheme.dbColourTheme !== colorTheme.id) {
@@ -57,7 +56,7 @@ const Settings = () => {
   }
 
   return (
-    <div className={classes.container} style={{ backgroundColor: darkMode ? '#424242' : '#fff' }}>
+    <div className={classes.container} style={{ backgroundColor: darkMode ? '#4F4F4F' : '#F5F5F5' }}>
       <Paper square variant='outlined' style={{ border: 'none', height: '100vh', backgroundColor: darkMode ? '#666' : '#fafafa' }}>
         <div className={classes.settings}>
           <div className={classes.darkMode}>

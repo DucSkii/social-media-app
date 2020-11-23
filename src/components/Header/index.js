@@ -108,6 +108,8 @@ const Header = () => {
           uid: authUser.user.uid,
           image: authUser.user.photoURL, //add a default image
         }
+        localStorage.setItem('darkMode', false)
+        localStorage.setItem('colourTheme', 0)
         dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
         dispatch({ type: 'SELECT_THEME', id: 0 })
         userDispatch({ type: 'SELECT_BANNER', banner: null })
@@ -137,6 +139,8 @@ const Header = () => {
           darkMode: doc.data().darkMode,
           colourTheme: doc.data().colourTheme,
         }
+        localStorage.setItem('darkMode', doc.data().darkMode)
+        localStorage.setItem('colourTheme', doc.data().colourTheme)
         dispatch({ type: 'DARKMODE_TOGGLE', mode: doc.data().darkMode })
         dispatch({ type: 'SELECT_THEME', id: doc.data().colourTheme })
         dispatch({ type: 'SET_THEME', themePayload })

@@ -110,8 +110,8 @@ const Profile = () => {
 
 
   return (
-    <div className={classes.profile} style={{ backgroundColor: darkMode ? '#424242' : '#fff' }}>
-      <Paper square className={classes.paper} style={{ backgroundColor: darkMode ? '#666' : '#fafafa' }}>
+    <div className={classes.profile} style={{ backgroundColor: darkMode ? '#4F4F4F' : '#F5F5F5' }}>
+      <Paper square variant='outlined' className={classes.paper} style={{ border: 'none', backgroundColor: darkMode ? '#666' : '#fafafa' }}>
         {renderProfile()}
       </Paper>
     </div>

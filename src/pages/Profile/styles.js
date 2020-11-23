@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
     height: '100vh',
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '950px'
+      width: '960px'
     },
   },
   container: {
