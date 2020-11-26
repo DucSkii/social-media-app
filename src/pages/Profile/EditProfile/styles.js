@@ -21,7 +21,7 @@ export const useStyles = makeStyles(theme => ({
     width: '70px',
   },
   button: {
-    padding: '0px 7px',
+    padding: '7px',
     margin: '0',
   },
   changeButton: {

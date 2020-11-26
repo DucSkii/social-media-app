@@ -55,13 +55,28 @@ const EditProfile = () => {
           .ref('images')
           .child(image.name)
           .getDownloadURL()
-          .then(url => {
+          .then(async (url) => {
             user.updateProfile({
               photoURL: url,
             })
-            db.collection("users").doc(userId).update({
+            db.doc(`/users/${userId}`).update({
               avatar: url,
             })
+
+            const queryPostImage = await db.collectionGroup("posts").where("uid", "==", userId).get()
+            queryPostImage.docs.forEach(snapshot => {
+              snapshot.ref.update({
+                avatar: url,
+              })
+            })
+
+            const queryCommentImage = await db.collectionGroup("comments").where("uid", "==", userId).get()
+            queryCommentImage.docs.forEach(snapshot => {
+              snapshot.ref.update({
+                avatar: url,
+              })
+            })
+
             userDispatch({ type: 'SET_IMAGE', image: url })
             setImage(null)
             setImagePreview(null)
