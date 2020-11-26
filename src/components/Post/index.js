@@ -74,31 +74,16 @@ const Post = (props) => {
   const [comment, setComment] = useState('')
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
-  const [{ user, userId, userDisplayName, userImage }, userDispatch] = useUserValue()
+  const [{ user, userId, userDisplayName, userImage, userBanner }, userDispatch] = useUserValue()
   const postHeader = classNames('post-header-paper', classes.header)
 
   useEffect(() => {
-    setComments([])
-    if (props.postId) {
-      db.collection("comments")
-        .where("postId", "==", props.postId)
-        .orderBy('timestamp', 'desc').get() // grabbing comment linked to post
-        .then(queryCommentSnapshot => {
-          queryCommentSnapshot.forEach(comment => {
-            const commentData = comment.data()
+    const unsubscribe = db.collection("comments").where("postId", "==", props.postId).orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+      setComments(snapshot.docs.map(doc => doc.data()))
+    })
 
-            db.collection("users").where("uid", "==", commentData.uid).get() // grabbing user linked to comment uid
-              .then(queryUserSnapshot => {
-                queryUserSnapshot.forEach(user => {
-                  const userData = { // new object for username and avatar
-                    username: user.data().username,
-                    avatar: user.data().avatar,
-                  }
-                  setComments(prevState => [...prevState, { ...commentData, ...userData }])
-                })
-              })
-          })
-        })
+    return () => {
+      unsubscribe()
     }
   }, [])
 
@@ -112,6 +97,7 @@ const Post = (props) => {
       postId: props.postId,
       username: userDisplayName,
       avatar: userImage,
+      postBannerColour: userBanner,
     }
 
     db.collection("comments").add({
@@ -119,12 +105,13 @@ const Post = (props) => {
       text: commentObj.text,
       uid: commentObj.uid,
       postId: commentObj.postId,
-    }).then(() => {
-      setComments(prevState => [commentObj, ...prevState])
+      username: commentObj.username,
+      avatar: commentObj.avatar,
+      postBannerColour: commentObj.postBannerColour,
     }).catch(error => console.log(error))
-
     setComment('')
   }
+
   const properties = {
     autoplay: false,
     transitionDuration: 200,
@@ -159,7 +146,7 @@ const Post = (props) => {
         </Fade>
       )
     } else {
-      return <img src={props.image} alt='' className='post-image'/>
+      return <img src={props.image} alt='' className='post-image' />
     }
   }
 

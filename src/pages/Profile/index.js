@@ -106,7 +106,6 @@ const Profile = () => {
               </Grid>
             )
           } else {
-            console.log('image', image)
             return (
               <Grid item xs={4} key={index} style={{ maxHeight: '176px' }}>
                 <Fade {...properties} style={{ maxHeight: '176px' }}>

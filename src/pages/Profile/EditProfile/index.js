@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useGeneralValue } from '../../../context/GeneralContext'
 import { useUserValue } from '../../../context/UserContext'
 import { Paper, Grid, Input, Avatar, Button, IconButton, Typography } from '@material-ui/core'
@@ -112,27 +112,50 @@ const EditProfile = () => {
     setNewUsername('')
   }
 
-  const handleChangeUsername = () => {
+  const handleChangeUsername = async () => {
     if (newUsername === '' || newUsername === userDisplayName) {
       alert('Please enter a new username')
     } else {
       user.updateProfile({
         displayName: newUsername,
       })
-      db.collection("users").doc(userId).update({
+      db.doc(`/users/${userId}`).update({
         username: newUsername,
       })
+
+      const queryPosts = await db.collectionGroup("posts").where("uid", "==", userId).get()
+      queryPosts.docs.forEach(snapshot => {
+        snapshot.ref.update({
+          username: newUsername,
+        })
+      })
+
+      const queryComments = await db.collectionGroup("comments").where("uid", "==", userId).get()
+      queryComments.docs.forEach(snapshot => {
+        snapshot.ref.update({
+          username: newUsername,
+        })
+      })
+
+
       userDispatch({ type: 'SET_DISPLAYNAME', name: newUsername })
       setEdit(false)
       setNewUsername('')
     }
   }
 
-  const setBannerColour = () => {
-    db.collection("users").doc(userId).update({
+  const setBannerColour = async () => {
+    db.doc(`/users/${userId}`).update({
       postBannerColour: selectBanner,
     }).then(() => {
       userDispatch({ type: 'SET_BANNER', banner: selectBanner })
+    })
+
+    const queryPostsBanner = await db.collectionGroup("posts").where("uid", "==", userId).get()
+    queryPostsBanner.docs.forEach(snapshot => {
+      snapshot.ref.update({
+        postBannerColour: selectBanner,
+      })
     })
   }
 
