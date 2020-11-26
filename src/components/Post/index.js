@@ -118,9 +118,13 @@ const Post = (props) => {
   const postHeader = classNames('post-header-paper', classes.header)
 
   useEffect(() => {
-    const unsubscribe = db.collection("comments").where("postId", "==", props.postId).orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-      setComments(snapshot.docs.map(doc => doc.data()))
-    })
+    const unsubscribe = db.collection("comments")
+      .where("postId", "==", props.postId)
+      .orderBy('timestamp', 'desc')
+      .limit(3)
+      .onSnapshot(snapshot => {
+        setComments(snapshot.docs.map(doc => doc.data()))
+      })
 
     return () => {
       unsubscribe()
@@ -190,11 +194,27 @@ const Post = (props) => {
     }
   }
 
+  const showMore = (e) => {
+    let commentsLength = comments.length
+    db.collection("comments")
+      .where("postId", "==", e)
+      .orderBy('timestamp', 'desc')
+      .limit(commentsLength + 3)
+      .get()
+      .then(queryCommentsSnapshot => {
+        const moreComments = []
+        queryCommentsSnapshot.forEach(comment => {
+          moreComments.push(comment.data())
+        })
+        setComments(moreComments)
+      })
+  }
+
   const renderComments = () => {
-    if (comments.length > 3) {
+    if (comments.length >= 3) {
       return (
         <>
-          {comments.slice(0, 3).map((comment, index) => {
+          {comments.map((comment, index) => {
             return (
               <div key={index} style={{ display: 'flex', alignItems: 'center', padding: '0px 10px', paddingBottom: '5px' }}>
                 <Link
@@ -217,7 +237,7 @@ const Post = (props) => {
               </div>
             )
           })}
-          <Typography variant='h4' className={classes.moreComments}>Show more comments</Typography>
+          <Typography variant='h4' className={classes.moreComments} onClick={() => showMore(props.postId)}>Show more comments</Typography>
         </>
       )
     } else {
