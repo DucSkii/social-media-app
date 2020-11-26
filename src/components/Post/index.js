@@ -33,6 +33,11 @@ const useStyles = makeStyles(theme => ({
       height: '26px',
       marginRight: '10px',
     },
+    [theme.breakpoints.up('md')]: {
+      width: '30px',
+      height: '30px',
+      marginRight: '12px',
+    },
   },
   commentAvatar: {
     width: '17px',
@@ -43,6 +48,25 @@ const useStyles = makeStyles(theme => ({
       height: '20px',
       marginRight: '10px',
     },
+    [theme.breakpoints.up('md')]: {
+      width: '23px',
+      height: '23px',
+      marginRight: '12px',
+    },
+  },
+  commentUsername: {
+    fontSize: '11px',
+    [theme.breakpoints.up('md')]: {
+      fontSize: '13px',
+    },
+  },
+  commentText: {
+    fontSize: '11px',
+    marginLeft: '5px',
+    [theme.breakpoints.up('md')]: {
+      fontSize: '13px',
+      marginLeft: '7px',
+    }
   },
   link: {
     textDecoration: 'none',
@@ -50,14 +74,24 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   captionText: {
+    fontSize: '13px',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: '8px'
+      fontSize: '14px',
+      marginLeft: '8px',
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: '15px',
     },
   },
   captionTextNoImage: {
     padding: '10px 5px',
+    fontSize: '14px',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: '8px'
+      fontSize: '16px',
+      marginLeft: '8px',
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: '18px',
     },
   },
   moreComments: {
@@ -65,6 +99,12 @@ const useStyles = makeStyles(theme => ({
     padding: '15px',
     textAlign: 'center',
     cursor: 'pointer',
+  },
+  postUsername: {
+    fontSize: '13px',
+    [theme.breakpoints.up('md')]: {
+      fontSize: '15px',
+    },
   },
 }))
 
@@ -167,11 +207,11 @@ const Post = (props) => {
                   }}
                 >
                   <Avatar src={comment.avatar} className={classes.commentAvatar} />
-                  <Typography style={{ fontSize: '11px' }}>
+                  <Typography className={classes.commentUsername}>
                     <strong>{comment.username}</strong>
                   </Typography>
                 </Link>
-                <Typography style={{ fontSize: '11px', marginLeft: '5px' }}>
+                <Typography className={classes.commentText}>
                   {comment.text}
                 </Typography>
               </div>
@@ -195,11 +235,11 @@ const Post = (props) => {
                 }}
               >
                 <Avatar src={comment.avatar} className={classes.commentAvatar} />
-                <Typography style={{ fontSize: '11px' }}>
+                <Typography className={classes.commentUsername}>
                   <strong>{comment.username}</strong>
                 </Typography>
               </Link>
-              <Typography style={{ fontSize: '11px', marginLeft: '5px' }}>
+              <Typography className={classes.commentText}>
                 {comment.text}
               </Typography>
             </div>
@@ -275,7 +315,7 @@ const Post = (props) => {
             style={{ color: darkMode ? '#fff' : '#000000' }}
           >
             <Avatar src={props.avatar} className={classes.avatar} />
-            <Typography style={{ fontSize: '13px' }}><strong>{props.username}</strong></Typography>
+            <Typography className={classes.postUsername}><strong>{props.username}</strong></Typography>
           </Link>
         </Paper>
       </header>
@@ -289,14 +329,14 @@ const Post = (props) => {
         <footer className='post-footer'>
           {props.image.length ? (
             <>
-              <Typography style={{ fontSize: '13px' }} className={classes.captionText}>
+              <Typography className={classes.captionText}>
                 <strong>{props.username}</strong> {props.caption}
               </Typography>
               {/* {renderLikes()} */}
             </>
           ) : (
               <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Typography style={{ fontSize: '14px' }} className={classes.captionTextNoImage}>
+                <Typography className={classes.captionTextNoImage}>
                   <strong>{props.caption}</strong>
                 </Typography>
                 {/* {renderLikes()} */}
