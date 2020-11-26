@@ -60,6 +60,7 @@ const Header = () => {
           }
           localStorage.setItem('darkMode', doc.data().darkMode)
           localStorage.setItem('colourTheme', doc.data().colourTheme)
+          localStorage.setItem('uid', doc.data().uid)
           dispatch({ type: 'DARKMODE_TOGGLE', mode: doc.data().darkMode })
           dispatch({ type: 'SELECT_THEME', id: doc.data().colourTheme })
           dispatch({ type: 'SET_THEME', themePayload })
@@ -110,6 +111,7 @@ const Header = () => {
         }
         localStorage.setItem('darkMode', false)
         localStorage.setItem('colourTheme', 0)
+        localStorage.setItem('uid', authUser.user.uid)
         dispatch({ type: 'DARKMODE_TOGGLE', mode: false })
         dispatch({ type: 'SELECT_THEME', id: 0 })
         userDispatch({ type: 'SELECT_BANNER', banner: null })
@@ -141,6 +143,7 @@ const Header = () => {
         }
         localStorage.setItem('darkMode', doc.data().darkMode)
         localStorage.setItem('colourTheme', doc.data().colourTheme)
+        localStorage.setItem('uid', doc.data().uid)
         dispatch({ type: 'DARKMODE_TOGGLE', mode: doc.data().darkMode })
         dispatch({ type: 'SELECT_THEME', id: doc.data().colourTheme })
         dispatch({ type: 'SET_THEME', themePayload })

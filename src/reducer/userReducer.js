@@ -1,7 +1,7 @@
 export const initialUserState = {
   user: null,
   userDisplayName: '',
-  userId: '',
+  userId: localStorage.getItem('uid'),
   userImage: '',
   userBanner: '',
   selectBanner: '',

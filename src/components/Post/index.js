@@ -109,13 +109,15 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Post = (props) => {
-  // console.log('props', props)
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const classes = useStyles()
   const [{ darkMode }, dispatch] = useGeneralValue()
   const [{ user, userId, userDisplayName, userImage, userBanner }, userDispatch] = useUserValue()
+  const [liked, setLiked] = useState(false)
   const postHeader = classNames('post-header-paper', classes.header)
+  const increment = firebase.firestore.FieldValue.increment(1)
+  const decrement = firebase.firestore.FieldValue.increment(-1)
 
   useEffect(() => {
     const unsubscribe = db.collection("comments")
@@ -130,6 +132,37 @@ const Post = (props) => {
       unsubscribe()
     }
   }, [])
+
+  useEffect(() => {
+    if (userId) {
+      const unsubscribe = db.collection("posts").doc(props.postId).collection("likes").doc(userId).onSnapshot(doc => {
+        if (doc.data() === undefined) {
+          setLiked(false)
+        } else {
+          setLiked(true)
+        }
+      })
+
+      return () => {
+        unsubscribe()
+      }
+    }
+    return null
+  }, [userId])
+
+  const addLike = (e) => {
+    db.collection("posts").doc(e).collection("likes").doc(userId).set({})
+    db.doc(`/posts/${e}`).update({
+      likes: increment,
+    })
+  }
+
+  const removeLike = (e) => {
+    db.collection("posts").doc(e).collection("likes").doc(userId).delete()
+    db.doc(`/posts/${e}`).update({
+      likes: decrement,
+    })
+  }
 
   const postComment = (event) => {
     event.preventDefault()
@@ -269,63 +302,6 @@ const Post = (props) => {
     }
   }
 
-  // useEffect(() => {
-
-  //   db.collection("posts").doc(props.postId).collection("likes").get().then(doc => {
-  //     // console.log('doc', doc.docs)
-  //     if (doc.docs.length) {
-  //       doc.forEach(post => {
-  //         console.log('post', post.id)
-  //         if (post.id === userId) {
-  //           console.log('includes')
-  //           return (
-  //             <div style={{
-  //               display: 'flex',
-  //               paddingRight: '10px',
-  //               alignItems: 'center',
-  //               flexDirection: 'column',
-  //               width: '50px',
-  //             }}>
-  //               <IconButton style={{ padding: '0' }}><FavoriteIcon /></IconButton>
-  //               <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
-  //             </div>
-  //           )
-  //         } else {
-  //           console.log('does not include')
-  //           return (
-  //             <div style={{
-  //               display: 'flex',
-  //               paddingRight: '10px',
-  //               alignItems: 'center',
-  //               flexDirection: 'column',
-  //               width: '50px',
-  //             }}>
-  //               <IconButton style={{ padding: '0' }}><FavoriteBorderIcon /></IconButton>
-  //               <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
-  //             </div>
-  //           )
-  //         }
-  //       })
-  //     } else {
-  //       console.log('no likes')
-  //       return (
-  //         <div style={{
-  //           display: 'flex',
-  //           paddingRight: '10px',
-  //           alignItems: 'center',
-  //           flexDirection: 'column',
-  //           width: '50px',
-  //         }}>
-  //           <IconButton style={{ padding: '0' }}><FavoriteBorderIcon /></IconButton>
-  //           <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
-  //         </div>
-  //       )
-  //     }
-  //   })
-  // }, [])
-
-  // renderLikes()
-
   return (
     <div className='post'>
       <header className='post-header'>
@@ -348,18 +324,62 @@ const Post = (props) => {
       <Paper square >
         <footer className='post-footer'>
           {props.image.length ? (
-            <>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Typography className={classes.captionText}>
                 <strong>{props.username}</strong> {props.caption}
               </Typography>
-              {/* {renderLikes()} */}
-            </>
+              {(liked === false) ? (
+                <div style={{
+                  display: 'flex',
+                  paddingRight: '10px',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  width: '50px',
+                }}>
+                  <IconButton style={{ padding: '0' }} onClick={() => addLike(props.postId)}><FavoriteBorderIcon /></IconButton>
+                  <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+                </div>
+              ) : (
+                  <div style={{
+                    display: 'flex',
+                    paddingRight: '10px',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    width: '50px',
+                  }}>
+                    <IconButton style={{ padding: '0' }} onClick={() => removeLike(props.postId)}><FavoriteIcon /></IconButton>
+                    <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+                  </div>
+                )}
+            </div>
           ) : (
               <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Typography className={classes.captionTextNoImage}>
                   <strong>{props.caption}</strong>
                 </Typography>
-                {/* {renderLikes()} */}
+                {(liked === false) ? (
+                  <div style={{
+                    display: 'flex',
+                    paddingRight: '10px',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    width: '50px',
+                  }}>
+                    <IconButton style={{ padding: '0' }} onClick={() => addLike(props.postId)}><FavoriteBorderIcon /></IconButton>
+                    <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+                  </div>
+                ) : (
+                    <div style={{
+                      display: 'flex',
+                      paddingRight: '10px',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                      width: '50px',
+                    }}>
+                      <IconButton style={{ padding: '0' }} onClick={() => removeLike(props.postId)}><FavoriteIcon /></IconButton>
+                      <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+                    </div>
+                  )}
               </div>
             )}
         </footer>
