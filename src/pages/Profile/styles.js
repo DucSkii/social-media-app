@@ -52,18 +52,14 @@ export const useStyles = makeStyles(theme => ({
       marginLeft: "-38px",
     },
   },
-  // id: {
-  //   display: 'flex',
-  //   marginRight: '15px',
-  //   flexDirection: 'column',
-  // },
-  // details: {
-  //   display: 'flex',
-  // },
-  // detail: {
-  //   margin: '0px 10px',
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   textAlign: 'center',
-  // },
+  modal: {
+    position: 'absolute',
+    width: 400,
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 2, 3),
+  },
 }))

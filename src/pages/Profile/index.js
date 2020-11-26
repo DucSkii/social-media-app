@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useStyles } from './styles'
-import { Paper, Avatar, Typography, Grid, Button, IconButton } from '@material-ui/core'
+import { Paper, Avatar, Typography, Grid, Button, IconButton, Modal } from '@material-ui/core'
 import { Fade } from "react-slideshow-image"
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
@@ -9,14 +9,33 @@ import { useUserValue } from '../../context/UserContext'
 import { useLocation, Link } from 'react-router-dom'
 import { db } from '../../firebase'
 
+function getModalStyle() {
+  const top = 50
+  const left = 50
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+    width: '100%',
+    maxWidth: '400px',
+    outline: '0',
+    border: '0',
+    padding: '50px'
+  }
+}
+
 const Profile = () => {
 
   const [{ darkMode }, dispatch] = useGeneralValue()
   const [{ userId }, userDispatch] = useUserValue()
+  const [open, setOpen] = useState(false)
   const [images, setImages] = useState([])
+  const [modalImage, setModalImage] = useState([])
   const [userProfile, setUserProfile] = useState([])
   const location = useLocation()
   const classes = useStyles()
+  const [modalStyle] = useState(getModalStyle)
 
   useEffect(() => {
     const profileId = location.pathname.substring(location.pathname.lastIndexOf('/') + 1)
@@ -70,12 +89,20 @@ const Profile = () => {
         </>
       )
     }
+    const handleClose = () => {
+      setOpen(false)
+      setModalImage([])
+    }
+
+    const imageClicked = (image) => {
+      setModalImage(image)
+      setOpen(true)
+    }
 
     const renderImages = () => {
       const properties = {
         autoplay: false,
         transitionDuration: 200,
-        indicators: true,
         prevArrow:
           <div style={{ width: "30px", marginRight: "-30px" }}>
             <IconButton>
@@ -94,32 +121,38 @@ const Profile = () => {
         return images.map((image, index) => {
           if (image.length === 1) {
             return (
-              <Grid item xs={4} key={index} style={{ display: 'flex', alignItems: 'center' }}>
+              <Grid item xs={4}
+                key={index}
+                style={{ display: 'flex', alignItems: 'center', border: '1px solid #4F4F4F' }}
+              >
                 <img src={image[0]} alt=''
                   style={{
                     width: '100%',
                     objectFit: 'contain',
                     maxHeight: '176px',
-                    border: '1px solid #4F4F4F',
                   }}
+                  onClick={() => imageClicked(image)}
                 />
               </Grid>
             )
           } else {
             return (
-              <Grid item xs={4} key={index} style={{ maxHeight: '176px' }}>
+              <Grid item xs={4}
+                key={index}
+                style={{ border: '1px solid #4F4F4F', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+              >
                 <Fade {...properties} style={{ maxHeight: '176px' }}>
                   {
-                    image.map((image, index) => {
+                    image.map((img, index) => {
                       return (
                         <div key={index} style={{ width: '100%' }}>
-                          <img src={image} alt=''
+                          <img src={img} alt=''
                             style={{
                               width: '100%',
                               objectFit: 'contain',
                               maxHeight: '176px',
-                              border: '1px solid #4F4F4F',
                             }}
+                            onClick={() => imageClicked(image)}
                           />
                         </div>
                       )
@@ -139,8 +172,58 @@ const Profile = () => {
       }
     }
 
+    const properties = {
+      autoplay: false,
+      transitionDuration: 200,
+      indicators: true,
+      prevArrow:
+        <div style={{ width: "30px", marginRight: "-30px" }}>
+          <IconButton>
+            <KeyboardArrowLeftIcon className={classes.arrowIcon} />
+          </IconButton>
+        </div>,
+      nextArrow:
+        <div className={classes.arrowRight}>
+          <IconButton>
+            <KeyboardArrowRightIcon className={classes.arrowIcon} />
+          </IconButton>
+        </div>,
+    }
+
     return (
       <div className={classes.body}>
+        < Modal
+          open={open}
+          onClose={handleClose}
+        >
+          <div style={modalStyle} className={classes.modal}>
+            {(modalImage.length === 1) ? (
+              <>
+                <img src={modalImage} alt='' />
+              </>
+            ) : (
+                <>
+                  <Fade {...properties} style={{ maxHeight: '176px', width: '100%' }}>
+                    {
+                      modalImage.map((img, index) => {
+                        return (
+                          <div key={index} style={{ width: '100%' }}>
+                            <img src={img} alt=''
+                              style={{
+                                width: '100%',
+                                objectFit: 'contain',
+                                maxHeight: '176px',
+                              }}
+                            />
+                          </div>
+                        )
+                      })
+                    }
+                  </Fade>
+                </>
+              )}
+          </div>
+        </Modal >
         <Grid container className={classes.container}>
           <Grid container item xs={12}>
             <Grid item xs={1} />

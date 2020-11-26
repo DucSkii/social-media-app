@@ -18,7 +18,7 @@ function getModalStyle() {
     width: '250px',
     outline: '0',
     border: '0',
-  };
+  }
 }
 
 const useStyles = makeStyles(theme => ({
