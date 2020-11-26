@@ -328,36 +328,8 @@ const Post = (props) => {
               <Typography className={classes.captionText}>
                 <strong>{props.username}</strong> {props.caption}
               </Typography>
-              {(liked === false) ? (
-                <div style={{
-                  display: 'flex',
-                  paddingRight: '10px',
-                  alignItems: 'center',
-                  flexDirection: 'column',
-                  width: '50px',
-                }}>
-                  <IconButton style={{ padding: '0' }} onClick={() => addLike(props.postId)}><FavoriteBorderIcon /></IconButton>
-                  <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
-                </div>
-              ) : (
-                  <div style={{
-                    display: 'flex',
-                    paddingRight: '10px',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    width: '50px',
-                  }}>
-                    <IconButton style={{ padding: '0' }} onClick={() => removeLike(props.postId)}><FavoriteIcon /></IconButton>
-                    <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
-                  </div>
-                )}
-            </div>
-          ) : (
-              <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Typography className={classes.captionTextNoImage}>
-                  <strong>{props.caption}</strong>
-                </Typography>
-                {(liked === false) ? (
+              {userId ? (
+                (liked === false) ? (
                   <div style={{
                     display: 'flex',
                     paddingRight: '10px',
@@ -377,6 +349,60 @@ const Post = (props) => {
                       width: '50px',
                     }}>
                       <IconButton style={{ padding: '0' }} onClick={() => removeLike(props.postId)}><FavoriteIcon /></IconButton>
+                      <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+                    </div>
+                  )
+              ) : (
+                  <div style={{
+                    display: 'flex',
+                    paddingRight: '10px',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    width: '50px',
+                  }}>
+                    <IconButton style={{ padding: '0' }} ><FavoriteBorderIcon /></IconButton>
+                    <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+                  </div>
+                )}
+            </div>
+          ) : (
+              <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Typography className={classes.captionTextNoImage}>
+                  <strong>{props.caption}</strong>
+                </Typography>
+                {userId ? (
+                  (liked === false) ? (
+                    <div style={{
+                      display: 'flex',
+                      paddingRight: '10px',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                      width: '50px',
+                    }}>
+                      <IconButton style={{ padding: '0' }} onClick={() => addLike(props.postId)}><FavoriteBorderIcon /></IconButton>
+                      <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+                    </div>
+                  ) : (
+                      <div style={{
+                        display: 'flex',
+                        paddingRight: '10px',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        width: '50px',
+                      }}>
+                        <IconButton style={{ padding: '0' }} onClick={() => removeLike(props.postId)}><FavoriteIcon /></IconButton>
+                        <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+                      </div>
+                    )
+                ) : (
+                    <div style={{
+                      display: 'flex',
+                      paddingRight: '10px',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                      width: '50px',
+                    }}>
+                      <IconButton style={{ padding: '0' }} ><FavoriteBorderIcon /></IconButton>
                       <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
                     </div>
                   )}
