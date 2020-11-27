@@ -28,6 +28,7 @@ const Chat = () => {
     if (location.pathname === '/chat') {
       setChatId(null)
       const unsubscribeChat = db.collection("chats").where("uid", "array-contains", userId).onSnapshot(queryChatSnapshot => {
+        setChatList([])
         const userIdList = []
         const userList = []
         const promises = []
