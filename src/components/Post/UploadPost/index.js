@@ -13,6 +13,7 @@ const UploadPost = () => {
   const [caption, setCaption] = useState('')
   const [images, setImages] = useState([])
   const [imagePreview, setImagePreview] = useState(null)
+  const increment = firebase.firestore.FieldValue.increment(1)
 
   const handleChange = e => {
     handleImagePreview(e)
@@ -84,6 +85,7 @@ const UploadPost = () => {
               avatar: userImage,
               postBannerColour: userBanner,
             }).then(() => {
+              db.doc(`/users/${userId}`).update({ posts: increment })
               setImages([])
               setProgress(0)
               setCaption('')
@@ -103,6 +105,7 @@ const UploadPost = () => {
         avatar: userImage,
         postBannerColour: userBanner,
       }).then(() => {
+        db.doc(`/users/${userId}`).update({ posts: increment })
         setImages([])
         setProgress(0)
         setCaption('')
