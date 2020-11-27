@@ -27,6 +27,7 @@ const Chat = () => {
   useEffect(() => {
     if (location.pathname === '/chat') {
       setChatId(null)
+      setMessages([])
       const unsubscribeChat = db.collection("chats").where("uid", "array-contains", userId).onSnapshot(queryChatSnapshot => {
         setChatList([])
         const userIdList = []
@@ -74,14 +75,17 @@ const Chat = () => {
     } else {
       const chatLocation = location.pathname.substring(location.pathname.lastIndexOf('/') + 1)
       setChatId(chatLocation)
-      const unsubscribe = db.doc(`/chats/${chatLocation}`).onSnapshot(queryChatSnapshot => {
-        queryChatSnapshot.data().uid.forEach(user => {
-          if (user !== userId) {
-            db.doc(`/users/${user}`).get().then(userSnapshot => {
-              setChatName(userSnapshot.data().username)
-            })
-          }
-        })
+      const unsubscribe = db.doc(`/chats/${chatLocation}`).onSnapshot(async (queryChatSnapshot) => {
+        const timer = setTimeout(() => {
+          queryChatSnapshot.data().uid.forEach(user => {
+            if (user !== userId) {
+              db.doc(`/users/${user}`).get().then(userSnapshot => {
+                setChatName(userSnapshot.data().username)
+              })
+            }
+          })
+        }, 100)
+        return () => clearTimeout(timer)
       })
 
       const unsubscribeMessage = db.doc(`/chats/${chatLocation}`)

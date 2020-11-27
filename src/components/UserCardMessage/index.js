@@ -26,7 +26,7 @@ const UserCardMessage = (props) => {
       })
     }
   }
-  console.log('props.username', props.username)
+
   return (
     <>
       <Paper variant='outlined' style={{ width: '100%' }}>
