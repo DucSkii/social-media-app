@@ -7,8 +7,11 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
 import { useLocation, Link } from 'react-router-dom'
+import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined'
+import ChatIcon from '@material-ui/icons/Chat'
 import { db } from '../../firebase'
 import firebase from 'firebase'
+import { default as UUID } from 'node-uuid'
 
 function getModalStyle() {
   const top = 50
@@ -42,6 +45,8 @@ const Profile = () => {
   const profileId = location.pathname.substring(location.pathname.lastIndexOf('/') + 1)
   const increment = firebase.firestore.FieldValue.increment(1)
   const decrement = firebase.firestore.FieldValue.increment(-1)
+  const [chatId, setChatId] = useState(UUID.v4())
+  const [newChat, setNewChat] = useState(true)
 
   useEffect(() => {
     const profileId = location.pathname.substring(location.pathname.lastIndexOf('/') + 1)
@@ -74,6 +79,14 @@ const Profile = () => {
       })
     })
 
+    db.collection("chats").where("uid", "array-contains", userId && profileId).get().then(doc => {
+      if (doc.docs.length) {
+        setChatId(doc.docs[0].id)
+        setNewChat(false)
+      }
+      return null
+    })
+
     return () => {
       userUnsubscribe()
       unsubscribe()
@@ -96,6 +109,13 @@ const Profile = () => {
       db.doc(`/users/${profileId}`).update({ followers: decrement })
     }
 
+    const createNewChat = () => {
+
+      db.collection("chats").doc(chatId).set({
+        uid: [userId, profileId],
+      })
+    }
+
     const renderButton = () => {
       if (userId) {
         if (location.pathname.includes(userId)) {
@@ -115,16 +135,36 @@ const Profile = () => {
         return (
           <>
             {(following === true) ? (
-              <Button
-                variant='outlined'
-                className={classes.following}
-                style={{ fontSize: '12px', padding: '0px 5px', minWidth: '120px' }}
-                onClick={unFollowUser}
-                onMouseOver={() => setText('Unfollow')}
-                onMouseLeave={() => setText('Following')}
-              >
-                {text}
-              </Button>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Button
+                  variant='outlined'
+                  className={classes.following}
+                  style={{ fontSize: '12px', padding: '0px 5px', minWidth: '120px' }}
+                  onClick={unFollowUser}
+                  onMouseOver={() => setText('Unfollow')}
+                  onMouseLeave={() => setText('Following')}
+                >
+                  {text}
+                </Button>
+                {(newChat === true) ? (
+                  <Link to={`/chat/${chatId}`}>
+                    <IconButton
+                      style={{ marginLeft: '10px' }}
+                      onClick={createNewChat}
+                    >
+                      <ChatOutlinedIcon />
+                    </IconButton>
+                  </Link>
+                ) : (
+                    <Link to={`/chat/${chatId}`}>
+                      <IconButton
+                        style={{ marginLeft: '10px' }}
+                      >
+                        <ChatIcon />
+                      </IconButton>
+                    </Link>
+                  )}
+              </div>
             ) : (
                 <Button
                   variant='outlined'
