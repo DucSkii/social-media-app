@@ -6,6 +6,7 @@ import EditProfile from './pages/Profile/EditProfile'
 import Settings from './pages/Settings'
 import Favourites from './pages/Favourites'
 import Followers from './pages/Favourites/Followers'
+import Chat from './pages/Chat'
 import Drawer from '@material-ui/core/Drawer'
 import DrawerBar from './components/Drawer'
 import { useGeneralValue } from './context/GeneralContext'
@@ -80,7 +81,7 @@ const App = () => {
             <Switch>
               <Route path='/editprofile' component={EditProfile} />
               <Route path='/profile' render={(props) => <Profile key={props.location.key} />} />
-              <Route path='/chat' />
+              <Route path='/chat' component={Chat} />
               <Route path='/followers' component={Followers} />
               <Route path='/favourites' component={Favourites} />
               <Route path='/settings' component={Settings} />

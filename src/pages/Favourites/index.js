@@ -56,7 +56,12 @@ const Favourites = () => {
 
   return (
     <div className={classes.container} style={{ backgroundColor: darkMode ? '#4F4F4F' : '#F5F5F5' }}>
-      <Paper square variant='outlined' className={classes.paper} style={{ border: 'none', backgroundColor: darkMode ? '#666' : '#fafafa' }}>
+      <Paper
+        square
+        variant='outlined'
+        className={classes.paper}
+        style={{ border: 'none', backgroundColor: darkMode ? '#666' : '#fafafa' }}
+      >
         <Grid container style={{ paddingTop: '30px' }}>
           <Grid item xs={1} />
           <Grid container item xs={5} style={{ justifyContent: 'center' }}>
