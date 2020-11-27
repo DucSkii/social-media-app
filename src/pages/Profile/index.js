@@ -8,6 +8,7 @@ import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
 import { useLocation, Link } from 'react-router-dom'
 import { db } from '../../firebase'
+import firebase from 'firebase'
 
 function getModalStyle() {
   const top = 50
@@ -34,14 +35,18 @@ const Profile = () => {
   const [modalImage, setModalImage] = useState([])
   const [userProfile, setUserProfile] = useState([])
   const [following, setFollowing] = useState(false)
+  const [text, setText] = useState('Following')
   const location = useLocation()
   const classes = useStyles()
   const [modalStyle] = useState(getModalStyle)
+  const profileId = location.pathname.substring(location.pathname.lastIndexOf('/') + 1)
+  const increment = firebase.firestore.FieldValue.increment(1)
+  const decrement = firebase.firestore.FieldValue.increment(-1)
 
   useEffect(() => {
     const profileId = location.pathname.substring(location.pathname.lastIndexOf('/') + 1)
     setImages([])
-    db.collection("users").doc(profileId).get().then(doc => {
+    const userUnsubscribe = db.collection("users").doc(profileId).onSnapshot(doc => {
       const userData = {
         username: doc.data().username,
         avatar: doc.data().avatar,
@@ -70,11 +75,26 @@ const Profile = () => {
     })
 
     return () => {
+      userUnsubscribe()
       unsubscribe()
     }
   }, [location.pathname])
 
   const renderProfile = () => {
+
+    const followUser = () => {
+      db.doc(`/users/${userId}`).collection("following").doc(profileId).set({})
+      db.doc(`/users/${userId}`).update({ following: increment })
+      db.doc(`/users/${profileId}`).collection("followers").doc(userId).set({})
+      db.doc(`/users/${profileId}`).update({ followers: increment })
+    }
+
+    const unFollowUser = () => {
+      db.doc(`/users/${userId}`).collection("following").doc(profileId).delete()
+      db.doc(`/users/${userId}`).update({ following: decrement })
+      db.doc(`/users/${profileId}`).collection("followers").doc(userId).delete()
+      db.doc(`/users/${profileId}`).update({ followers: decrement })
+    }
 
     const renderButton = () => {
       if (userId) {
@@ -97,14 +117,19 @@ const Profile = () => {
             {(following === true) ? (
               <Button
                 variant='outlined'
+                className={classes.following}
                 style={{ fontSize: '12px', padding: '0px 5px', minWidth: '120px' }}
+                onClick={unFollowUser}
+                onMouseOver={() => setText('Unfollow')}
+                onMouseLeave={() => setText('Following')}
               >
-                Following
+                {text}
               </Button>
             ) : (
                 <Button
                   variant='outlined'
                   style={{ fontSize: '12px', padding: '0px 5px', minWidth: '120px' }}
+                  onClick={followUser}
                 >
                   Follow
                 </Button>
