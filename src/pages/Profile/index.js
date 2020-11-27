@@ -33,6 +33,7 @@ const Profile = () => {
   const [images, setImages] = useState([])
   const [modalImage, setModalImage] = useState([])
   const [userProfile, setUserProfile] = useState([])
+  const [following, setFollowing] = useState(false)
   const location = useLocation()
   const classes = useStyles()
   const [modalStyle] = useState(getModalStyle)
@@ -51,6 +52,14 @@ const Profile = () => {
       setUserProfile(userData)
     })
 
+    const unsubscribe = db.doc(`/users/${userId}`).collection("following").doc(profileId).onSnapshot(doc => {
+      if (doc.data() === undefined) {
+        setFollowing(false)
+      } else {
+        setFollowing(true)
+      }
+    })
+
     db.collection("posts").where("uid", "==", profileId).orderBy('timestamp', 'desc').get().then(queryPostSnapshot => {
       queryPostSnapshot.forEach(post => {
         if (post.data().image) {
@@ -59,36 +68,53 @@ const Profile = () => {
         return null
       })
     })
+
+    return () => {
+      unsubscribe()
+    }
   }, [location.pathname])
 
   const renderProfile = () => {
 
     const renderButton = () => {
-      if (location.pathname.includes(userId)) {
+      if (userId) {
+        if (location.pathname.includes(userId)) {
+          return (
+            <>
+              <Link to='/editprofile' style={{ textDecoration: 'none', padding: '0', margin: '0', width: '120px' }}>
+                <Button
+                  variant='outlined'
+                  style={{ fontSize: '12px', padding: '0px 5px', minWidth: '120px' }}
+                >
+                  Edit Profile
+                </Button>
+              </Link>
+            </>
+          )
+        }
         return (
           <>
-            <Link to='/editprofile' style={{ textDecoration: 'none', padding: '0', margin: '0', width: '120px' }}>
+            {(following === true) ? (
               <Button
                 variant='outlined'
                 style={{ fontSize: '12px', padding: '0px 5px', minWidth: '120px' }}
               >
-                Edit Profile
+                Following
               </Button>
-            </Link>
+            ) : (
+                <Button
+                  variant='outlined'
+                  style={{ fontSize: '12px', padding: '0px 5px', minWidth: '120px' }}
+                >
+                  Follow
+                </Button>
+              )}
           </>
         )
       }
-      return (
-        <>
-          <Button
-            variant='outlined'
-            style={{ fontSize: '12px', padding: '0px 5px', minWidth: '120px' }}
-          >
-            Follow
-          </Button>
-        </>
-      )
+      return null
     }
+
     const handleClose = () => {
       setOpen(false)
       setModalImage([])
