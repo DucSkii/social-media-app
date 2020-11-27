@@ -26,18 +26,18 @@ const UserCardMessage = (props) => {
       })
     }
   }
-
+  console.log('props.username', props.username)
   return (
     <>
       <Paper variant='outlined' style={{ width: '100%' }}>
         <Grid container style={{ padding: '10px', alignItems: 'center' }}>
           <Grid item xs={2} md={1} >
-            <Link to={`/profile/${props.uid}`} className={classes.link}>
+            <Link to={`/profile/${props.username}/${props.username}/${props.uid}`} className={classes.link}>
               <Avatar src={props.avatar} className={classes.avatar} />
             </Link>
           </Grid>
           <Grid item xs={5} md={6}>
-            <Link to={`/profile/${props.uid}`} className={classes.link} style={{ color: darkMode ? '#fff' : '#000000' }}>
+            <Link to={`/profile/${props.username}/${props.uid}`} className={classes.link} style={{ color: darkMode ? '#fff' : '#000000' }}>
               <Typography style={{ whiteSpace: 'no-wrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                 {props.username}
               </Typography>
