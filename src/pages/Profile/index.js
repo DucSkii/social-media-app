@@ -7,7 +7,6 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
 import { useLocation, Link } from 'react-router-dom'
-import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined'
 import ChatIcon from '@material-ui/icons/Chat'
 import { db } from '../../firebase'
 import firebase from 'firebase'
@@ -113,6 +112,7 @@ const Profile = () => {
 
       db.collection("chats").doc(chatId).set({
         uid: [userId, profileId],
+        hide: [userId, profileId],
       })
     }
 
@@ -152,7 +152,7 @@ const Profile = () => {
                       style={{ marginLeft: '10px' }}
                       onClick={createNewChat}
                     >
-                      <ChatOutlinedIcon />
+                      <ChatIcon />
                     </IconButton>
                   </Link>
                 ) : (

@@ -19,4 +19,10 @@ export const useStyles = makeStyles(theme => ({
       width: '960px'
     },
   },
+  textBox: {
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '960px'
+    },
+  }
 }))

@@ -5,12 +5,27 @@ import { useUserValue } from '../../context/UserContext'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { Link } from 'react-router-dom'
 import ChatIcon from '@material-ui/icons/Chat'
+import CancelIcon from '@material-ui/icons/Cancel'
+import { db } from '../../firebase'
 
-const UserCard = (props) => {
-
+const UserCardMessage = (props) => {
   const classes = useStyles()
   const [{ userId }, userDispatch] = useUserValue()
   const [{ darkMode }, dispatch] = useGeneralValue()
+
+  const closeChat = async () => {
+    const queryChat = db.doc(`/chats/${props.chatId}`).get()
+    const getChat = await queryChat
+    if (getChat.data().hide === undefined) {
+      db.doc(`/chats/${props.chatId}`).update({
+        hide: [userId],
+      })
+    } else {
+      db.doc(`/chats/${props.chatId}`).update({
+        hide: [userId, props.uid]
+      })
+    }
+  }
 
   return (
     <>
@@ -34,6 +49,9 @@ const UserCard = (props) => {
                 <ChatIcon />
               </IconButton>
             </Link>
+            <IconButton className={classes.closeButton} onClick={closeChat}>
+              <CancelIcon />
+            </IconButton>
           </Grid>
         </Grid>
       </Paper>
@@ -41,4 +59,4 @@ const UserCard = (props) => {
   )
 }
 
-export default UserCard
+export default UserCardMessage

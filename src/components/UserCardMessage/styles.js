@@ -16,4 +16,9 @@ export const useStyles = makeStyles(theme => ({
   link: {
     textDecoration: 'none',
   },
+  closeButton: {
+    [theme.breakpoints.up('md')]: {
+      marginLeft: '15px'
+    }
+  }
 }))

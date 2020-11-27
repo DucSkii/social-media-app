@@ -77,6 +77,13 @@ const EditProfile = () => {
               })
             })
 
+            const queryMessages = await db.collectionGroup("messages").where("uid", "==", userId).get()
+            queryMessages.docs.forEach(snapshot => {
+              snapshot.ref.update({
+                avatar: url,
+              })
+            })
+
             userDispatch({ type: 'SET_IMAGE', image: url })
             setImage(null)
             setImagePreview(null)
