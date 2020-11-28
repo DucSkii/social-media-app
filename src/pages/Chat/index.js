@@ -73,9 +73,10 @@ const Chat = () => {
         unsubscribeChat()
       }
     } else {
+      setChatName('')
       const chatLocation = location.pathname.substring(location.pathname.lastIndexOf('/') + 1)
       setChatId(chatLocation)
-      const unsubscribe = db.doc(`/chats/${chatLocation}`).onSnapshot(async (queryChatSnapshot) => {
+      db.doc(`/chats/${chatLocation}`).get().then(queryChatSnapshot => {
         const timer = setTimeout(() => {
           queryChatSnapshot.data().uid.forEach(user => {
             if (user !== userId) {
@@ -84,7 +85,7 @@ const Chat = () => {
               })
             }
           })
-        }, 100)
+        }, 500)
         return () => clearTimeout(timer)
       })
 
@@ -105,7 +106,6 @@ const Chat = () => {
         })
 
       return () => {
-        unsubscribe()
         unsubscribeMessage()
       }
     }

@@ -140,6 +140,7 @@ const Profile = () => {
       db.collection("chats").doc(chatId).set({
         creatorId: userId,
         receiverId: profileId,
+        uid: [userId, profileId],
         hide: [userId, profileId],
       })
     }
