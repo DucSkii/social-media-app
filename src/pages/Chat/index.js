@@ -159,6 +159,8 @@ const Chat = () => {
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     })
 
+    setMessage('')
+
     const queryChat = db.doc(`/chats/${chatId}`).get()
     const getChat = await queryChat
     if (getChat.data().hide === undefined) {
@@ -168,8 +170,6 @@ const Chat = () => {
         hide: firebase.firestore.FieldValue.delete(),
       })
     }
-
-    setMessage('')
   }
 
   const renderPage = () => {
