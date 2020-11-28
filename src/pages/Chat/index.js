@@ -161,7 +161,7 @@ const Chat = () => {
 
     const queryChat = db.doc(`/chats/${chatId}`).get()
     const getChat = await queryChat
-    if (getChat.data() === undefined) {
+    if (getChat.data().hide === undefined) {
       return null
     } else {
       db.doc(`/chats/${chatId}`).update({

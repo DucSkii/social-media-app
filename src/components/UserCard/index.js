@@ -57,7 +57,9 @@ const UserCard = (props) => {
             </Link>
           </Grid>
           <Grid item xs={5} md={6}>
-            <Link to={`/profile/${props.username}/${props.uid}`} className={classes.link} style={{ color: darkMode ? '#fff' : '#000000' }}>
+            <Link to={`/profile/${props.username}/${props.uid}`} className={classes.link}
+              style={{ color: darkMode ? '#fff' : '#000000' }}
+            >
               <Typography style={{ whiteSpace: 'no-wrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                 {props.username}
               </Typography>

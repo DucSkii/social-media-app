@@ -75,6 +75,9 @@ const Header = () => {
           uid: null,
           image: null,
         }
+        localStorage.setItem('darkMode', false)
+        localStorage.setItem('colourTheme', 0)
+        localStorage.setItem('uid', null)
         userDispatch({ type: 'SELECT_BANNER', banner: null })
         userDispatch({ type: 'SET_BANNER', banner: null })
         userDispatch({ type: 'SET_USER', payload })

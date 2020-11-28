@@ -32,7 +32,7 @@ const UserCardMessage = (props) => {
       <Paper variant='outlined' style={{ width: '100%' }}>
         <Grid container style={{ padding: '10px', alignItems: 'center' }}>
           <Grid item xs={2} md={1} >
-            <Link to={`/profile/${props.username}/${props.username}/${props.uid}`} className={classes.link}>
+            <Link to={`/profile/${props.username}/${props.uid}`} className={classes.link}>
               <Avatar src={props.avatar} className={classes.avatar} />
             </Link>
           </Grid>
