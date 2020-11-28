@@ -79,14 +79,12 @@ const Profile = () => {
     })
 
     db.collection("chats").where("creatorId", "==", userId).get().then(doc => {
-      console.log('query 1')
       if (doc.docs.length) {
         doc.forEach(chat => {
           if (chat.data().receiverId === profileId) {
             setChatId(chat.id)
             setNewChat(false)
           } else {
-            console.log('query 2')
             db.collection("chats").where("creatorId", "==", profileId).get().then(receiverDoc => {
               if (receiverDoc.docs.length) {
                 receiverDoc.forEach(receiverChat => {
@@ -102,7 +100,18 @@ const Profile = () => {
           }
         })
       }
-      return null
+      db.collection("chats").where("creatorId", "==", profileId).get().then(doc => {
+        if (doc.docs.length) {
+          doc.forEach(chat => {
+            if (chat.data().receiverId === userId) {
+              setChatId(chat.id)
+              setNewChat(false)
+            }
+            return null
+          })
+        }
+        return null
+      })
     })
 
     return () => {
@@ -111,7 +120,6 @@ const Profile = () => {
     }
   }, [location.pathname])
 
-  // console.log('chatId', chatId)
   const renderProfile = () => {
     const followUser = () => {
       db.doc(`/users/${userId}`).collection("following").doc(profileId).set({})
