@@ -290,7 +290,13 @@ const Profile = () => {
           <div style={modalStyle} className={classes.modal}>
             {(modalImage.length === 1) ? (
               <>
-                <img src={modalImage} alt='' />
+                <img src={modalImage} alt=''
+                  style={{
+                    width: '100%',
+                    objectFit: 'contain',
+                    maxHeight: '176px',
+                  }}
+                />
               </>
             ) : (
                 <>
