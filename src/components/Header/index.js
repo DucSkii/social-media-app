@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Paper, Avatar, IconButton, Button, Input } from '@material-ui/core'
+import { Paper, Avatar, IconButton, Button, Input, TextField } from '@material-ui/core'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 import Modal from '@material-ui/core/Modal'
 import MenuIcon from '@material-ui/icons/Menu'
 import { auth, db } from '../../firebase'
@@ -36,6 +37,7 @@ const Header = () => {
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [userList, setUserList] = useState([])
   const handleClose = () => {
     setDisplayName('')
     setPassword('')
@@ -45,6 +47,7 @@ const Header = () => {
   }
 
   useEffect(() => {
+    const finalUsersList = []
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         db.collection("users").doc(authUser.uid).get().then((doc) => {
@@ -84,14 +87,35 @@ const Header = () => {
       }
     })
 
+    const userUnsubscribe = db.collection("users").onSnapshot(queryUsers => {
+      queryUsers.forEach(user => {
+        const userData = {
+          username: user.data().username,
+          uid: user.data().uid,
+        }
+        finalUsersList.push(userData)
+      })
+      setUserList(finalUsersList)
+    })
+
     return () => {
       unsubscribe()
+      userUnsubscribe()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const signUp = (event) => {
+  // console.log('userList', userList)
+  const signUp = async (event) => {
     event.preventDefault()
+    const usernameList = []
+    const getUsername = await db.collection("users").get()
+    getUsername.forEach(user => {
+      usernameList.push(user.data().username)
+    })
+    if (usernameList.includes(displayName)) {
+      return alert('Username is taken')
+    }
+
     auth.createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
         db.collection("users").doc(authUser.user.uid).set({
@@ -252,7 +276,19 @@ const Header = () => {
               <img src={logo} alt='logo' style={{ height: '35px', marginLeft: '10px' }} />
             </div>
           </Link>
-          <Input placeholder='Search...' style={{ width: '40%' }} />
+          <Autocomplete
+            freeSolo
+            id="search-bar"
+            style={{ width: '40%' }}
+            options={userList.map(user => user.username)}
+            renderInput={params => (
+              <TextField
+                {...params}
+                label='Search Users...'
+                variant='standard'
+              />
+            )}
+          />
           {user ? (
             <>
               <div className={classes.headerIcons}>

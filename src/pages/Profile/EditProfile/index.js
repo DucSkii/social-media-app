@@ -135,6 +135,15 @@ const EditProfile = () => {
   }
 
   const handleChangeUsername = async () => {
+    const usernameList = []
+    const getUsername = await db.collection("users").get()
+    getUsername.forEach(user => {
+      usernameList.push(user.data().username)
+    })
+    if (usernameList.includes(newUsername)) {
+      return alert('Username is taken')
+    }
+
     if (newUsername === '' || newUsername === userDisplayName) {
       alert('Please enter a new username')
     } else {
