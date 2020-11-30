@@ -29,7 +29,7 @@ const Home = () => {
   }, [])
 
   const handleScroll = (e) => {
-    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
+    const bottom = e.target.scrollHeight - e.target.scrollTop >= e.target.clientHeight - 100
     if (bottom) {
       fetchMoreData()
     }
