@@ -197,7 +197,7 @@ const Header = () => {
       if (user.username === search) {
         return (
           <Link key={index} to={`/profile/${user.username}/${user.uid}`}>
-            <Avatar src={user.avatar} style={{marginRight: '10px'}}/>
+            <Avatar src={user.avatar} style={{ marginRight: '10px' }} />
           </Link>
         )
       }
@@ -298,12 +298,12 @@ const Header = () => {
               <img src={logo} alt='logo' style={{ height: '35px', marginLeft: '10px' }} />
             </div>
           </Link>
-          <div style={{display: 'flex', width: '40%', alignItems: 'center'}}>
+          <div style={{ display: 'flex', width: '40%', alignItems: 'center' }}>
             {renderSearchAvatar()}
             <Autocomplete
               freeSolo
               id="search-bar"
-              style={{width: '100%'}}
+              style={{ width: '100%' }}
               key={searchKey}
               options={userList.map(user => user.username)}
               onChange={(event, newValue) => {
