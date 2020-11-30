@@ -25,6 +25,7 @@ const Chat = () => {
   const bottomPage = useRef()
 
   useEffect(() => {
+    setMessage('')
     if (location.pathname === '/chat') {
       setChatId(null)
       setMessages([])
@@ -157,9 +158,9 @@ const Chat = () => {
       avatar: userImage,
       uid: userId,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    }).then(() => {
+      setMessage('')
     })
-
-    setMessage('')
 
     const queryChat = db.doc(`/chats/${chatId}`).get()
     const getChat = await queryChat
