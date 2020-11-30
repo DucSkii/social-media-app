@@ -10,9 +10,13 @@ const Home = () => {
   const classes = useStyles()
   const [posts, setPosts] = useState([])
   const [{ user }, userDispatch] = useUserValue()
+  const [maxPosts, setMaxPosts] = useState(3)
+  const [postsLength, setPostsLength] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const unsubscribe = db.collection("posts").orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+      setPostsLength(snapshot.docs.length)
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
         post: doc.data(),
@@ -24,13 +28,31 @@ const Home = () => {
     }
   }, [])
 
+  const handleScroll = (e) => {
+    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
+    if (bottom) {
+      fetchMoreData()
+    }
+  }
+
+  const fetchMoreData = () => {
+    if (maxPosts >= postsLength) {
+      return setIsLoading(false)
+    }
+    setIsLoading(true)
+    setTimeout(() => {
+      setMaxPosts(prevState => prevState + 3)
+      setIsLoading(false)
+    }, 500)
+  }
+
   return (
-    <div className={classes.posts}>
+    <div className={classes.posts} onScroll={e => handleScroll(e)}>
       {user &&
         <UploadPost />
       }
       {
-        posts.map(({ id, post }) => {
+        posts.slice(0, maxPosts).map(({ id, post }) => {
           return <Post
             key={id}
             postId={id}
@@ -44,6 +66,9 @@ const Home = () => {
           />
         })
         // // // having a unique key for each post prevents old posts from having to re-render when a new post is added
+      }
+      {isLoading === true &&
+        <div style={{ marginBottom: '10px' }}>Loading...</div>
       }
     </div>
   )

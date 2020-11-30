@@ -23,3 +23,5 @@ This website was designed heavily using material-ui but I also used a fair amoun
 
 This project was fully deployed using firebase, the backend database was also stored using firebase,
 You can find a link to the deployed website here: https://social-media-69506.web.app/
+
+To install the code please clone the repository and run "npm install" to get all the dependencies.

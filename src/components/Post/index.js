@@ -307,72 +307,30 @@ const Post = (props) => {
   }
 
   return (
-    <div className='post'>
-      <header className='post-header'>
-        <Paper variant='outlined' square className={postHeader} style={{ backgroundColor: props.postBannerColour }}>
-          <Link to={`/profile/${props.username}/${props.uid}`}
-            className={classes.link}
-            style={{ color: darkMode ? '#fff' : '#000000' }}
-          >
-            <Avatar src={props.avatar} className={classes.avatar} />
-            <Typography className={classes.postUsername}><strong>{props.username}</strong></Typography>
-          </Link>
-        </Paper>
-      </header>
-      {
-        Array.isArray(props.image) &&
-        <>
-          {renderImage()}
-        </>
-      }
-      <Paper square >
-        <footer className='post-footer'>
-          {props.image.length ? (
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography className={classes.captionText}>
-                <strong>{props.username}</strong> {props.caption}
-              </Typography>
-              {userId ? (
-                (liked === false) ? (
-                  <div style={{
-                    display: 'flex',
-                    paddingRight: '10px',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    width: '50px',
-                  }}>
-                    <IconButton style={{ padding: '0' }} onClick={() => addLike(props.postId)}><FavoriteBorderIcon /></IconButton>
-                    <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
-                  </div>
-                ) : (
-                    <div style={{
-                      display: 'flex',
-                      paddingRight: '10px',
-                      alignItems: 'center',
-                      flexDirection: 'column',
-                      width: '50px',
-                    }}>
-                      <IconButton style={{ padding: '0' }} onClick={() => removeLike(props.postId)}><FavoriteIcon /></IconButton>
-                      <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
-                    </div>
-                  )
-              ) : (
-                  <div style={{
-                    display: 'flex',
-                    paddingRight: '10px',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    width: '50px',
-                  }}>
-                    <IconButton style={{ padding: '0' }} onClick={alertNoUser}><FavoriteBorderIcon /></IconButton>
-                    <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
-                  </div>
-                )}
-            </div>
-          ) : (
-              <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Typography className={classes.captionTextNoImage}>
-                  <strong>{props.caption}</strong>
+      <div className='post'>
+        <header className='post-header'>
+          <Paper variant='outlined' square className={postHeader} style={{ backgroundColor: props.postBannerColour }}>
+            <Link to={`/profile/${props.username}/${props.uid}`}
+              className={classes.link}
+              style={{ color: darkMode ? '#fff' : '#000000' }}
+            >
+              <Avatar src={props.avatar} className={classes.avatar} />
+              <Typography className={classes.postUsername}><strong>{props.username}</strong></Typography>
+            </Link>
+          </Paper>
+        </header>
+        {
+          Array.isArray(props.image) &&
+          <>
+            {renderImage()}
+          </>
+        }
+        <Paper square >
+          <footer className='post-footer'>
+            {props.image.length ? (
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography className={classes.captionText}>
+                  <strong>{props.username}</strong> {props.caption}
                 </Typography>
                 {userId ? (
                   (liked === false) ? (
@@ -406,54 +364,96 @@ const Post = (props) => {
                       flexDirection: 'column',
                       width: '50px',
                     }}>
-                      <IconButton style={{ padding: '0' }} ><FavoriteBorderIcon /></IconButton>
+                      <IconButton style={{ padding: '0' }} onClick={alertNoUser}><FavoriteBorderIcon /></IconButton>
                       <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
                     </div>
                   )}
               </div>
-            )}
-        </footer>
-      </Paper>
-      <Paper square variant='outlined' style={{ border: 'none' }}>
-        <div>
-          {renderComments()}
-        </div>
-      </Paper>
-      {user &&
-        <>
-          <Divider style={{ backgroundColor: darkMode ? '#666' : 'lightgrey' }} />
-          <Paper
-            variant='outlined'
-            square
-            style={{
-              height: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              border: 'none',
-            }}>
-            <form className='post-footer' onSubmit={postComment}>
-              <Input
-                type='text'
-                required
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder='Add a comment...'
-                style={{
-                  fontSize: '13px',
-                  padding: '0px 5px',
-                  width: '100%',
-                }}
-              />
-              <span hidden={!comment}>
-                <IconButton type='submit' style={{ padding: '0', margin: '0' }}>
-                  <SendIcon />
-                </IconButton>
-              </span>
-            </form>
-          </Paper>
-        </>
-      }
-    </div>
+            ) : (
+                <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Typography className={classes.captionTextNoImage}>
+                    <strong>{props.caption}</strong>
+                  </Typography>
+                  {userId ? (
+                    (liked === false) ? (
+                      <div style={{
+                        display: 'flex',
+                        paddingRight: '10px',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        width: '50px',
+                      }}>
+                        <IconButton style={{ padding: '0' }} onClick={() => addLike(props.postId)}><FavoriteBorderIcon /></IconButton>
+                        <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+                      </div>
+                    ) : (
+                        <div style={{
+                          display: 'flex',
+                          paddingRight: '10px',
+                          alignItems: 'center',
+                          flexDirection: 'column',
+                          width: '50px',
+                        }}>
+                          <IconButton style={{ padding: '0' }} onClick={() => removeLike(props.postId)}><FavoriteIcon /></IconButton>
+                          <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+                        </div>
+                      )
+                  ) : (
+                      <div style={{
+                        display: 'flex',
+                        paddingRight: '10px',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        width: '50px',
+                      }}>
+                        <IconButton style={{ padding: '0' }} ><FavoriteBorderIcon /></IconButton>
+                        <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
+                      </div>
+                    )}
+                </div>
+              )}
+          </footer>
+        </Paper>
+        <Paper square variant='outlined' style={{ border: 'none' }}>
+          <div>
+            {renderComments()}
+          </div>
+        </Paper>
+        {user &&
+          <>
+            <Divider style={{ backgroundColor: darkMode ? '#666' : 'lightgrey' }} />
+            <Paper
+              variant='outlined'
+              square
+              style={{
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                border: 'none',
+              }}>
+              <form className='post-footer' onSubmit={postComment}>
+                <Input
+                  type='text'
+                  required
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder='Add a comment...'
+                  style={{
+                    fontSize: '13px',
+                    padding: '0px 5px',
+                    width: '100%',
+                  }}
+                />
+                <span hidden={!comment}>
+                  <IconButton type='submit' style={{ padding: '0', margin: '0' }}>
+                    <SendIcon />
+                  </IconButton>
+                </span>
+              </form>
+            </Paper>
+          </>
+        }
+      </div>
   )
 }
 
