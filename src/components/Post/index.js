@@ -302,6 +302,10 @@ const Post = (props) => {
     }
   }
 
+  const alertNoUser = () => {
+    alert('Please log in to like this post')
+  }
+
   return (
     <div className='post'>
       <header className='post-header'>
@@ -360,7 +364,7 @@ const Post = (props) => {
                     flexDirection: 'column',
                     width: '50px',
                   }}>
-                    <IconButton style={{ padding: '0' }} ><FavoriteBorderIcon /></IconButton>
+                    <IconButton style={{ padding: '0' }} onClick={alertNoUser}><FavoriteBorderIcon /></IconButton>
                     <Typography style={{ fontSize: '10px', textAlign: 'center' }}>{props.likes} likes</Typography>
                   </div>
                 )}
