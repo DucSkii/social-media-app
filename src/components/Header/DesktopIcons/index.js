@@ -49,6 +49,9 @@ const DesktopIcons = () => {
     if (matchPath(location.pathname, { path: '/favourites' })) {
       return <FavouriteIcon className={classes.navigation} />
     }
+    if (matchPath(location.pathname, { path: '/followers' })) {
+      return <FavouriteIcon className={classes.navigation} />
+    }
     return <FavouriteBorderOutlinedIcon className={classes.navigation} />
   }
 
