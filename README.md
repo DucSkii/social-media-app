@@ -25,3 +25,4 @@ This project was fully deployed using firebase, the backend database was also st
 You can find a link to the deployed website here: https://social-media-69506.web.app/
 
 To install the code please clone the repository and run "npm install" to get all the dependencies.
+Run "npm run start" to host the application on your localhost.
