@@ -6,7 +6,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { auth, db } from '../../firebase'
 import { useGeneralValue } from '../../context/GeneralContext'
 import { useUserValue } from '../../context/UserContext'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import logo from '../../images/app-logo.png'
 import DesktopIcons from './DesktopIcons'
 
@@ -29,6 +29,7 @@ function getModalStyle() {
 const Header = () => {
 
   const classes = useStyles()
+  const location = useLocation()
   const [{ darkMode }, dispatch] = useGeneralValue()
   const [{ user, userId, userDisplayName, userImage }, userDispatch] = useUserValue()
   const [openSignup, setOpenSignup] = useState(false)
@@ -38,6 +39,8 @@ const Header = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [userList, setUserList] = useState([])
+  const [search, setSearch] = useState('')
+  const [searchKey, setSearchKey] = useState(Math.random())
   const handleClose = () => {
     setDisplayName('')
     setPassword('')
@@ -47,7 +50,11 @@ const Header = () => {
   }
 
   useEffect(() => {
-    const finalUsersList = []
+    setSearch('')
+    setSearchKey(Math.random())
+  }, [location.pathname])
+
+  useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         db.collection("users").doc(authUser.uid).get().then((doc) => {
@@ -88,10 +95,12 @@ const Header = () => {
     })
 
     const userUnsubscribe = db.collection("users").onSnapshot(queryUsers => {
+      const finalUsersList = []
       queryUsers.forEach(user => {
         const userData = {
           username: user.data().username,
           uid: user.data().uid,
+          avatar: user.data().avatar,
         }
         finalUsersList.push(userData)
       })
@@ -104,7 +113,7 @@ const Header = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  // console.log('userList', userList)
+
   const signUp = async (event) => {
     event.preventDefault()
     const usernameList = []
@@ -181,6 +190,19 @@ const Header = () => {
     })
       .catch((error) => alert(error.message))
     handleClose()
+  }
+
+  const renderSearchAvatar = () => {
+    return userList.map((user, index) => {
+      if (user.username === search) {
+        return (
+          <Link key={index} to={`/profile/${user.username}/${user.uid}`}>
+            <Avatar src={user.avatar} style={{marginRight: '10px'}}/>
+          </Link>
+        )
+      }
+      return null
+    })
   }
 
   return (
@@ -276,19 +298,27 @@ const Header = () => {
               <img src={logo} alt='logo' style={{ height: '35px', marginLeft: '10px' }} />
             </div>
           </Link>
-          <Autocomplete
-            freeSolo
-            id="search-bar"
-            style={{ width: '40%' }}
-            options={userList.map(user => user.username)}
-            renderInput={params => (
-              <TextField
-                {...params}
-                label='Search Users...'
-                variant='standard'
-              />
-            )}
-          />
+          <div style={{display: 'flex', width: '40%', alignItems: 'center'}}>
+            {renderSearchAvatar()}
+            <Autocomplete
+              freeSolo
+              id="search-bar"
+              style={{width: '100%'}}
+              key={searchKey}
+              options={userList.map(user => user.username)}
+              onChange={(event, newValue) => {
+                setSearch(newValue)
+              }}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label='Search Users...'
+                  variant='standard'
+                  value={search}
+                />
+              )}
+            />
+          </div>
           {user ? (
             <>
               <div className={classes.headerIcons}>
