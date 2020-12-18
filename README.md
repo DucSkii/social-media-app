@@ -26,7 +26,7 @@ __*Following my first project, the eCommerce website, I went by designing this w
 
 Desktop size:
 
-![Alt Text](https://i.gyazo.com/ee709aea516294b2bff18efc6a7dfa16.png)
+![Alt Text](https://i.gyazo.com/2ca91feeb5bd37993bb7ad0356790cc4.png)
 
 Mobile size:
 
