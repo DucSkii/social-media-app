@@ -28,6 +28,7 @@ Desktop size:
 ![Alt Text](https://i.gyazo.com/02387f4ce5b5f29672919e46975d2faf.png)
 
 Mobile size:
+
 ![Alt Text](https://i.gyazo.com/419276f62cd3ad00a94afb2c2e7993d4.png)
 ![Alt Text](https://i.gyazo.com/b3c0201c163b13e3f2390fa3ca0afb41.png)
 
