@@ -1,3 +1,8 @@
+**Social Media React App**
+
+This project was fully deployed using firebase, the backend database was also stored using firebase,
+You can find a link to the deployed website here: https://social-media-69506.web.app/
+
 The goal of this project was to create a social-media app and have it be fully deployed with real-time updates.
 
 Following my first project, the eCommerce website, I went by designing this website from the mobile-first approach.
@@ -18,7 +23,8 @@ Following my first project, the eCommerce website, I went by designing this webs
 - Users can see past images posted of the profile page
 - Users will have a responsive page between mobile, tablet and desktop size screens
 
-**Project preview**
+**Project preview:**
+
 ![Alt Text](https://i.gyazo.com/4a15c0f71c149efe41adb0f231fb9952.png)
 
 This website was designed heavily using material-ui but I also used a fair amount of css/scss. This website is now fully responsive too all screen sizes, material-ui helped to achieve this with their grid methods.
