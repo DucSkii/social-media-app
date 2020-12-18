@@ -24,7 +24,12 @@ __*Following my first project, the eCommerce website, I went by designing this w
 
 **Project preview:**
 
-![Alt Text](https://i.gyazo.com/4a15c0f71c149efe41adb0f231fb9952.png)
+Desktop size:
+![Alt Text](https://i.gyazo.com/02387f4ce5b5f29672919e46975d2faf.png)
+
+Mobile size:
+![Alt Text](https://i.gyazo.com/419276f62cd3ad00a94afb2c2e7993d4.png)
+![Alt Text](https://i.gyazo.com/b3c0201c163b13e3f2390fa3ca0afb41.png)
 
 *This website was designed heavily using material-ui but I also used a fair amount of css/scss. This website is now fully* *responsive to all screen sizes, material-ui helped to achieve this with their grid methods.*
 
