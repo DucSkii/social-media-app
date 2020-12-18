@@ -2,22 +2,24 @@ The goal of this project was to create a social-media app and have it be fully d
 
 Following my first project, the eCommerce website, I went by designing this website from the mobile-first approach.
 
-Functionality that I wished to include:
-- User authentication.
-- Ability to create posts.
-- Have personal settings to change the website theme.
-- Have the option to change your account settings including username, avatars and post banner.
-- Have a profile page for each user which will also display their image posts.
-- Be able to follow and unfollow users.
-- A page to display the users you are following or are following you.
-- One on one chat messaging system.
-- A search bar that can search through the signed up users.
-- Ability to comment on posts
-- Ability to like each post
+**User Story:**
+- User authentication, user can sign-up and login to their own account
+- Users can create a post with a caption
+- Each post can include multiple images to create a slideshow
+- Comments can be posted onto each comment
+- Users can route to different profiles
+- Users can manage their own profile settings including name, avatar and post banner colour
+- Users can manage their personal settings including dark mode and theme colours
+- Search bar has Auto suggest to find users that have registered
+- Each post can be liked by a unique user
+- Infinite scrolling
+- Direct one on one messaging between users
+- Users can follow/unfollow eachother
+- Users can see past images posted of the profile page
+- Users will have a responsive page between mobile, tablet and desktop size screens
 
-Improvements that can be made:
-- The "show more comments" function will show more comments but does not track if you have reached all of the comments.
-- The chat system works but I had to use a timeout function to get past an error that sometimes occurs whenever a chat is newly created.
+**Project preview**
+![Alt Text](https://i.gyazo.com/4a15c0f71c149efe41adb0f231fb9952.png)
 
 This website was designed heavily using material-ui but I also used a fair amount of css/scss. This website is now fully responsive too all screen sizes, material-ui helped to achieve this with their grid methods.
 
