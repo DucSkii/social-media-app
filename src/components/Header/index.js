@@ -205,6 +205,11 @@ const Header = () => {
     })
   }
 
+  const handleDemoLogin = () => {
+    setEmail('test2@gmail.com')
+    setPassword('test2123')
+  }
+
   return (
     <div className={classes.header}>
       <Modal
@@ -235,6 +240,9 @@ const Header = () => {
               />
               <div>
                 <Button type='submit' variant='outlined' style={{ marginTop: '15px' }}>Login</Button>
+                <Button type='submit' variant='outlined' style={{ marginTop: '15px' }} onClick={handleDemoLogin}>
+                  Demo Login
+                </Button>
               </div>
             </center>
           </form>
@@ -334,11 +342,11 @@ const Header = () => {
               <DesktopIcons />
             </>
           ) : (
-              <div>
-                <Button className={classes.buttonLogin} onClick={() => setOpenLogin(true)}>Login</Button>
-                <Button variant='outlined' className={classes.buttonSignUp} onClick={() => setOpenSignup(true)}>Sign-up</Button>
-              </div>
-            )}
+            <div>
+              <Button className={classes.buttonLogin} onClick={() => setOpenLogin(true)}>Login</Button>
+              <Button variant='outlined' className={classes.buttonSignUp} onClick={() => setOpenSignup(true)}>Sign-up</Button>
+            </div>
+          )}
         </div>
       </Paper>
     </div>
